@@ -15,7 +15,10 @@ const NavMenu = ({ navLinks, ...props }: NavMenuProps) => {
       <NavigationMenuList className="gap-6">
         {navLinks?.map((link) => (
           <NavigationMenuItem key={link.to}>
-            <NavigationMenuLink asChild className="hover:bg-transparent">
+            <NavigationMenuLink
+              asChild
+              className="hover:bg-transparent focus:outline-none focus:bg-transparent focus:text-white"
+            >
               <Link
                 href={link.to}
                 className="text-ring hover:text-white capitalize"

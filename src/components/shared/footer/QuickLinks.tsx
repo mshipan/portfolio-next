@@ -13,7 +13,10 @@ const QuickLinks = ({ navLinks, ...props }: NavMenuProps) => {
       <NavigationMenuList className="flex-col items-start gap-3">
         {navLinks?.map((link) => (
           <NavigationMenuItem key={link.to}>
-            <NavigationMenuLink asChild className="hover:bg-transparent p-0">
+            <NavigationMenuLink
+              asChild
+              className="hover:bg-transparent p-0 focus:outline-none focus:bg-transparent focus:text-white"
+            >
               <Link
                 href={link.to}
                 className="text-ring hover:text-white capitalize"
