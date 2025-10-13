@@ -85,14 +85,14 @@ const Banner = () => {
           ))}
         </div>
         <motion.div
-          initial={{ y: -30 }}
-          animate={{ y: 0 }}
+          initial={{ y: 0 }}
+          animate={{ y: -30 }}
           transition={{
             type: "spring",
             stiffness: 200,
             damping: 15,
             repeat: Infinity,
-            repeatType: "reverse",
+            repeatType: "mirror",
             repeatDelay: 0.5,
           }}
           className="absolute bottom-0"
