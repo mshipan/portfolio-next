@@ -14,7 +14,7 @@ const Footer = () => {
   return (
     <div className="border-t border-gray-800">
       <div className="max-w-7xl mx-auto px-4 ">
-        <div className="flex flex-col items-start md:grid md:grid-cols-4 gap-8 py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 py-12">
           <div className="flex flex-col gap-4 items-start">
             <Logo />
             <h1 className="text-ring md:max-w-lg">

@@ -32,8 +32,8 @@ const Banner = () => {
   }, [index, texts.length]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 h-dvh">
-      <div className="flex flex-col items-center justify-center gap-8 h-[calc(100vh-128px)]">
+    <div className="max-w-7xl mx-auto px-4 min-h-screen">
+      <div className="relative flex flex-col items-center justify-center gap-8 min-h-[calc(100vh-128px)]">
         <h4 className="capitalize text-xl leading-7 font-normal">
           hi, i&apos;m{" "}
           <span className="text-site-gradient font-semibold">
@@ -49,7 +49,7 @@ const Banner = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 30 }}
               transition={{ duration: 0.3 }}
-              className="text-site-gradient text-5xl md:text-8xl md:leading-24 font-black capitalize text-center max-w-3xl"
+              className="text-site-gradient text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-black capitalize text-center max-w-3xl"
             >
               {texts[index]}
             </motion.div>

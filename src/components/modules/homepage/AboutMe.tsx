@@ -2,12 +2,12 @@ import { ChevronsLeftRight, Rocket, Users } from "lucide-react";
 
 const AboutMe = () => {
   return (
-    <div className="h-dvh">
-      <div className="max-w-7xl mx-auto md:px-16 flex flex-col items-center justify-center h-full gap-6">
+    <div className="min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 md:px-16 flex flex-col items-center justify-center h-full gap-6">
         <h1 className="capitalize text-5xl font-black leading-12">
           about <span className="text-site-gradient">me</span>
         </h1>
-        <p className="text-lg font-normal leading-7 text-ring max-w-3xl">
+        <p className="text-lg font-normal leading-7 text-ring max-w-3xl text-center">
           I&apos;m a passionate full-stack developer with 2+ years of experience
           building web applications that make a difference. I specialize in
           React, TypeScript, and Node.js, with a strong focus on creating
