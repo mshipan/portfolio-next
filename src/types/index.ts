@@ -9,3 +9,9 @@ export interface NavLink {
 export interface NavMenuProps extends ComponentProps<typeof NavigationMenu> {
   navLinks: NavLink[];
 }
+
+export interface SectionHeader {
+  titleFirstPart: string;
+  titleSecondPart: string;
+  subTitle: string;
+}

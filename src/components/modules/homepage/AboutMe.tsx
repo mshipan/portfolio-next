@@ -1,18 +1,18 @@
+import HeaderSection from "@/components/shared/HeaderSection";
 import { ChevronsLeftRight, Rocket, Users } from "lucide-react";
 
 const AboutMe = () => {
   return (
-    <div className="min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 md:px-16 flex flex-col items-center justify-center h-full gap-6">
-        <h1 className="capitalize text-5xl font-black leading-12">
-          about <span className="text-site-gradient">me</span>
-        </h1>
-        <p className="text-lg font-normal leading-7 text-ring max-w-3xl text-center">
-          I&apos;m a passionate full-stack developer with 2+ years of experience
+    <div className="h-dvh">
+      <div className="max-w-7xl mx-auto md:px-16 flex flex-col items-center justify-center h-full gap-6">
+        <HeaderSection
+          titleFirstPart="about"
+          titleSecondPart="me"
+          subTitle=" I'm a passionate full-stack developer with 2+ years of experience
           building web applications that make a difference. I specialize in
           React, TypeScript, and Node.js, with a strong focus on creating
-          performant, accessible, and beautiful user interfaces.
-        </p>
+          performant, accessible, and beautiful user interfaces."
+        />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           <div className="bg-[#11192c] border border-gray-800 rounded-md p-8 flex flex-col items-start gap-3">
