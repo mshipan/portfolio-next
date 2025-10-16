@@ -1,0 +1,21 @@
+import { SectionHeader } from "@/types";
+
+const HeaderSection = ({
+  titleFirstPart,
+  titleSecondPart,
+  subTitle,
+}: SectionHeader) => {
+  return (
+    <>
+      <h1 className="capitalize text-5xl font-black leading-12">
+        {titleFirstPart}{" "}
+        <span className="text-site-gradient">{titleSecondPart}</span>
+      </h1>
+      <p className="text-lg font-normal leading-7 text-ring max-w-3xl">
+        {subTitle}
+      </p>
+    </>
+  );
+};
+
+export default HeaderSection;
