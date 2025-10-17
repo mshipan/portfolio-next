@@ -11,7 +11,7 @@ const HeaderSection = ({
         {titleFirstPart}{" "}
         <span className="text-site-gradient">{titleSecondPart}</span>
       </h1>
-      <p className="text-lg font-normal leading-7 text-ring max-w-3xl">
+      <p className="text-lg font-normal leading-7 text-ring max-w-3xl text-center">
         {subTitle}
       </p>
     </>
