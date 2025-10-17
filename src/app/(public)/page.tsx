@@ -3,6 +3,7 @@ import Banner from "@/components/modules/homepage/Banner";
 import Skills from "@/components/modules/homepage/Skills";
 import Experience from "@/components/modules/homepage/Experience";
 import Education from "@/components/modules/homepage/Education";
+import Projects from "@/components/modules/homepage/Projects";
 
 const HomePage = () => {
   return (
@@ -10,9 +11,9 @@ const HomePage = () => {
       <Banner />
       <AboutMe />
       <Skills />
-      {/* <AboutMe /> */}
       <Experience />
       <Education />
+      <Projects />
     </div>
   );
 };
