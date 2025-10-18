@@ -11,7 +11,7 @@ export interface NavMenuProps extends ComponentProps<typeof NavigationMenu> {
 }
 
 export interface SectionHeader {
-  titleFirstPart: string;
-  titleSecondPart: string;
-  subTitle: string;
+  titleFirstPart?: string;
+  titleSecondPart?: string;
+  subTitle?: string;
 }
