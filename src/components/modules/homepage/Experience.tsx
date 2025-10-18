@@ -3,7 +3,7 @@ import { Briefcase, SquareArrowRight } from "lucide-react";
 
 const Experience = () => {
   return (
-    <div>
+    <div className="my-28">
       <div className="flex flex-col items-center gap-8">
         <HeaderSection
           titleFirstPart="work"
