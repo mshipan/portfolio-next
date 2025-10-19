@@ -9,11 +9,14 @@ const HomePage = () => {
   return (
     <div className="text-white">
       <Banner />
-      <AboutMe />
-      <Skills />
-      <Experience />
-      <Education />
-      <Projects />
+
+      <div className="px-4 sm:px-6">
+        <AboutMe />
+        <Skills />
+        <Experience />
+        <Education />
+        <Projects />
+      </div>
     </div>
   );
 };
