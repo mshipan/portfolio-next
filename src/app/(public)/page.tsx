@@ -5,19 +5,21 @@ import Experience from "@/components/modules/homepage/Experience";
 import Education from "@/components/modules/homepage/Education";
 import Projects from "@/components/modules/homepage/Projects";
 import Blogs from "@/components/modules/homepage/Blogs";
+import GetInTouch from "@/components/modules/homepage/GetInTouch";
 
 const HomePage = () => {
   return (
     <div className="text-white">
       <Banner />
 
-      <div className="px-4 sm:px-6">
+      <div>
         <AboutMe />
         <Skills />
         <Experience />
         <Education />
         <Projects />
         <Blogs />
+        <GetInTouch />
       </div>
     </div>
   );

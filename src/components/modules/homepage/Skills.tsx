@@ -4,7 +4,7 @@ import HeaderSection from "@/components/shared/HeaderSection";
 
 const Skills = () => {
   return (
-    <div className="bg-[#131a2c] py-36 sm:py-28">
+    <div className="bg-[#131a2c] py-20 sm:py-28 md:py-36">
       <div className="flex flex-col items-center gap-8 text-center px-4">
         <HeaderSection
           titleFirstPart="skills &"

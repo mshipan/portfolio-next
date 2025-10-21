@@ -7,7 +7,7 @@ const HeaderSection = ({
 }: SectionHeader) => {
   return (
     <>
-      <h1 className="capitalize text-5xl font-black leading-12">
+      <h1 className="capitalize text-3xl md:text-5xl font-black leading-12 text-center">
         {titleFirstPart}{" "}
         <span className="text-site-gradient">{titleSecondPart}</span>
       </h1>

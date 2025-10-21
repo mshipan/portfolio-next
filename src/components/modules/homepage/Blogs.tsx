@@ -18,8 +18,8 @@ const Blogs = () => {
   }));
 
   return (
-    <div className="bg-[#131a2c]">
-      <div className="flex flex-col items-center gap-8 max-w-7xl mx-auto px-4 sm:px-6 py-36 sm:py-28">
+    <div className="bg-[#131a2c] px-6 py-20 sm:py-28 md:py-36">
+      <div className="flex flex-col items-center gap-8 max-w-7xl mx-auto">
         <HeaderSection
           titleFirstPart="latest"
           titleSecondPart="blog posts"
