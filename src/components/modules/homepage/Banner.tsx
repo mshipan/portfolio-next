@@ -32,7 +32,7 @@ const Banner = () => {
   }, [index, texts.length]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 min-h-screen">
+    <div className="max-w-7xl mx-auto px-4 min-h-svh">
       <div className="relative flex flex-col items-center justify-center gap-8 min-h-[calc(100vh-128px)]">
         <h4 className="capitalize text-xl leading-7 font-normal">
           hi, i&apos;m{" "}

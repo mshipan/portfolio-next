@@ -15,3 +15,24 @@ export interface SectionHeader {
   titleSecondPart?: string;
   subTitle?: string;
 }
+
+export interface Project {
+  id: number;
+  title: string;
+  desc: string;
+  img: string;
+  techs: string[];
+}
+
+export interface Blog {
+  id: string;
+  authorId: string;
+  title: string;
+  slug: string;
+  summary?: string;
+  content: string;
+  published?: boolean;
+  coverUrl?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}

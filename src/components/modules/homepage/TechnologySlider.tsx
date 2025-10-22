@@ -18,44 +18,39 @@ const TechnologySlider = () => {
     { name: "MongoDB", src: "/images/react.svg" },
   ];
   return (
-    <div className="max-w-screen-2xl mx-auto px-4 sm:px-6">
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 overflow-hidden">
       <Swiper
-        loop={true}
-        grabCursor={true}
-        // Added slidesPerView={2} as a default for mobile view
+        loop
+        grabCursor
         slidesPerView={1}
-        autoplay={{
-          delay: 2000,
-          disableOnInteraction: false,
-        }}
-        modules={[Autoplay]}
-        // **FIX 2: Tweaked breakpoints for better spacing on mobile**
+        observer
+        observeParents
+        breakpointsBase="container"
         breakpoints={{
-          320: { slidesPerView: 3, spaceBetween: 10 }, // Mobile S/M: show 3 items
-          480: { slidesPerView: 4, spaceBetween: 12 }, // Mobile L: show 4 items
-          640: { slidesPerView: 5, spaceBetween: 16 }, // sm: show 5 items
-          768: { slidesPerView: 6, spaceBetween: 20 }, // md: show 6 items
-          1024: { slidesPerView: 7, spaceBetween: 24 }, // lg: show 7 items
-          1280: { slidesPerView: 8, spaceBetween: 28 }, // xl: show 8 items
+          320: { slidesPerView: 1, spaceBetween: 0 },
+          480: { slidesPerView: 2, spaceBetween: 12 },
+          640: { slidesPerView: 2, spaceBetween: 14 },
+          768: { slidesPerView: 6, spaceBetween: 16 },
+          1024: { slidesPerView: 6, spaceBetween: 18 },
+          1280: { slidesPerView: 6, spaceBetween: 22 },
         }}
-        className="pb-8" // Added bottom padding to make sure the navigation dots are visible
+        autoHeight
+        centerInsufficientSlides
+        autoplay={{ delay: 2000, disableOnInteraction: false }}
+        modules={[Autoplay]}
+        className="pb-8"
       >
-        {/* Duplicating array for 'loop' mode */}
-        {technologies.concat(technologies).map((tech, index) => (
-          <SwiperSlide key={index}>
-            {/* **FIX 3: Reduced Padding and Image Size Significantly**
-                This allows 3-4 items to fit on a small mobile screen (320px).
-            */}
-            <div className="bg-[#11192c] border border-gray-800 rounded-lg flex flex-col items-center justify-center p-3 sm:p-4 w-full h-full hover:scale-105 transition-transform duration-200">
+        {technologies.map((tech, index) => (
+          <SwiperSlide key={index} className="!h-auto">
+            <div className="bg-[#11192c] border border-gray-800 rounded-lg flex flex-col items-center justify-center p-3 sm:p-4 hover:scale-105 transition-transform duration-200">
               <Image
                 src={tech.src}
                 alt={`${tech.name} logo`}
-                // Reduced size for better fit
                 width={40}
                 height={40}
-                className="w-10 h-10 sm:w-12 sm:h-12" // Ensure a fixed size on the image element
+                priority={index < 4}
               />
-              <h5 className="text-[10px] sm:text-xs font-medium mt-2 capitalize text-center">
+              <h5 className="text-[10px] sm:text-xs font-medium mt-2 capitalize text-center truncate">
                 {tech.name}
               </h5>
             </div>
