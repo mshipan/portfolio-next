@@ -16,7 +16,7 @@ import { Send } from "lucide-react";
 const GetInTouchForm = () => {
   const form = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
   };
 
@@ -73,9 +73,10 @@ const GetInTouchForm = () => {
                 <FormItem>
                   <FormControl>
                     <Textarea
+                      rows={12}
                       placeholder="Your Message"
                       {...field}
-                      className="py-5"
+                      className="min-h-36 py-5"
                     />
                   </FormControl>
                   <FormMessage />
