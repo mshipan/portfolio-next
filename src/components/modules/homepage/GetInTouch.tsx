@@ -1,5 +1,7 @@
 import GetInTouchForm from "@/components/forms/GetInTouchForm";
 import HeaderSection from "@/components/shared/HeaderSection";
+import ContactInfo from "./ContactInfo";
+import Opportunity from "./Opportunity";
 
 const GetInTouch = () => {
   return (
@@ -11,9 +13,12 @@ const GetInTouch = () => {
           subTitle="Have a project in mind or want to collaborate? I'd love to hear from you!"
         />
 
-        <div>
+        <div className="grid md:grid-cols-2 gap-8 auto-rows-[1fr] items-stretch">
           <GetInTouchForm />
-          {/* Others div and Grid layout goes here for contact form */}
+          <div className="flex flex-col gap-8 h-full">
+            <ContactInfo />
+            <Opportunity />
+          </div>
         </div>
       </div>
     </div>
