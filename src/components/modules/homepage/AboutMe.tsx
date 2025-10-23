@@ -3,7 +3,7 @@ import { ChevronsLeftRight, Rocket, Users } from "lucide-react";
 
 const AboutMe = () => {
   return (
-    <section className="pb-8 sm:py-20 min-h-[60svh]">
+    <section id="about" className="pb-8 sm:py-20 min-h-[60svh]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-16 flex flex-col items-center justify-center gap-6">
         <HeaderSection
           titleFirstPart="about"

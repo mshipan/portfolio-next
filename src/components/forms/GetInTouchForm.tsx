@@ -40,7 +40,7 @@ const GetInTouchForm = () => {
                       type="text"
                       placeholder="Your Name"
                       {...field}
-                      className="py-5"
+                      className="py-5 border border-gray-700"
                     />
                   </FormControl>
                   <FormMessage />
@@ -58,7 +58,7 @@ const GetInTouchForm = () => {
                       type="email"
                       placeholder="Your Email"
                       {...field}
-                      className="py-5"
+                      className="py-5 border border-gray-700"
                     />
                   </FormControl>
                   <FormMessage />
@@ -76,7 +76,7 @@ const GetInTouchForm = () => {
                       rows={12}
                       placeholder="Your Message"
                       {...field}
-                      className="min-h-36 py-5"
+                      className="min-h-36 py-5 border border-gray-700"
                     />
                   </FormControl>
                   <FormMessage />

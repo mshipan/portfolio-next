@@ -24,7 +24,7 @@ const ProjectCard = ({ card }: ProjectCardProps) => {
       </div>
 
       <div className="p-6 sm:p-7 flex flex-col gap-3 sm:gap-6 h-full">
-        <Link href="/">
+        <Link href="/project">
           <h4 className="text-white hover:text-[#9767e4] text-lg sm:text-xl leading-7 font-bold">
             {card.title}
           </h4>

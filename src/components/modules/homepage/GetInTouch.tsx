@@ -5,7 +5,7 @@ import Opportunity from "./Opportunity";
 
 const GetInTouch = () => {
   return (
-    <div className="px-6 py-20 sm:py-28 md:py-36">
+    <div id="contact" className="px-6 py-20 sm:py-28 md:py-36">
       <div className="flex flex-col items-center gap-8 max-w-7xl mx-auto">
         <HeaderSection
           titleFirstPart="get in"
