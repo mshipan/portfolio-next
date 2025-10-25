@@ -1,6 +1,7 @@
 import BackLink from "@/components/shared/BackLink";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Github } from "lucide-react";
+import { Check, ExternalLink, Github } from "lucide-react";
+import Image from "next/image";
 
 const SingleProjectPage = () => {
   return (
@@ -33,6 +34,39 @@ const SingleProjectPage = () => {
           <ExternalLink className="w-4 h-4" />
           <span>Demo</span>
         </Button>
+      </div>
+
+      <Image
+        src="/images/project1.jpeg"
+        alt="project image"
+        width={1000}
+        height={1000}
+        className="rounded-2xl"
+      />
+      <h1 className="text-3xl leading-9 font-bold">About This Project</h1>
+      <p className="text-base leading-6 font-normal text-ring">
+        This comprehensive e-commerce platform provides a complete solution for
+        online retail businesses. Built with modern technologies, it features a
+        responsive user interface, secure payment processing through Stripe,
+        real-time inventory management, and detailed analytics dashboards. The
+        platform supports multiple payment methods, automatic tax calculations,
+        and integrates with major shipping providers. The admin panel offers
+        powerful tools for managing products, orders, and customer
+        relationships.
+      </p>
+      <h1 className="text-3xl leading-9 font-bold">Key Features</h1>
+      <div className="grid grid-cols-2 gap-4">
+        {[0, 1, 2, 3, 4, 5, 6, 7]?.map((feature, i) => (
+          <div
+            key={i}
+            className="bg-[#11192c] flex items-center gap-3 text-ring p-4 rounded-xl border border-gray-800"
+          >
+            <Check className="text-[#9767e4] rotate-y-45" />
+            <p className="text-base leading-6 font-normal text-right">
+              Secure user authentication and authorization
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );
