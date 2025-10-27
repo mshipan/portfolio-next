@@ -122,5 +122,5 @@
 }
 
 .text-site-gradient {
-  @apply bg-gradient-to-r from-[#9767e4] to-[#47cfeb] inline-block text-transparent bg-clip-text;
+  @apply bg-gradient-to-r from-[#9767e4] to-[#47cfeb] inline-block text-transparent bg-clip-text pb-2;
 }
