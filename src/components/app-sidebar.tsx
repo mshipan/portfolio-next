@@ -158,13 +158,16 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader className="bg-background border-b border-b-">
+    <Sidebar
+      collapsible="icon"
+      {...props}
+      className="text-white border-gray-800 dark:border-gray-800"
+    >
+      <SidebarHeader className="bg-background border-b border-b-gray-800 dark:border-b-gray-800">
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
-      <SidebarContent className="bg-background border-b border-b-accent">
+      <SidebarContent className="bg-background border-b border-b-gray-800 dark:border-b-gray-800">
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter className="bg-background">
         <NavUser user={data.user} />

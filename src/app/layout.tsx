@@ -20,8 +20,8 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.className}>
-      <body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.variable}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
