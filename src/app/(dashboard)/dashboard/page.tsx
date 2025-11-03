@@ -1,4 +1,6 @@
+import { BlogGrowthChart } from "@/components/dashboard/BlogGrowthChart";
 import Stats from "@/components/dashboard/Stats";
+import { TechStackChart } from "@/components/dashboard/TechStackChart";
 
 const DashboardAnalytics = () => {
   return (
@@ -18,6 +20,11 @@ const DashboardAnalytics = () => {
         <Stats />
         <Stats />
         <Stats />
+      </div>
+
+      <div className="flex items-center gap-4 w-full h-fit">
+        <BlogGrowthChart />
+        <TechStackChart />
       </div>
     </div>
   );
