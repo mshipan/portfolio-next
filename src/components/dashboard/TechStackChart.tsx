@@ -1,13 +1,12 @@
 "use client";
 
-import { ChevronsLeftRight, TrendingUp } from "lucide-react";
+import { ChevronsLeftRight } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -95,7 +94,7 @@ export function TechStackChart() {
             />
 
             {/* Bars */}
-            <Bar dataKey="desktop" fill="#47cfeb" radius={8} />
+            <Bar dataKey="desktop" fill="#47cfeb" radius={[8, 8, 0, 0]} />
           </BarChart>
         </ChartContainer>
       </CardContent>

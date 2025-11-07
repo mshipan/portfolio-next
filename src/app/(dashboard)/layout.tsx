@@ -24,9 +24,7 @@ const DashboardLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
           <ModeToggler />
         </header>
 
-        <main className="text-white max-w-dvw flex justify-center py-8">
-          {children}
-        </main>
+        <main className="text-white max-w-360 mx-auto py-8">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );
