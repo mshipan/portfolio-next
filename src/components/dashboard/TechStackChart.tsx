@@ -37,7 +37,7 @@ const chartConfig = {
 
 export function TechStackChart() {
   return (
-    <Card className="w-full bg-transparent border-gray-800">
+    <Card className="w-full bg-[#0B111E] border-gray-800 hover:border-[#9767E4] transition-all duration-500 ease-out">
       <CardHeader>
         <CardTitle className="font-inter text-lg font-semibold leading-7 text-white">
           <span className="flex items-center gap-2">

@@ -1,4 +1,4 @@
-import { AppSidebar } from "@/components/app-sidebar";
+import { AppSidebar } from "@/components/AppSidebar";
 import ModeToggler from "@/components/shared/navbar/ModeToggler";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -12,19 +12,29 @@ const DashboardLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center justify-between gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 border-b border-b-gray-800 dark:border-b-gray-800 pr-4">
-          <div className="flex items-center gap-2 px-4">
+
+      <SidebarInset className="relative flex flex-col w-full">
+        <header
+          className="
+            sticky top-0 z-30
+            flex h-16 shrink-0 items-center justify-between
+            border-b border-gray-800 dark:border-gray-800
+            bg-background/80 backdrop-blur-sm
+            px-4 pr-6
+          "
+        >
+          <div className="flex items-center gap-2">
             <SidebarTrigger className="-ml-1 text-white" />
             <Separator
               orientation="vertical"
               className="mr-2 data-[orientation=vertical]:h-4"
             />
           </div>
+
           <ModeToggler />
         </header>
 
-        <main className="text-white max-w-360 mx-auto py-8">{children}</main>
+        <main className="flex-1 text-white px-4 lg:px-20 py-8">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );

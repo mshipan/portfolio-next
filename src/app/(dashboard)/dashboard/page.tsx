@@ -4,6 +4,7 @@ import LatestBlogTable from "@/components/dashboard/LatestBlogTable";
 import LatestProjectsTable from "@/components/dashboard/LatestProjectsTable";
 import Stats from "@/components/dashboard/Stats";
 import { TechStackChart } from "@/components/dashboard/TechStackChart";
+import ExperienceTimeline from "@/components/dashboard/ExperienceTimeline";
 import {
   Briefcase,
   ChevronsLeftRight,
@@ -14,6 +15,7 @@ import {
   GraduationCap,
   TrendingUp,
 } from "lucide-react";
+import MonthlyBlogSummary from "@/components/dashboard/MonthlyBlogSummary";
 
 const DashboardAnalytics = () => {
   return (
@@ -27,7 +29,7 @@ const DashboardAnalytics = () => {
         </p>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col lg:flex-row items-center gap-4">
         <Stats
           mainIcon={FileText}
           mainIconColor="#9767e4"
@@ -82,14 +84,22 @@ const DashboardAnalytics = () => {
         />
       </div>
 
-      <div className="flex items-center gap-4 w-full h-fit">
+      <div className="flex flex-col lg:flex-row items-center gap-4 w-full h-fit">
         <BlogGrowthChart />
         <TechStackChart />
       </div>
 
-      <div className="flex items-start gap-4 w-full h-fit">
+      <div className="flex flex-col lg:flex-row items-start gap-4 w-full h-fit">
         <LatestProjectsTable />
         <LatestBlogTable />
+      </div>
+
+      <div>
+        <ExperienceTimeline />
+      </div>
+
+      <div>
+        <MonthlyBlogSummary />
       </div>
     </div>
   );

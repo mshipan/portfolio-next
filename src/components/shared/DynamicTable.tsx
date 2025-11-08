@@ -83,7 +83,7 @@ export function DynamicTable<T>({
   };
 
   return (
-    <Card className="w-full bg-transparent border-gray-800">
+    <Card className="w-full bg-[#0B111E] border-gray-800 hover:border-[#9767E4] transition-all duration-500 ease-out">
       <CardHeader>
         <CardTitle className="font-inter text-lg font-semibold leading-7 text-white flex items-center gap-2">
           {Icon && <Icon className={iconColor || "text-[#9767e4]"} />}

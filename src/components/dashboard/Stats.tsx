@@ -40,7 +40,7 @@ const Stats = ({
         <BackgroundIcon className="absolute -top-14 -left-12" />
       )}
 
-      <div className="border border-gray-800 rounded-xl p-6 space-y-4 w-full h-full min-h-[200px]">
+      <div className="border border-gray-800 rounded-xl hover:border-[#9767E4] transition-all duration-500 ease-out p-6 space-y-4 w-full h-full min-h-[200px]">
         <div className="flex items-center justify-between">
           <MainIcon className="size-8" color={mainIconColor} />
           {ExtraIcon && <ExtraIcon className="text-ring" />}
