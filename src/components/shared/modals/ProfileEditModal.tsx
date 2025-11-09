@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -103,7 +104,11 @@ const ProfileEditModal = () => {
                   <FormItem>
                     <FormLabel>Full Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Your Full Name" {...field} />
+                      <Input
+                        {...field}
+                        placeholder="Your Full Name"
+                        className="border-gray-800"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -117,7 +122,11 @@ const ProfileEditModal = () => {
                   <FormItem>
                     <FormLabel>Title</FormLabel>
                     <FormControl>
-                      <Input placeholder="Title" {...field} />
+                      <Input
+                        {...field}
+                        placeholder="Title"
+                        className="border-gray-800"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -132,9 +141,9 @@ const ProfileEditModal = () => {
                     <FormLabel>Bio</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="Your Bio"
-                        className="min-h-28"
                         {...field}
+                        placeholder="Your Bio"
+                        className="min-h-28 border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -149,7 +158,11 @@ const ProfileEditModal = () => {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="Your Email" {...field} />
+                      <Input
+                        {...field}
+                        placeholder="Your Email"
+                        className="border-gray-800"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -163,7 +176,11 @@ const ProfileEditModal = () => {
                   <FormItem>
                     <FormLabel>Phone</FormLabel>
                     <FormControl>
-                      <Input placeholder="Your Phone Number" {...field} />
+                      <Input
+                        {...field}
+                        placeholder="Your Phone Number"
+                        className="border-gray-800"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -177,7 +194,11 @@ const ProfileEditModal = () => {
                   <FormItem className="sm:col-span-2">
                     <FormLabel>Address</FormLabel>
                     <FormControl>
-                      <Input placeholder="Your Address" {...field} />
+                      <Input
+                        {...field}
+                        placeholder="Your Address"
+                        className="border-gray-800"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -190,13 +211,15 @@ const ProfileEditModal = () => {
               <Button type="submit" className="w-full sm:w-4/5 btn-gradient">
                 Save Changes
               </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                className="w-full sm:w-1/5 hover:bg-[#47cfeb]"
-              >
-                Cancel
-              </Button>
+              <DialogClose asChild>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className="w-full sm:w-1/5 hover:bg-[#47cfeb]"
+                >
+                  Cancel
+                </Button>
+              </DialogClose>
             </div>
           </form>
         </Form>

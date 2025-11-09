@@ -1,4 +1,7 @@
+import EducationCard from "@/components/modules/about-me-page/EducationCard";
+import ExperienceCard from "@/components/modules/about-me-page/ExperienceCard";
 import ProfileInfoCard from "@/components/modules/about-me-page/ProfileInfoCard";
+import SkillsCard from "@/components/modules/about-me-page/SkillsCard";
 
 const AboutMePage = () => {
   return (
@@ -13,8 +16,11 @@ const AboutMePage = () => {
         </p>
       </div>
 
-      <div>
+      <div className="space-y-8">
         <ProfileInfoCard />
+        <SkillsCard />
+        <ExperienceCard />
+        <EducationCard />
       </div>
     </div>
   );

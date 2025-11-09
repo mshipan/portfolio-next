@@ -39,10 +39,7 @@ const ProfileInfoCard = () => {
 
           <div className="flex flex-col flex-1 gap-5 pl-0 pt-4 md:pt-0 md:pl-8">
             <div className="flex items-start gap-3">
-              <FileText
-                className="text-[#9CA3AF] mt-[2px] shrink-0"
-                size={20}
-              />
+              <FileText className="text-[#9CA3AF] mt-0.5 shrink-0" size={20} />
               <div>
                 <h2 className="text-base font-medium mb-1">Bio</h2>
                 <p className="text-sm text-gray-400 leading-relaxed max-w-xl">

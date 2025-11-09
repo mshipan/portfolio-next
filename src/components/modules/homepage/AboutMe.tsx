@@ -1,10 +1,19 @@
 import HeaderSection from "@/components/shared/HeaderSection";
 import { ChevronsLeftRight, Rocket, Users } from "lucide-react";
+import Image from "next/image";
 
 const AboutMe = () => {
   return (
     <section id="about" className="pb-8 sm:py-20 min-h-[60svh]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-16 flex flex-col items-center justify-center gap-6">
+        <div className="relative w-40 h-40 rounded-full border-4 border-[#9767e4] transition-shadow duration-300 shadow-[0_0_45px_rgba(151,103,228,0.5)] hover:shadow-[0_0_60px_#9767e4]">
+          <Image
+            src="/images/user.png"
+            alt="user image"
+            fill
+            className="absolute top-0 object-cover"
+          />
+        </div>
         <HeaderSection
           titleFirstPart="about"
           titleSecondPart="me"
