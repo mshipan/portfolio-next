@@ -39,7 +39,7 @@ const ExperienceCard = () => {
   };
 
   return (
-    <Card className="w-full bg-[#0B111E] border border-gray-800 text-white">
+    <Card className="w-full bg-[#0B111E] border border-gray-800 text-white shadow-[0_0_25px_#000000] hover:shadow-[0_0_40px_#000000] transition-shadow duration-500 ease-out">
       <CardHeader className="flex flex-col lg:flex-row justify-between pb-2">
         <div className="flex flex-col items-start">
           <CardTitle className="font-inter text-lg font-semibold text-white">

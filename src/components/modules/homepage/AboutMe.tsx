@@ -23,9 +23,7 @@ const AboutMe = () => {
           performant, accessible, and beautiful user interfaces."
         />
 
-        {/* was: md:grid-cols-2 → start 2-col earlier on small/larger phones */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-6 sm:mt-8">
-          {/* Card */}
           <div className="bg-[#11192c] border border-gray-800 rounded-md p-5 sm:p-8 flex flex-col items-start gap-3">
             <ChevronsLeftRight
               size={40}

@@ -14,7 +14,6 @@ import { ChevronUp, ChevronDown } from "lucide-react";
 import { useState, useMemo, ElementType } from "react";
 import { Button } from "../ui/button";
 
-// ---------- Types ----------
 interface Column<T> {
   key: keyof T;
   label: string;
@@ -25,7 +24,7 @@ interface Column<T> {
 interface DynamicTableProps<T> {
   title: string;
   icon?: ElementType;
-  iconColor?: string; // for dynamic main icon color
+  iconColor?: string;
   columns: Column<T>[];
   data: T[];
   rowsPerPage?: number;
@@ -33,11 +32,10 @@ interface DynamicTableProps<T> {
     label: string;
     color?: string;
     variant?: "default" | "outline" | "secondary" | "destructive";
-    icon?: ElementType; // optional icon inside badge
+    icon?: ElementType;
   } | null;
 }
 
-// ---------- Component ----------
 export function DynamicTable<T>({
   title,
   icon: Icon,
@@ -54,7 +52,6 @@ export function DynamicTable<T>({
 
   const [page, setPage] = useState(1);
 
-  // Sorting logic
   const sortedData = useMemo(() => {
     if (!sortConfig.key) return data;
     const sorted = [...data].sort((a, b) => {
@@ -67,14 +64,12 @@ export function DynamicTable<T>({
     return sorted;
   }, [data, sortConfig]);
 
-  // Pagination logic
   const totalPages = Math.ceil(sortedData.length / rowsPerPage);
   const paginatedData = sortedData.slice(
     (page - 1) * rowsPerPage,
     page * rowsPerPage
   );
 
-  // Handle sort toggle
   const handleSort = (key: keyof T) => {
     setSortConfig((prev) => ({
       key,
@@ -133,7 +128,7 @@ export function DynamicTable<T>({
                         {col.key === "status" && getRowBadge
                           ? (() => {
                               const badgeData = getRowBadge(row);
-                              if (!badgeData) return String(row[col.key]); // force ReactNode
+                              if (!badgeData) return String(row[col.key]);
 
                               const BadgeIcon = badgeData.icon;
 
@@ -161,7 +156,6 @@ export function DynamicTable<T>({
           </Table>
         </div>
 
-        {/* Pagination Controls */}
         <div className="flex justify-between items-center mt-4">
           <p className="text-sm text-ring">
             Page {page} of {totalPages}
