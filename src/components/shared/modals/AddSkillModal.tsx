@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Plus } from "lucide-react";
+import Image from "next/image";
 
 import { useForm } from "react-hook-form";
 
@@ -53,6 +54,42 @@ const AddSkillModal = () => {
             <div className="flex flex-col gap-4">
               <FormField
                 control={form.control}
+                name="photo"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Skill Logo/Icon</FormLabel>
+                    <div className="flex items-center gap-3">
+                      {/* Preview box */}
+                      <div className="w-20 h-16 bg-white rounded flex items-center justify-center overflow-hidden relative">
+                        {field.value ? (
+                          <Image
+                            src={URL.createObjectURL(field.value)}
+                            alt="Preview"
+                            fill
+                            className="object-cover"
+                          />
+                        ) : (
+                          <span className="text-gray-500 text-sm">+</span>
+                        )}
+                      </div>
+
+                      {/* File input */}
+                      <FormControl>
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => field.onChange(e.target.files?.[0])}
+                          className="border-gray-800 file:text-white file:mr-2"
+                        />
+                      </FormControl>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
@@ -62,24 +99,6 @@ const AddSkillModal = () => {
                         {...field}
                         placeholder="Skill Name"
                         className="border-gray-800"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="photo"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Photo</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        type="file"
-                        className="border-gray-800 file:text-white file:mr-2"
                       />
                     </FormControl>
                     <FormMessage />
