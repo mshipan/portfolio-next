@@ -1,4 +1,5 @@
 import ManageTechCard from "@/components/modules/cards/skill/ManageTechCard";
+import AddSkillModal from "@/components/shared/modals/AddSkillModal";
 
 const SkillsPage = () => {
   return (
@@ -11,7 +12,7 @@ const SkillsPage = () => {
           <p className="text-base leading-5 text-ring">My technical skills</p>
         </div>
 
-        {/* <AddExperienceModal /> */}
+        <AddSkillModal />
       </div>
 
       <div>
