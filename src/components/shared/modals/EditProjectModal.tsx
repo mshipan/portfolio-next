@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+
 import {
   Form,
   FormControl,
@@ -17,75 +18,59 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Plus, Star } from "lucide-react";
-import { useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+
+import { Edit, Star } from "lucide-react";
 import Image from "next/image";
+import { useForm } from "react-hook-form";
 
-type ProjectFormValues = {
-  title: string;
-  description: string;
-  techStack: string;
-  featured: boolean;
-  thumbnail: File | null;
-};
-
-const AddProjectModal = () => {
-  const [preview, setPreview] = useState<string | null>(null);
-  const fileRef = useRef<HTMLInputElement | null>(null);
-
-  const form = useForm<ProjectFormValues>({
+const EditProjectModal = ({ project }: { project: any }) => {
+  const form = useForm({
     defaultValues: {
-      title: "",
-      description: "",
-      techStack: "",
-      featured: false,
-      thumbnail: null,
+      title: project?.title || "",
+      description: project?.description || "",
+      techStack: project?.techStack?.join(", ") || "",
+      featured: project?.featured || false,
+      thumbnail: null as File | null,
     },
   });
 
-  const onSubmit = (values: ProjectFormValues) => {
-    console.log({
-      ...values,
-      preview,
-    });
-  };
+  const thumbnailPreview = project?.thumbnail || "/images/user.png";
 
   return (
     <Dialog>
+      {/* Edit Button */}
       <DialogTrigger asChild>
-        <Button className="btn-gradient flex items-center gap-2 px-4 py-2 text-sm font-medium">
-          <Plus size={16} />
-          New Project
+        <Button
+          variant="ghost"
+          className="transition-all duration-300 ease-linear cursor-pointer hover:bg-[#47cfeb] hover:text-black p-2.5 sm:p-3 rounded-xl"
+        >
+          <Edit className="w-5 h-5 sm:w-6 sm:h-6" />
         </Button>
       </DialogTrigger>
 
-      <DialogContent
-        className="
-        text-white border-gray-800 w-[95vw] max-w-[95vw] sm:max-w-lg md:max-w-2xl
-        p-4 sm:p-6 max-h-[85vh] overflow-y-auto space-y-6"
-      >
+      {/* Modal */}
+      <DialogContent className="text-white border-gray-800 w-[95vw] max-w-[95vw] sm:max-w-lg md:max-w-2xl p-4 sm:p-6 overflow-y-auto space-y-6">
         <DialogHeader className="pb-0">
           <DialogTitle className="text-base sm:text-lg font-semibold">
-            Create New Project
+            Edit Project
           </DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {/* Thumbnail Area — NEW Replacement */}
+          <form className="space-y-6">
+            {/* Thumbnail */}
             <div className="flex flex-col sm:flex-row gap-4 items-start">
               <div className="w-28 h-28 bg-gray-800 rounded-lg overflow-hidden">
                 <Image
-                  src={preview || "/images/user.png"}
-                  alt="thumbnail"
+                  src={thumbnailPreview || "/images/user.png"}
                   width={120}
                   height={120}
-                  className="object-cover w-full h-full opacity-80"
+                  alt="thumbnail"
+                  className="object-cover opacity-80"
                 />
               </div>
 
@@ -99,15 +84,10 @@ const AddProjectModal = () => {
                       <Input
                         type="file"
                         accept="image/*"
-                        ref={fileRef}
+                        onChange={(e) =>
+                          field.onChange(e.target.files?.[0] || null)
+                        }
                         className="border-gray-800 file:text-white"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0] || null;
-                          field.onChange(file);
-                          if (file) {
-                            setPreview(URL.createObjectURL(file));
-                          }
-                        }}
                       />
                     </FormControl>
                     <FormMessage />
@@ -116,7 +96,7 @@ const AddProjectModal = () => {
               />
             </div>
 
-            {/* Project Title */}
+            {/* Title */}
             <FormField
               control={form.control}
               name="title"
@@ -145,7 +125,7 @@ const AddProjectModal = () => {
                   <FormControl>
                     <Textarea
                       {...field}
-                      placeholder="Project description"
+                      placeholder="Describe the project"
                       className="min-h-28 border-gray-800"
                     />
                   </FormControl>
@@ -173,49 +153,37 @@ const AddProjectModal = () => {
               )}
             />
 
-            {/* Featured */}
+            {/* Featured Checkbox */}
             <FormField
               control={form.control}
               name="featured"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="flex items-center gap-3">
                   <FormControl>
-                    <div className="flex items-center gap-2">
-                      <Checkbox
-                        id="featured"
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                      <div className="flex items-center gap-1">
-                        <Star className="h-4 w-4" />
-                        <Label
-                          htmlFor="featured"
-                          className="text-sm font-medium cursor-pointer"
-                        >
-                          Mark as Featured Project
-                        </Label>
-                      </div>
-                    </div>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
                   </FormControl>
+                  <FormLabel className="cursor-pointer">
+                    <Star size={16} /> Mark as Featured Project
+                  </FormLabel>
                 </FormItem>
               )}
             />
 
-            {/* Actions */}
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
-              <Button type="submit" className="w-full sm:w-4/5 btn-gradient">
-                Create Project
+            {/* Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 justify-end">
+              <Button type="submit" className="w-full btn-gradient">
+                Update Project
               </Button>
-
-              <DialogClose asChild>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  className="w-full sm:w-1/5 hover:bg-[#47cfeb]"
-                >
-                  Cancel
-                </Button>
-              </DialogClose>
+              <Button
+                type="button"
+                variant="ghost"
+                className="text-gray-400 hover:text-white"
+              >
+                Cancel
+              </Button>
             </div>
           </form>
         </Form>
@@ -224,4 +192,4 @@ const AddProjectModal = () => {
   );
 };
 
-export default AddProjectModal;
+export default EditProjectModal;

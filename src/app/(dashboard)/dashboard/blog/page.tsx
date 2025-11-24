@@ -1,27 +1,27 @@
-import ManageProjectTable from "@/components/modules/cards/project/ManageProjectTable";
-import AddProjectModal from "@/components/shared/modals/AddProjectModal";
+import ManageBlogTable from "@/components/modules/cards/blog/ManageBlogTable";
+import AddBlogPostModal from "@/components/shared/modals/AddBlogPostModal";
 
-const ProjectPage = () => {
+const ManageBlogPage = () => {
   return (
     <div className="space-y-8">
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
         <div>
           <h1 className="text-3xl font-bold leading-9 text-white pb-2">
-            Manage Projects
+            Manage Blog Posts
           </h1>
           <p className="text-base leading-5 text-ring">
-            Create and edit my portfolio projects
+            Write and publish articles
           </p>
         </div>
 
-        <AddProjectModal />
+        <AddBlogPostModal />
       </div>
 
       <div>
-        <ManageProjectTable />
+        <ManageBlogTable />
       </div>
     </div>
   );
 };
 
-export default ProjectPage;
+export default ManageBlogPage;
