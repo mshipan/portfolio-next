@@ -21,7 +21,7 @@ const NavMenu = ({ navLinks, ...props }: NavMenuProps) => {
             >
               <Link
                 href={link.to}
-                className="text-ring hover:text-white capitalize"
+                className="text-ring dark:hover:text-white capitalize font-semibold"
               >
                 {link.label}
               </Link>

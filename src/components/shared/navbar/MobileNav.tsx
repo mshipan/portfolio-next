@@ -22,7 +22,7 @@ const MobileNav = ({ navLinks, open }: MobileNavProps) => {
           <li key={link.to}>
             <Link
               href={link.to}
-              className="text-ring hover:text-white capitalize"
+              className="text-ring hover:text-white font-semibold capitalize"
             >
               {link.label}
             </Link>

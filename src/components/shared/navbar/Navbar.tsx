@@ -8,9 +8,11 @@ import MobileNav from "./MobileNav";
 import ModeToggler from "./ModeToggler";
 import ToggleButton from "./ToggleButton";
 import { useState } from "react";
+import { useTheme } from "next-themes";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const { theme } = useTheme();
 
   const navLinks: NavLink[] = [
     { to: "#about", label: "about" },
@@ -31,7 +33,11 @@ const Navbar = () => {
         <NavMenu className="hidden md:block" navLinks={navLinks} />
         <div className="flex items-center gap-2 md:hidden">
           <ModeToggler />
-          <ToggleButton setOpen={setOpen} open={open} />
+          <ToggleButton
+            setOpen={setOpen}
+            open={open}
+            color={theme === "light" ? "black" : "white"}
+          />
         </div>
       </div>
       <MobileNav navLinks={navLinks} open={open} />
