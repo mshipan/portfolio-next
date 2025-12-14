@@ -41,16 +41,17 @@ const TechnologySlider = () => {
         className="pb-8"
       >
         {technologies.map((tech, index) => (
-          <SwiperSlide key={index} className="!h-auto">
-            <div className="bg-[#11192c] border border-gray-800 rounded-lg flex flex-col items-center justify-center p-3 sm:p-4 hover:scale-105 transition-transform duration-200">
+          <SwiperSlide key={index} className="h-auto!">
+            <div className="bg-white dark:bg-[#11192c] border border-gray-300 dark:border-gray-800 rounded-lg flex flex-col items-center justify-center p-3 sm:p-4 transition-transform duration-200">
               <Image
                 src={tech.src}
                 alt={`${tech.name} logo`}
                 width={40}
                 height={40}
                 priority={index < 4}
+                className="hover:scale-105"
               />
-              <h5 className="text-[10px] sm:text-xs font-medium mt-2 capitalize text-center truncate">
+              <h5 className="text-[10px] sm:text-xs font-medium mt-2 capitalize text-center truncate text-black dark:text-white">
                 {tech.name}
               </h5>
             </div>

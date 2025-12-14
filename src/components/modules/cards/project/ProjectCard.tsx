@@ -11,8 +11,8 @@ interface ProjectCardProps {
 
 const ProjectCard = ({ card }: ProjectCardProps) => {
   return (
-    <div className="bg-[#11192c] rounded-2xl overflow-hidden flex flex-col border border-gray-800 hover:border-[#9767e4] transition-all ease-in-out duration-500">
-      <div className="relative overflow-hidden bg-cover bg-no-repeat w-full h-full aspect-[16/9]">
+    <div className="bg-[#fafafa] dark:bg-[#11192c] rounded-2xl overflow-hidden flex flex-col border border-gray-300 dark:border-gray-800 hover:border-[#9767e4] transition-all ease-in-out duration-500">
+      <div className="relative overflow-hidden bg-cover bg-no-repeat w-full h-full aspect-video">
         <Image
           src={card.img}
           alt={card.title}
@@ -25,7 +25,7 @@ const ProjectCard = ({ card }: ProjectCardProps) => {
 
       <div className="p-6 sm:p-7 flex flex-col gap-3 sm:gap-6 h-full">
         <Link href={`/project/${card.id}`}>
-          <h4 className="text-white hover:text-[#9767e4] text-lg sm:text-xl leading-7 font-bold">
+          <h4 className="text-black dark:text-white hover:text-[#9767e4] text-lg sm:text-xl leading-7 font-bold">
             {card.title}
           </h4>
         </Link>
@@ -48,7 +48,7 @@ const ProjectCard = ({ card }: ProjectCardProps) => {
             <Github className="w-4 h-4" />
             <span>Code</span>
           </Button>
-          <Button className="flex items-center justify-center gap-2 w-1/2 text-sm font-medium bg-gradient-to-r from-[#9767e4] to-[#47cfeb] cursor-pointer">
+          <Button className="flex items-center justify-center gap-2 w-1/2 text-sm font-medium bg-linear-to-r from-[#9767e4] to-[#47cfeb] cursor-pointer">
             <ExternalLink className="w-4 h-4" />
             <span>Demo</span>
           </Button>

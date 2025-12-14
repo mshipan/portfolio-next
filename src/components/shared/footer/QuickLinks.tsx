@@ -19,7 +19,7 @@ const QuickLinks = ({ navLinks, ...props }: NavMenuProps) => {
             >
               <Link
                 href={link.to}
-                className="text-ring hover:text-white capitalize"
+                className="text-ring hover:text-[#9767e4] dark:hover:text-white capitalize"
               >
                 {link.label}
               </Link>

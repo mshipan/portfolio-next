@@ -13,10 +13,22 @@ import { useForm } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
 import { Send } from "lucide-react";
 
-const GetInTouchForm = () => {
-  const form = useForm();
+interface FormField {
+  name: string;
+  email: string;
+  message: string;
+}
 
-  const onSubmit = async (data) => {
+const GetInTouchForm = () => {
+  const form = useForm<FormField>({
+    defaultValues: {
+      name: "",
+      email: "",
+      message: "",
+    },
+  });
+
+  const onSubmit = async (data: FormField) => {
     console.log(data);
   };
 
@@ -25,9 +37,11 @@ const GetInTouchForm = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="h-full flex flex-col bg-[#11192c] p-8 rounded-xl border border-gray-700 space-y-8"
+          className="h-full flex flex-col bg-[#fafafa] dark:bg-[#11192c] p-8 rounded-xl border border-gray-300 dark:border-gray-700 space-y-8"
         >
-          <h1 className="text-2xl leading-8 font-bold">Send a Message</h1>
+          <h1 className="text-2xl leading-8 font-bold text-black dark:text-white">
+            Send a Message
+          </h1>
 
           <div className="flex flex-col gap-5 justify-center">
             <FormField
@@ -40,7 +54,7 @@ const GetInTouchForm = () => {
                       type="text"
                       placeholder="Your Name"
                       {...field}
-                      className="py-5 border border-gray-700"
+                      className="py-5 border border-gray-300 dark:border-gray-700"
                     />
                   </FormControl>
                   <FormMessage />
@@ -58,7 +72,7 @@ const GetInTouchForm = () => {
                       type="email"
                       placeholder="Your Email"
                       {...field}
-                      className="py-5 border border-gray-700"
+                      className="py-5 border border-gray-300 dark:border-gray-700"
                     />
                   </FormControl>
                   <FormMessage />
@@ -76,7 +90,7 @@ const GetInTouchForm = () => {
                       rows={12}
                       placeholder="Your Message"
                       {...field}
-                      className="min-h-36 py-5 border border-gray-700"
+                      className="min-h-36 py-5 border border-gray-300 dark:border-gray-700"
                     />
                   </FormControl>
                   <FormMessage />
@@ -86,7 +100,7 @@ const GetInTouchForm = () => {
 
             <Button
               type="submit"
-              className="flex items-center justify-center gap-3 bg-gradient-to-r from-[#9767e4] to-[#47cfeb] cursor-pointer w-full mt-3"
+              className="flex items-center justify-center gap-3 bg-linear-to-r from-[#9767e4] to-[#47cfeb] cursor-pointer w-full mt-3"
             >
               <Send />
               Send Message

@@ -71,22 +71,22 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
     <Sidebar
       collapsible="icon"
       {...props}
-      className="text-white border-gray-800 dark:border-gray-800"
+      className="text-white border-gray-300 dark:border-gray-800 shadow-lg"
     >
-      <SidebarContent className="bg-background border-b border-b-gray-800 dark:border-b-gray-800">
+      <SidebarContent className="bg-background border-b border-b-gray-300 dark:border-b-gray-800">
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter className="bg-background">
         <div>
           <div className="flex flex-col items-start gap-2">
             <Link href="/" className="w-full">
-              <Button className="flex items-center justify-start gap-1 w-full bg-transparent hover:bg-[#2b3b5580] cursor-pointer">
+              <Button className="flex items-center justify-start gap-1 w-full bg-transparent hover:bg-gray-100 dark:hover:bg-[#2b3b5580] cursor-pointer text-black dark:text-white">
                 <House />
                 <p>View Site</p>
               </Button>
             </Link>
 
-            <Button className="flex items-center justify-start gap-1 w-full bg-transparent hover:bg-red-500/20 hover:text-red-300 cursor-pointer">
+            <Button className="flex items-center justify-start gap-1 w-full bg-transparent hover:bg-red-500/20 text-black dark:text-white hover:text-red-500 dark:hover:text-red-500 cursor-pointer">
               <LogOut />
               <p>Logout</p>
             </Button>

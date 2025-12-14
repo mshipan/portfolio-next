@@ -3,6 +3,39 @@ import { ChevronsLeftRight, Rocket, Users } from "lucide-react";
 import Image from "next/image";
 
 const AboutMe = () => {
+  const aboutMeData = [
+    {
+      icon: ChevronsLeftRight,
+      title: "clean code",
+      desc: "Writing maintainable, scalable code following best practices",
+    },
+    {
+      icon: Rocket,
+      title: "performance",
+      desc: "Optimizing applications for speed and efficiency",
+    },
+    {
+      icon: Users,
+      title: "user-centric",
+      desc: "Creating intuitive experiences that users love",
+    },
+    {
+      icon: ChevronsLeftRight,
+      title: "responsive design",
+      desc: "Building seamless experiences across all devices",
+    },
+    {
+      icon: Rocket,
+      title: "modern technologies",
+      desc: "Leveraging cutting-edge tools and frameworks",
+    },
+    {
+      icon: Users,
+      title: "collaboration",
+      desc: "Working effectively in agile team environments",
+    },
+  ];
+
   return (
     <section id="about" className="pb-8 sm:py-20 min-h-[60svh]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-16 flex flex-col items-center justify-center gap-6">
@@ -24,71 +57,23 @@ const AboutMe = () => {
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-6 sm:mt-8">
-          <div className="bg-[#11192c] border border-gray-800 rounded-md p-5 sm:p-8 flex flex-col items-start gap-3">
-            <ChevronsLeftRight
-              size={40}
-              className="text-[#9767e4] mb-1 sm:size-12"
-            />
-            <h3 className="capitalize text-lg sm:text-xl font-bold leading-7">
-              clean code
-            </h3>
-            <p className="text-sm sm:text-base font-normal leading-6 text-ring">
-              Writing maintainable, scalable code following best practices
-            </p>
-          </div>
-
-          <div className="bg-[#11192c] border border-gray-800 rounded-md p-5 sm:p-8 flex flex-col items-start gap-3">
-            <Rocket size={40} className="text-[#9767e4] mb-1 sm:size-12" />
-            <h3 className="capitalize text-lg sm:text-xl font-bold leading-7">
-              performance
-            </h3>
-            <p className="text-sm sm:text-base font-normal leading-6 text-ring">
-              Optimizing applications for speed and efficiency
-            </p>
-          </div>
-
-          <div className="bg-[#11192c] border border-gray-800 rounded-md p-5 sm:p-8 flex flex-col items-start gap-3">
-            <Users size={40} className="text-[#9767e4] mb-1 sm:size-12" />
-            <h3 className="capitalize text-lg sm:text-xl font-bold leading-7">
-              user-centric
-            </h3>
-            <p className="text-sm sm:text-base font-normal leading-6 text-ring">
-              Creating intuitive experiences that users love
-            </p>
-          </div>
-
-          <div className="bg-[#11192c] border border-gray-800 rounded-md p-5 sm:p-8 flex flex-col items-start gap-3">
-            <ChevronsLeftRight
-              size={40}
-              className="text-[#9767e4] mb-1 sm:size-12"
-            />
-            <h3 className="capitalize text-lg sm:text-xl font-bold leading-7">
-              responsive design
-            </h3>
-            <p className="text-sm sm:text-base font-normal leading-6 text-ring">
-              Building seamless experiences across all devices
-            </p>
-          </div>
-
-          <div className="bg-[#11192c] border border-gray-800 rounded-md p-5 sm:p-8 flex flex-col items-start gap-3">
-            <Rocket size={40} className="text-[#9767e4] mb-1 sm:size-12" />
-            <h3 className="capitalize text-lg sm:text-xl font-bold leading-7">
-              modern technologies
-            </h3>
-            <p className="text-sm sm:text-base font-normal leading-6 text-ring">
-              Leveraging cutting-edge tools and frameworks
-            </p>
-          </div>
-
-          <div className="bg-[#11192c] border border-gray-800 rounded-md p-5 sm:p-8 flex flex-col items-start gap-3">
-            <Users size={40} className="text-[#9767e4] mb-1 sm:size-12" />
-            <h3 className="capitalize text-lg sm:text-xl font-bold leading-7">
-              collaboration
-            </h3>
-            <p className="text-sm sm:text-base font-normal leading-6 text-ring">
-              Working effectively in agile team environments
-            </p>
-          </div>
+          {aboutMeData?.map((about, i) => (
+            <div
+              key={i}
+              className="bg-white dark:bg-[#11192c] border border-gray-300 dark:border-gray-800 rounded-md p-5 sm:p-8 flex flex-col items-start gap-3 hover:border-[#9767e4] dark:hover:border-[#9767e4] transition-shadow duration-300 hover:shadow-[0_0_45px_rgba(151,103,228,0.5)]"
+            >
+              <about.icon
+                size={40}
+                className="text-[#9767e4] mb-1 sm:size-12"
+              />
+              <h3 className="capitalize text-lg sm:text-xl font-bold leading-7 text-black dark:text-white">
+                {about.title}
+              </h3>
+              <p className="text-sm sm:text-base font-normal leading-6 text-ring">
+                {about.desc}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

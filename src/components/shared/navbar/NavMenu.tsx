@@ -17,7 +17,7 @@ const NavMenu = ({ navLinks, ...props }: NavMenuProps) => {
           <NavigationMenuItem key={link.to}>
             <NavigationMenuLink
               asChild
-              className="hover:bg-transparent focus:outline-none focus:bg-transparent focus:text-white"
+              className="hover:bg-transparent focus:outline-none focus:bg-transparent focus:text-black dark:focus:text-white"
             >
               <Link
                 href={link.to}

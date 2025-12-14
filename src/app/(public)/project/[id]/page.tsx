@@ -27,7 +27,7 @@ const SingleProjectPage = () => {
       <div className="flex flex-col gap-4 sm:gap-6">
         <BackLink targetId="projects" label="back to projects" />
 
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight text-black dark:text-white">
           E-Commerce Platform
         </h1>
 
@@ -48,13 +48,13 @@ const SingleProjectPage = () => {
         </div>
 
         <div className="flex flex-wrap gap-3 sm:gap-4">
-          <Button className="flex-1 sm:flex-none sm:w-auto flex items-center justify-center gap-2 text-sm font-medium hover:bg-[#47cfeb] cursor-pointer">
+          <Button className="flex-1 sm:flex-none sm:w-auto flex items-center justify-center gap-2 text-sm font-medium bg-linear-to-r from-[#9767e4] to-[#47cfeb] cursor-pointer text-white">
             <Github className="w-4 h-4" />
-            <span>Code</span>
+            <span>View Code</span>
           </Button>
-          <Button className="flex-1 sm:flex-none sm:w-auto flex items-center justify-center gap-2 text-sm font-medium bg-gradient-to-r from-[#9767e4] to-[#47cfeb] cursor-pointer">
+          <Button className="flex-1 sm:flex-none sm:w-auto flex items-center justify-center gap-2 text-sm font-medium bg-white dark:bg-black hover:bg-[#47cfeb] dark:hover:bg-[#47cfeb] cursor-pointer text-black dark:text-white border border-gray-300 dark:border-gray-800">
             <ExternalLink className="w-4 h-4" />
-            <span>Demo</span>
+            <span>Live Demo</span>
           </Button>
         </div>
       </div>
@@ -71,7 +71,7 @@ const SingleProjectPage = () => {
       </div>
 
       <section className="flex flex-col gap-3 sm:gap-4">
-        <h2 className="text-2xl sm:text-3xl font-bold leading-tight">
+        <h2 className="text-2xl sm:text-3xl font-bold leading-tight text-black dark:text-white">
           About This Project
         </h2>
         <p className="text-sm sm:text-base leading-relaxed text-ring">
@@ -87,14 +87,14 @@ const SingleProjectPage = () => {
       </section>
 
       <section className="flex flex-col gap-4 sm:gap-5">
-        <h2 className="text-2xl sm:text-3xl font-bold leading-tight">
+        <h2 className="text-2xl sm:text-3xl font-bold leading-tight text-black dark:text-white">
           Key Features
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           {[...Array(8)].map((_, i) => (
             <div
               key={i}
-              className="bg-[#11192c] flex items-center gap-3 text-ring p-4 rounded-xl border border-gray-800"
+              className="bg-[#fcfcfc] dark:bg-[#11192c] flex items-center gap-3 text-ring p-4 rounded-xl border border-gray-300 dark:border-gray-800"
             >
               <Check className="text-[#9767e4]" />
               <p className="text-sm sm:text-base leading-6">
@@ -105,10 +105,10 @@ const SingleProjectPage = () => {
         </div>
       </section>
 
-      <hr className="border-gray-800" />
+      <hr className="border-gray-300 dark:border-gray-800" />
 
       <section className="flex flex-col items-start gap-3 sm:gap-4">
-        <h2 className="text-2xl sm:text-3xl font-bold leading-tight">
+        <h2 className="text-2xl sm:text-3xl font-bold leading-tight text-black dark:text-white">
           Share this project
         </h2>
 
@@ -122,7 +122,7 @@ const SingleProjectPage = () => {
             <button
               key={idx}
               aria-label={label}
-              className="border border-gray-700 p-2 rounded-lg cursor-pointer hover:bg-[#47cfeb] hover:text-black transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#47cfeb]"
+              className="border border-gray-300 dark:border-gray-700 p-2 rounded-lg cursor-pointer hover:bg-[#47cfeb] text-black dark:text-white hover:text-white dark:hover:text-black transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#47cfeb]"
             >
               <Icon className="w-5 h-5" />
             </button>
@@ -131,7 +131,7 @@ const SingleProjectPage = () => {
       </section>
 
       <section className="flex flex-col gap-4 sm:gap-5">
-        <h2 className="text-2xl sm:text-3xl font-bold capitalize leading-tight">
+        <h2 className="text-2xl sm:text-3xl font-bold capitalize leading-tight text-black dark:text-white">
           Recent projects
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -142,7 +142,7 @@ const SingleProjectPage = () => {
       </section>
 
       <section className="flex flex-col gap-4 sm:gap-5">
-        <h2 className="text-2xl sm:text-3xl font-bold capitalize leading-tight">
+        <h2 className="text-2xl sm:text-3xl font-bold capitalize leading-tight text-black dark:text-white">
           Featured projects
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

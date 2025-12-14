@@ -36,7 +36,7 @@ const Navbar = () => {
           <ToggleButton
             setOpen={setOpen}
             open={open}
-            color={theme === "light" ? "black" : "white"}
+            color={theme === "light" ? "gray" : "white"}
           />
         </div>
       </div>

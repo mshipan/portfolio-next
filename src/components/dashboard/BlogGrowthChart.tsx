@@ -54,10 +54,10 @@ const chartConfig = {
 
 export function BlogGrowthChart() {
   return (
-    <Card className="w-full bg-[#0B111E] border-gray-800 hover:border-[#9767E4] transition-all duration-500 ease-out">
+    <Card className="w-full bg-[#fdfdfd] dark:bg-[#0B111E] border-gray-300 dark:border-gray-800 hover:border-[#9767E4] transition-all duration-500 ease-out">
       <CardHeader>
         <CardTitle className="font-inter text-lg font-semibold leading-7 text-white">
-          <span className="flex items-center gap-2">
+          <span className="flex items-center gap-2 text-black dark:text-white">
             <TrendingUp className="text-[#9767e4]" />
             Blog Growth Trends
           </span>
@@ -91,7 +91,10 @@ export function BlogGrowthChart() {
             {/* Y Axis (left line) — make solid and high opacity */}
             <YAxis
               tickLine={false}
-              axisLine={{ stroke: "rgba(255,255,255,0.8)", strokeWidth: 1.5 }}
+              axisLine={{
+                stroke: "rgba(255,255,255,0.8)",
+                strokeWidth: 1.5,
+              }}
               tick={{ fill: "rgba(255,255,255,0.6)", fontSize: 12 }}
               domain={[0, "auto"]}
             />

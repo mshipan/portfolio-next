@@ -34,7 +34,7 @@ const Banner = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 min-h-svh">
       <div className="relative flex flex-col items-center justify-center gap-8 min-h-[calc(100vh-128px)]">
-        <h4 className="capitalize text-xl leading-7 font-normal text-black dark:text-white">
+        <h4 className="capitalize text-xl leading-7 font-normal text-[#6b7280] dark:text-white">
           hi, i&apos;m{" "}
           <span className="text-site-gradient font-semibold">
             shipan mallik
@@ -56,7 +56,7 @@ const Banner = () => {
           </AnimatePresence>
         </div>
 
-        <p className="text-xl leading-7 font-normal text-black dark:text-ring max-w-2xl text-center">
+        <p className="text-xl leading-7 font-normal text-[#6b7280] dark:text-white max-w-2xl text-center">
           Crafting beautiful, performant, and scalable web applications with
           modern technologies. Passionate about clean code and exceptional user
           experiences.
@@ -76,7 +76,7 @@ const Banner = () => {
           {connectLinks?.map((link) => (
             <div
               key={link.path}
-              className="rounded-full flex items-center justify-center cursor-pointer text-black dark:text-white hover:text-[#9767e4] transition-all duration-300"
+              className="rounded-full flex items-center justify-center cursor-pointer text-[#6b7280] dark:text-white hover:text-[#9767e4] transition-all duration-300"
             >
               <Link href={link.path}>
                 <link.icon className="text-2xl" />
@@ -97,7 +97,7 @@ const Banner = () => {
           }}
           className="absolute bottom-0"
         >
-          <Mouse className="w-10 h-14 text-black dark:text-ring" />
+          <Mouse className="w-10 h-14 text-[#6b7280] dark:text-white" />
         </motion.div>
       </div>
     </div>

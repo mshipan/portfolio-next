@@ -191,7 +191,7 @@ const SingleBlogPage = () => {
           React
         </span>
 
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight text-black dark:text-white">
           Building Scalable React Applications
         </h1>
 
@@ -202,7 +202,7 @@ const SingleBlogPage = () => {
 
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-start gap-2 sm:gap-4 text-ring">
           {/* Author */}
-          <h5 className="text-sm sm:text-base font-semibold text-white whitespace-nowrap">
+          <h5 className="text-sm sm:text-base font-semibold text-black dark:text-white whitespace-nowrap">
             By Shipan Mallik
           </h5>
 
@@ -258,10 +258,10 @@ const SingleBlogPage = () => {
         significantly.
       </p>
 
-      <hr className="border-gray-800" />
+      <hr className="border-gray-300 dark:border-gray-800" />
 
       <section className="flex flex-col items-start gap-3 sm:gap-4">
-        <h2 className="text-2xl sm:text-3xl font-bold leading-tight">
+        <h2 className="text-2xl sm:text-3xl font-bold leading-tight text-black dark:text-white">
           Share this post
         </h2>
 
@@ -275,7 +275,7 @@ const SingleBlogPage = () => {
             <button
               key={idx}
               aria-label={label}
-              className="border border-gray-700 p-2 rounded-lg cursor-pointer hover:bg-[#47cfeb] hover:text-black transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#47cfeb]"
+              className="border border-gray-300 dark:border-gray-700 p-2 rounded-lg cursor-pointer hover:bg-[#47cfeb] text-black dark:text-white hover:text-white dark:hover:text-black transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#47cfeb]"
             >
               <Icon className="w-5 h-5" />
             </button>
@@ -284,7 +284,7 @@ const SingleBlogPage = () => {
       </section>
 
       <section className="flex flex-col gap-4 sm:gap-5">
-        <h2 className="text-2xl sm:text-3xl font-bold capitalize leading-tight">
+        <h2 className="text-2xl sm:text-3xl font-bold capitalize leading-tight text-black dark:text-white">
           Recent posts
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
