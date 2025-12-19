@@ -58,19 +58,22 @@ const LatestProjectsTable = () => {
         if (row.status === "completed")
           return {
             label: "Done",
-            color: "bg-green-600",
+            color:
+              "border border-green-600 text-green-600! dark:text-white! bg-white dark:bg-green-600",
             variant: "default",
           };
         if (row.status === "ongoing")
           return {
             label: "Live",
-            color: "bg-purple-600",
+            color:
+              "border border-purple-600 text-purple-600! dark:text-white! bg-white dark:bg-purple-600",
             variant: "default",
           };
         if (row.status === "pending")
           return {
             label: "Development",
-            color: "bg-gray-800",
+            color:
+              "border border-gray-600 text-gray-600! dark:text-white! bg-white dark:bg-gray-600",
             variant: "destructive",
           };
         return null;

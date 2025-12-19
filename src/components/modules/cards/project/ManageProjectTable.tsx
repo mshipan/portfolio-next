@@ -26,6 +26,48 @@ const ManageProjectTable = () => {
       featured: false,
       status: "published",
     },
+    {
+      thumbnail: "/images/user.png",
+      title: "Social Media Dashboard",
+      techStack: ["Next.js", "TypeScript", "+1"],
+      featured: false,
+      status: "published",
+    },
+    {
+      thumbnail: "/images/user.png",
+      title: "Social Media Dashboard",
+      techStack: ["Next.js", "TypeScript", "+1"],
+      featured: false,
+      status: "published",
+    },
+    {
+      thumbnail: "/images/user.png",
+      title: "Social Media Dashboard",
+      techStack: ["Next.js", "TypeScript", "+1"],
+      featured: false,
+      status: "published",
+    },
+    {
+      thumbnail: "/images/user.png",
+      title: "Social Media Dashboard",
+      techStack: ["Next.js", "TypeScript", "+1"],
+      featured: false,
+      status: "published",
+    },
+    {
+      thumbnail: "/images/user.png",
+      title: "Social Media Dashboard",
+      techStack: ["Next.js", "TypeScript", "+1"],
+      featured: false,
+      status: "published",
+    },
+    {
+      thumbnail: "/images/user.png",
+      title: "Social Media Dashboard",
+      techStack: ["Next.js", "TypeScript", "+1"],
+      featured: false,
+      status: "published",
+    },
   ];
 
   return (
@@ -58,7 +100,10 @@ const ManageProjectTable = () => {
           render: (row) => (
             <div className="flex gap-2">
               {row.techStack.map((item, i) => (
-                <Badge key={i} className="bg-[#29A3FE] text-black">
+                <Badge
+                  key={i}
+                  className="bg-white dark:bg-[#29A3FE] border-[#29A3FE] text-[#29A3FE] dark:text-white"
+                >
                   {item}
                 </Badge>
               ))}
@@ -111,7 +156,8 @@ const ManageProjectTable = () => {
         if (row.status === "published")
           return {
             label: "Published",
-            color: "bg-purple-600",
+            color:
+              "bg-white dark:bg-purple-600 text-purple-600! dark:text-white! border-purple-600",
             variant: "default",
           };
 

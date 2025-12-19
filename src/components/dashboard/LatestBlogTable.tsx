@@ -51,14 +51,16 @@ const LatestBlogTable = () => {
         if (row.status === "published")
           return {
             label: "Published",
-            color: "bg-purple-600",
+            color:
+              "border border-purple-600 text-purple-600! dark:text-white! bg-white dark:bg-purple-600",
             variant: "default",
             icon: ClockCheck,
           };
         if (row.status === "draft")
           return {
             label: "Draft",
-            color: "bg-gray-800",
+            color:
+              "border border-gray-600 text-gray-600! dark:text-white! bg-white dark:bg-gray-600",
             variant: "destructive",
             icon: Clock10,
           };

@@ -4,6 +4,7 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -53,7 +54,7 @@ const EditProjectModal = ({ project }: { project: any }) => {
       </DialogTrigger>
 
       {/* Modal */}
-      <DialogContent className="text-white border-gray-800 w-[95vw] max-w-[95vw] sm:max-w-lg md:max-w-2xl p-4 sm:p-6 overflow-y-auto space-y-6">
+      <DialogContent className="text-black dark:text-white border-gray-300 dark:border-gray-800 w-[95vw] max-w-[95vw] sm:max-w-lg md:max-w-2xl p-4 sm:p-6 overflow-y-auto space-y-6">
         <DialogHeader className="pb-0">
           <DialogTitle className="text-base sm:text-lg font-semibold">
             Edit Project
@@ -63,14 +64,13 @@ const EditProjectModal = ({ project }: { project: any }) => {
         <Form {...form}>
           <form className="space-y-6">
             {/* Thumbnail */}
-            <div className="flex flex-col sm:flex-row gap-4 items-start">
-              <div className="w-28 h-28 bg-gray-800 rounded-lg overflow-hidden">
+            <div className="flex flex-col sm:flex-row gap-4 items-center">
+              <div className="relative w-full md:w-36 h-24 bg-gray-300 dark:bg-gray-800 rounded-lg overflow-hidden">
                 <Image
                   src={thumbnailPreview || "/images/user.png"}
-                  width={120}
-                  height={120}
+                  fill
                   alt="thumbnail"
-                  className="object-cover opacity-80"
+                  className="object-contain opacity-80"
                 />
               </div>
 
@@ -87,7 +87,7 @@ const EditProjectModal = ({ project }: { project: any }) => {
                         onChange={(e) =>
                           field.onChange(e.target.files?.[0] || null)
                         }
-                        className="border-gray-800 file:text-white"
+                        className="border-gray-300 dark:border-gray-800 file:text-black dark:file:text-white file:mr-2"
                       />
                     </FormControl>
                     <FormMessage />
@@ -107,7 +107,7 @@ const EditProjectModal = ({ project }: { project: any }) => {
                     <Input
                       {...field}
                       placeholder="Project name"
-                      className="border-gray-800"
+                      className="border-gray-300 dark:border-gray-800"
                     />
                   </FormControl>
                   <FormMessage />
@@ -126,7 +126,7 @@ const EditProjectModal = ({ project }: { project: any }) => {
                     <Textarea
                       {...field}
                       placeholder="Describe the project"
-                      className="min-h-28 border-gray-800"
+                      className="min-h-28 border-gray-300 dark:border-gray-800"
                     />
                   </FormControl>
                   <FormMessage />
@@ -145,7 +145,7 @@ const EditProjectModal = ({ project }: { project: any }) => {
                     <Input
                       {...field}
                       placeholder="React, Node.js, PostgreSQL"
-                      className="border-gray-800"
+                      className="border-gray-300 dark:border-gray-800"
                     />
                   </FormControl>
                   <FormMessage />
@@ -173,17 +173,23 @@ const EditProjectModal = ({ project }: { project: any }) => {
             />
 
             {/* Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-end">
-              <Button type="submit" className="w-full btn-gradient">
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <Button
+                type="submit"
+                className="w-full sm:w-4/5 btn-gradient cursor-pointer"
+              >
                 Update Project
               </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                className="text-gray-400 hover:text-white"
-              >
-                Cancel
-              </Button>
+
+              <DialogClose asChild>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className="w-full sm:w-1/5 hover:bg-[#47cfeb]"
+                >
+                  Cancel
+                </Button>
+              </DialogClose>
             </div>
           </form>
         </Form>

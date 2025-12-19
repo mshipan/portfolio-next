@@ -42,10 +42,10 @@ const ExTimeLine = () => {
   };
 
   return (
-    <Card className="w-full bg-[#0B111E] border border-gray-800 text-white shadow-[0_0_25px_#000000] hover:shadow-[0_0_40px_#000000] transition-shadow duration-500 ease-out">
-      <CardHeader className="flex flex-col lg:flex-row items-center justify-between pb-2">
-        <div className="flex flex-col items-center lg:items-start">
-          <CardTitle className="font-inter text-lg font-semibold text-white">
+    <Card className="w-full bg-[#fdfdfd] dark:bg-[#0B111E] border border-gray-800 text-black dark:text-white shadow-[0_0_25px_#000000] hover:shadow-[0_0_40px_#000000] transition-shadow duration-500 ease-out">
+      <CardHeader className="flex flex-col lg:flex-row items-start justify-between pb-2">
+        <div className="flex flex-col items-center md:items-start">
+          <CardTitle className="font-inter text-lg font-semibold text-black dark:text-white">
             Experience Timeline
           </CardTitle>
         </div>
@@ -71,7 +71,7 @@ const ExTimeLine = () => {
                   className="
                     flex size-8 items-center justify-center
                     group-data-[orientation=vertical]/timeline:-left-7
-                    bg-[#2C2951] text-[#9767E4] rounded-full
+                    bg-[#d6c4f2] dark:bg-[#2C2951] text-[#9767E4] rounded-full
                     
                   "
                 >
@@ -110,8 +110,10 @@ const ExTimeLine = () => {
 
               {/* Content */}
               <TimelineContent className="pl-1 mt-1">
-                <p className="text-xs text-gray-400">{exp.period}</p>
-                <p className="text-sm text-gray-300 mt-2">{exp.description}</p>
+                <p className="text-xs text-foreground">{exp.period}</p>
+                <p className="text-sm text-muted-foreground mt-2">
+                  {exp.description}
+                </p>
               </TimelineContent>
             </TimelineItem>
           ))}

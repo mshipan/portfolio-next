@@ -13,7 +13,7 @@ const TechPill = ({ name, image, onEdit, onDelete }: TechPillProps) => {
   return (
     <div
       className="
-        group flex items-center justify-between gap-6 bg-[#0D121A] 
+        group flex items-center justify-between gap-6 bg-[#f7f1f1] dark:bg-[#0D121A] 
         p-3 rounded-full
         transition-all duration-300 ease-in-out
         border border-transparent hover:border-[#47cfeb] hover:shadow-md hover:shadow-[#47cfeb]
@@ -28,7 +28,9 @@ const TechPill = ({ name, image, onEdit, onDelete }: TechPillProps) => {
             className="absolute top-0 object-contain"
           />
         </div>
-        <h1 className="text-sm leading-5 font-medium text-white">{name}</h1>
+        <h1 className="text-sm leading-5 font-medium text-black dark:text-white">
+          {name}
+        </h1>
       </div>
 
       <div

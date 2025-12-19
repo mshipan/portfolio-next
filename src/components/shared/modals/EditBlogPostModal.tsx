@@ -91,12 +91,7 @@ const EditBlogPostModal = ({ post }: Props) => {
         </Button>
       </DialogTrigger>
 
-      <DialogContent
-        className="
-          text-white border-gray-800 w-[95vw] max-w-[95vw] sm:max-w-lg md:max-w-2xl
-          p-4 sm:p-6 max-h-[85vh] overflow-y-auto space-y-6
-        "
-      >
+      <DialogContent className="[&>button]:cursor-pointer text-black dark:text-white border-gray-800 w-[95vw] max-w-[95vw] sm:max-w-lg md:max-w-2xl p-4 sm:p-6 max-h-[85vh] overflow-y-auto space-y-6">
         <DialogHeader className="pb-0">
           <DialogTitle className="text-base sm:text-lg font-semibold">
             Edit Blog Post
@@ -106,14 +101,13 @@ const EditBlogPostModal = ({ post }: Props) => {
         <Form {...form}>
           <form className="space-y-6">
             {/* Cover Image + file input */}
-            <div className="flex flex-col sm:flex-row gap-4 items-start">
-              <div className="w-28 h-28 bg-gray-800 rounded-lg overflow-hidden">
+            <div className="flex flex-col sm:flex-row gap-4 items-center">
+              <div className="relative w-full md:w-36 h-24 bg-gray-300 dark:bg-gray-800 rounded-lg overflow-hidden">
                 <Image
                   src={preview || "/images/user.png"}
                   alt="cover"
-                  width={120}
-                  height={120}
-                  className="object-cover w-full h-full opacity-80"
+                  fill
+                  className="object-fill w-full h-full opacity-80"
                 />
               </div>
 
@@ -128,7 +122,7 @@ const EditBlogPostModal = ({ post }: Props) => {
                         type="file"
                         accept="image/*"
                         ref={fileRef}
-                        className="border-gray-800 file:text-white"
+                        className="border-gray-300 dark:border-gray-800 file:text-black dark:file:text-white file:mr-2"
                         onChange={(e) => {
                           const file = e.target.files?.[0] || null;
                           field.onChange(file);
@@ -158,7 +152,7 @@ const EditBlogPostModal = ({ post }: Props) => {
                       <Input
                         {...field}
                         placeholder="Post title"
-                        className="border-gray-800"
+                        className="border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -176,7 +170,7 @@ const EditBlogPostModal = ({ post }: Props) => {
                       <Input
                         {...field}
                         placeholder="post-url-slug"
-                        className="border-gray-800"
+                        className="border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -196,7 +190,7 @@ const EditBlogPostModal = ({ post }: Props) => {
                     <Input
                       {...field}
                       placeholder="e.g. React, TypeScript"
-                      className="border-gray-800"
+                      className="border-gray-300 dark:border-gray-800"
                     />
                   </FormControl>
                   <FormMessage />
@@ -215,7 +209,7 @@ const EditBlogPostModal = ({ post }: Props) => {
                     <Textarea
                       {...field}
                       placeholder="Brief description of the post"
-                      className="min-h-24 border-gray-800"
+                      className="min-h-24 border-gray-300 dark:border-gray-800"
                     />
                   </FormControl>
                   <FormMessage />
@@ -234,7 +228,7 @@ const EditBlogPostModal = ({ post }: Props) => {
                     <Textarea
                       {...field}
                       placeholder="Write your blog content here..."
-                      className="min-h-40 border-gray-800"
+                      className="min-h-40 border-gray-300 dark:border-gray-800"
                     />
                   </FormControl>
                   <FormMessage />
@@ -246,7 +240,7 @@ const EditBlogPostModal = ({ post }: Props) => {
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <Button
                 type="button"
-                className="w-full sm:flex-1 btn-gradient"
+                className="w-full sm:flex-1 btn-gradient cursor-pointer"
                 onClick={() => handleSubmitWithStatus(true)}
               >
                 Update &amp; Publish
@@ -255,7 +249,7 @@ const EditBlogPostModal = ({ post }: Props) => {
               <Button
                 type="button"
                 variant="outline"
-                className="w-full sm:flex-1 border-gray-700"
+                className="w-full sm:flex-1 border-gray-700 cursor-pointer"
                 onClick={() => handleSubmitWithStatus(false)}
               >
                 Update as Draft
@@ -265,7 +259,7 @@ const EditBlogPostModal = ({ post }: Props) => {
                 <Button
                   type="button"
                   variant="ghost"
-                  className="w-full sm:w-auto hover:bg-[#47cfeb]"
+                  className="w-full sm:w-auto hover:bg-[#47cfeb] cursor-pointer"
                 >
                   Cancel
                 </Button>

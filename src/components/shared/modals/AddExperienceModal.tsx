@@ -26,15 +26,15 @@ const AddExperienceModal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="btn-gradient flex items-center gap-2 px-4 py-2 text-sm font-medium">
+        <Button className="btn-gradient flex items-center gap-2 px-4 py-2 text-sm font-medium cursor-pointer">
           <Plus size={16} />
           Add Experience
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="text-white border-gray-800 w-[95vw] max-w-[95vw] sm:max-w-lg md:max-w-2xl p-4 sm:p-6 overflow-y-auto space-y-6">
+      <DialogContent className="[&>button]:cursor-pointer text-black dark:text-white border-gray-300 dark:border-gray-800 w-[95vw] max-w-[95vw] sm:max-w-lg md:max-w-2xl p-4 sm:p-6 overflow-y-auto space-y-6">
         <DialogHeader className="pb-0">
-          <DialogTitle className="text-base sm:text-lg font-semibold">
+          <DialogTitle className="text-base sm:text-lg font-semibold text-black dark:text-white">
             Add New Experience
           </DialogTitle>
         </DialogHeader>
@@ -47,12 +47,14 @@ const AddExperienceModal = () => {
                 name="jobTitle"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Job Title</FormLabel>
+                    <FormLabel className="text-black dark:text-white">
+                      Job Title
+                    </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         placeholder="Your Position"
-                        className="border-gray-800"
+                        className="border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -65,12 +67,14 @@ const AddExperienceModal = () => {
                 name="company"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Company</FormLabel>
+                    <FormLabel className="text-black dark:text-white">
+                      Company
+                    </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         placeholder="Company Name"
-                        className="border-gray-800"
+                        className="border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -83,12 +87,14 @@ const AddExperienceModal = () => {
                 name="startYear"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Start Date</FormLabel>
+                    <FormLabel className="text-black dark:text-white">
+                      Start Date
+                    </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         type="date"
-                        className="border-gray-800"
+                        className="border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -101,12 +107,14 @@ const AddExperienceModal = () => {
                 name="endYear"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>End Date</FormLabel>
+                    <FormLabel className="text-black dark:text-white">
+                      End Date
+                    </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         type="date"
-                        className="border-gray-800"
+                        className="border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -119,12 +127,14 @@ const AddExperienceModal = () => {
                 name="description"
                 render={({ field }) => (
                   <FormItem className="lg:col-span-2">
-                    <FormLabel>Description</FormLabel>
+                    <FormLabel className="text-black dark:text-white">
+                      Description
+                    </FormLabel>
                     <FormControl>
                       <Textarea
                         {...field}
                         placeholder="Job Description"
-                        className="min-h-28 border-gray-800"
+                        className="min-h-28 border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -134,7 +144,10 @@ const AddExperienceModal = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3">
-              <Button type="submit" className="w-full btn-gradient">
+              <Button
+                type="submit"
+                className="w-full btn-gradient cursor-pointer"
+              >
                 Add Experience
               </Button>
             </div>

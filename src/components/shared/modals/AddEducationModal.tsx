@@ -26,13 +26,13 @@ const AddEducationModal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="btn-gradient flex items-center gap-2 px-4 py-2 text-sm font-medium">
+        <Button className="btn-gradient flex items-center gap-2 px-4 py-2 text-sm font-medium cursor-pointer">
           <Plus size={16} />
           Add Education
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="text-white border-gray-800 w-[95vw] max-w-[95vw] sm:max-w-lg md:max-w-2xl p-4 sm:p-6 overflow-y-auto space-y-6">
+      <DialogContent className="text-black dark:text-white border-gray-300 dark:border-gray-800 w-[95vw] max-w-[95vw] sm:max-w-lg md:max-w-2xl p-4 sm:p-6 overflow-y-auto space-y-6">
         <DialogHeader className="pb-0">
           <DialogTitle className="text-base sm:text-lg font-semibold">
             Add New Education
@@ -52,7 +52,7 @@ const AddEducationModal = () => {
                       <Input
                         {...field}
                         placeholder="Your degree"
-                        className="border-gray-800"
+                        className="border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -70,7 +70,7 @@ const AddEducationModal = () => {
                       <Input
                         {...field}
                         placeholder="Institute Name"
-                        className="border-gray-800"
+                        className="border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -88,7 +88,7 @@ const AddEducationModal = () => {
                       <Input
                         {...field}
                         type="date"
-                        className="border-gray-800"
+                        className="border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -106,7 +106,7 @@ const AddEducationModal = () => {
                       <Input
                         {...field}
                         type="date"
-                        className="border-gray-800"
+                        className="border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -124,7 +124,7 @@ const AddEducationModal = () => {
                       <Textarea
                         {...field}
                         placeholder="Job Description"
-                        className="min-h-28 border-gray-800"
+                        className="min-h-28 border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -134,7 +134,10 @@ const AddEducationModal = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3">
-              <Button type="submit" className="w-full btn-gradient">
+              <Button
+                type="submit"
+                className="w-full btn-gradient cursor-pointer"
+              >
                 Add Education
               </Button>
             </div>

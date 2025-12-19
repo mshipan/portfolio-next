@@ -19,7 +19,7 @@ const BlogSummaryCard: FC<BlogSummaryCardProps> = ({ month, count }) => {
   }
 
   return (
-    <div className="p-4 border border-gray-800 hover:border-[#9767E4] bg-[#04070C] transition-all duration-500 ease-out rounded-2xl flex flex-col items-center justify-center gap-1">
+    <div className="p-4 border border-gray-300 dark:border-gray-800 hover:border-[#9767E4] bg-[#fafafa] dark:bg-[#04070C] transition-all duration-500 ease-out rounded-2xl flex flex-col items-center justify-center gap-1">
       <h1 className="text-2xl leading-8 font-bold text-[#9767E4]">{count}</h1>
       <p className="text-xs leading-4 font-normal text-ring">{monthLabel}</p>
     </div>

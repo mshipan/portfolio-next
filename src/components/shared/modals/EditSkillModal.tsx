@@ -30,24 +30,13 @@ const EditSkillModal = () => {
         <Button
           variant="ghost"
           //   onClick={onEdit}
-          className="
-            transition-all duration-300 ease-linear cursor-pointer
-            hover:bg-[#47cfeb] hover:text-black p-2.5 rounded-full
-          "
+          className="transition-all duration-300 ease-linear cursor-pointer hover:bg-[#47cfeb] hover:text-black p-2.5 rounded-full"
         >
           <Edit className="w-5 h-5" />
         </Button>
       </DialogTrigger>
 
-      <DialogContent
-        className="
-          text-white border-gray-800
-          
-          p-4 sm:p-6
-           overflow-y-auto
-          space-y-6
-        "
-      >
+      <DialogContent className="[&>button]:cursor-pointer text-black dark:text-white border-gray-300 dark:border-gray-800 p-4 sm:p-6 overflow-y-auto space-y-6">
         <DialogHeader className="pb-0">
           <DialogTitle className="text-base sm:text-lg font-semibold">
             Edit Skill
@@ -66,7 +55,7 @@ const EditSkillModal = () => {
                     <FormLabel>Skill Logo/Icon</FormLabel>
                     <div className="flex items-center gap-3">
                       {/* Preview box */}
-                      <div className="w-20 h-16 bg-white rounded flex items-center justify-center overflow-hidden relative">
+                      <div className="w-20 h-16 bg-[#f7f1f1] dark:bg-white rounded flex items-center justify-center overflow-hidden relative">
                         {field.value ? (
                           <Image
                             src={URL.createObjectURL(field.value)}
@@ -85,7 +74,7 @@ const EditSkillModal = () => {
                           type="file"
                           accept="image/*"
                           onChange={(e) => field.onChange(e.target.files?.[0])}
-                          className="border-gray-800 file:text-white file:mr-2"
+                          className="border-gray-300 dark:border-gray-800 file:text-black dark:file:text-white file:mr-2"
                         />
                       </FormControl>
                     </div>
@@ -104,7 +93,7 @@ const EditSkillModal = () => {
                       <Input
                         {...field}
                         placeholder="Skill Name"
-                        className="border-gray-800"
+                        className="border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -115,7 +104,10 @@ const EditSkillModal = () => {
 
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-3">
-              <Button type="submit" className="w-full btn-gradient">
+              <Button
+                type="submit"
+                className="w-full btn-gradient cursor-pointer"
+              >
                 Update Skill
               </Button>
             </div>

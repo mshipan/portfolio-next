@@ -17,11 +17,13 @@ const ErrorPage = ({
 
   return (
     <div className="grid min-h-screen place-content-center px-4 py-16 sm:px-6 lg:px-8 bg-background">
-      <div className="p-px mx-auto max-w-lg w-full rounded-3xl bg-gradient-to-r from-[#9767e4] via-[#9767e4]  to-[#47cfeb]">
+      <div className="p-px mx-auto max-w-lg w-full rounded-3xl bg-linear-to-r from-[#9767e4] via-[#9767e4]  to-[#47cfeb]">
         <div className="bg-background p-8 rounded-[calc(1.5rem-1px)] border border-border text-center shadow-md">
-          <h5 className="text-base font-bold text-site-gradient">Error !!!</h5>
+          <h5 className="text-lg md:text-xl font-bold text-site-gradient">
+            Error !!!
+          </h5>
 
-          <h1 className="mt-4 text-2xl font-semibold tracking-tight text-primary-foreground sm:text-3xl md:text-4xl lowercase">
+          <h1 className="mt-4 text-xl font-semibold tracking-tight text-black dark:text-white sm:text-3xl md:text-4xl capitalize">
             Something went wrong
           </h1>
 
@@ -30,7 +32,7 @@ const ErrorPage = ({
           </p>
 
           {error.digest && (
-            <p className="mt-2 text-xs text-gray-500">
+            <p className="mt-2 text-base text-gray-500">
               Error ID: <span className="font-mono">{error.digest}</span>
             </p>
           )}

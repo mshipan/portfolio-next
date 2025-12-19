@@ -38,10 +38,10 @@ const EducationCard = () => {
     console.log("Delete:", degree);
   };
   return (
-    <Card className="w-full bg-[#0B111E] border border-gray-800 text-white shadow-[0_0_25px_#000000] hover:shadow-[0_0_40px_#000000] transition-shadow duration-500 ease-out">
-      <CardHeader className="flex flex-col lg:flex-row justify-between pb-2">
+    <Card className="w-full bg-[#fdfdfd] dark:bg-[#0B111E] border border-gray-300 dark:border-gray-800 text-black dark:text-white shadow-[0_0_25px_#000000] hover:shadow-[0_0_40px_#000000] transition-shadow duration-500 ease-out">
+      <CardHeader className="flex flex-col md:flex-row justify-between gap-4 md:gap-0 pb-2">
         <div className="flex flex-col items-start">
-          <CardTitle className="font-inter text-lg font-semibold text-white">
+          <CardTitle className="font-inter text-lg font-semibold text-black dark:text-white">
             <h1 className="inline-flex gap-2 items-center">
               <GraduationCap /> Education
             </h1>

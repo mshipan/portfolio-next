@@ -18,10 +18,10 @@ const MonthlyBlogSummary = () => {
     { month: "Dec", count: 10 },
   ];
   return (
-    <Card className="w-full border-gray-800 bg-[#0B111E]">
+    <Card className="w-full bg-[#fdfdfd] dark:bg-[#0B111E] border-gray-300 dark:border-gray-800 hover:border-[#9767E4] transition-all duration-500 ease-out">
       <CardHeader>
         <CardTitle className="font-inter text-lg font-semibold leading-7 text-white">
-          <span className="flex items-center gap-2">
+          <span className="flex items-center gap-2 text-black dark:text-white">
             <Calendar className="text-[#9767e4]" />
             Monthly Blog Summary
           </span>

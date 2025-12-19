@@ -53,15 +53,15 @@ const SkillsCard = () => {
   const remainingCount = techs.length - visibleTechs.length;
 
   return (
-    <Card className="w-full bg-[#0B111E] border border-gray-800 text-white shadow-[0_0_25px_#000000] hover:shadow-[0_0_40px_#000000] transition-shadow duration-500 ease-out">
-      <CardHeader className="flex flex-col lg:flex-row justify-between pb-2">
+    <Card className="w-full bg-[#fdfdfd] dark:bg-[#0B111E] border border-gray-300 dark:border-gray-800 text-white shadow-[0_0_25px_#000000] hover:shadow-[0_0_40px_#000000] transition-shadow duration-500 ease-out">
+      <CardHeader className="flex flex-row justify-between pb-2">
         <div className="flex flex-col items-start">
-          <CardTitle className="font-inter text-lg font-semibold text-white">
+          <CardTitle className="font-inter text-lg font-semibold text-black dark:text-white">
             <h1 className="inline-flex gap-2 items-center">
               <Code /> Skills
             </h1>
           </CardTitle>
-          <CardDescription className="text-sm text-gray-400 text-center">
+          <CardDescription className="text-sm text-gray-400 text-left">
             My technical skills and expertise
           </CardDescription>
         </div>
@@ -84,7 +84,7 @@ const SkillsCard = () => {
             <div
               onClick={() => router.push("/dashboard/skills")}
               className="
-                flex items-center justify-center bg-[#0D121A] text-white 
+                flex items-center justify-center bg-[#f7f1f1] dark:bg-[#0D121A] text-black dark:text-white 
                 cursor-pointer rounded-full px-5 py-3 w-fit
                 hover:bg-[#47cfeb] border border-[#47cfeb] hover:text-black transition-all duration-300 whitespace-nowrap
               "

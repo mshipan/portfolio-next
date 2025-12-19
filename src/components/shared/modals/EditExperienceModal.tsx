@@ -35,7 +35,7 @@ const EditExperienceModal = () => {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="text-white border-gray-800 w-[95vw] max-w-[95vw] sm:max-w-lg md:max-w-2xl p-4 sm:p-6 overflow-y-auto space-y-6">
+      <DialogContent className="[&>button]:cursor-pointer text-black dark:text-white border-gray-800 w-[95vw] max-w-[95vw] sm:max-w-lg md:max-w-2xl p-4 sm:p-6 overflow-y-auto space-y-6">
         <DialogHeader className="pb-0">
           <DialogTitle className="text-base sm:text-lg font-semibold">
             Edit Experience
@@ -55,7 +55,7 @@ const EditExperienceModal = () => {
                       <Input
                         {...field}
                         placeholder="Your Position"
-                        className="border-gray-800"
+                        className="border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -73,7 +73,7 @@ const EditExperienceModal = () => {
                       <Input
                         {...field}
                         placeholder="Company Name"
-                        className="border-gray-800"
+                        className="border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -91,7 +91,7 @@ const EditExperienceModal = () => {
                       <Input
                         {...field}
                         type="date"
-                        className="border-gray-800"
+                        className="border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -109,7 +109,7 @@ const EditExperienceModal = () => {
                       <Input
                         {...field}
                         type="date"
-                        className="border-gray-800"
+                        className="border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -127,7 +127,7 @@ const EditExperienceModal = () => {
                       <Textarea
                         {...field}
                         placeholder="Job Description"
-                        className="min-h-28 border-gray-800"
+                        className="min-h-28 border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -137,7 +137,10 @@ const EditExperienceModal = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3">
-              <Button type="submit" className="w-full btn-gradient">
+              <Button
+                type="submit"
+                className="w-full btn-gradient cursor-pointer"
+              >
                 Update Experience
               </Button>
             </div>

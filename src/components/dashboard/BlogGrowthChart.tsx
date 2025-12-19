@@ -92,7 +92,7 @@ export function BlogGrowthChart() {
             <YAxis
               tickLine={false}
               axisLine={{
-                stroke: "rgba(255,255,255,0.8)",
+                stroke: "var(--foreground)",
                 strokeWidth: 1.5,
               }}
               tick={{ fill: "rgba(255,255,255,0.6)", fontSize: 12 }}
@@ -103,10 +103,16 @@ export function BlogGrowthChart() {
             <XAxis
               dataKey="month"
               tickLine={false}
-              axisLine={{ stroke: "rgba(255,255,255,0.8)", strokeWidth: 1.5 }}
+              axisLine={{
+                stroke: "var(--foreground)",
+                strokeWidth: 1.5,
+              }}
               tickMargin={8}
               tickFormatter={(value) => value.slice(0, 3)}
-              tick={{ fill: "rgba(255,255,255,0.6)", fontSize: 12 }}
+              tick={{
+                fill: "var(--muted-foreground)",
+                fontSize: 12,
+              }}
             />
 
             <ChartTooltip

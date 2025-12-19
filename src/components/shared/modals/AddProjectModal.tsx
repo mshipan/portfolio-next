@@ -58,17 +58,13 @@ const AddProjectModal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="btn-gradient flex items-center gap-2 px-4 py-2 text-sm font-medium">
+        <Button className="btn-gradient flex items-center gap-2 px-4 py-2 text-sm font-medium cursor-pointer">
           <Plus size={16} />
           New Project
         </Button>
       </DialogTrigger>
 
-      <DialogContent
-        className="
-        text-white border-gray-800 w-[95vw] max-w-[95vw] sm:max-w-lg md:max-w-2xl
-        p-4 sm:p-6 max-h-[85vh] overflow-y-auto space-y-6"
-      >
+      <DialogContent className="[&>button]:cursor-pointer text-black dark:text-white border-gray-300 dark:border-gray-800 w-[95vw] max-w-[95vw] sm:max-w-lg md:max-w-2xl p-4 sm:p-6 max-h-[85vh] overflow-y-auto space-y-6">
         <DialogHeader className="pb-0">
           <DialogTitle className="text-base sm:text-lg font-semibold">
             Create New Project
@@ -78,14 +74,13 @@ const AddProjectModal = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             {/* Thumbnail Area — NEW Replacement */}
-            <div className="flex flex-col sm:flex-row gap-4 items-start">
-              <div className="w-28 h-28 bg-gray-800 rounded-lg overflow-hidden">
+            <div className="flex flex-col sm:flex-row gap-4 md:items-center">
+              <div className="relative w-full md:w-36 h-24 bg-gray-300 dark:bg-gray-800 rounded-lg">
                 <Image
                   src={preview || "/images/user.png"}
                   alt="thumbnail"
-                  width={120}
-                  height={120}
-                  className="object-cover w-full h-full opacity-80"
+                  fill
+                  className="object-contain w-full h-full opacity-80"
                 />
               </div>
 
@@ -100,7 +95,7 @@ const AddProjectModal = () => {
                         type="file"
                         accept="image/*"
                         ref={fileRef}
-                        className="border-gray-800 file:text-white"
+                        className="border-gray-300 dark:border-gray-800 file:text-black dark:file:text-white file:mr-2"
                         onChange={(e) => {
                           const file = e.target.files?.[0] || null;
                           field.onChange(file);
@@ -127,7 +122,7 @@ const AddProjectModal = () => {
                     <Input
                       {...field}
                       placeholder="Project name"
-                      className="border-gray-800"
+                      className="border-gray-300 dark:border-gray-800"
                     />
                   </FormControl>
                   <FormMessage />
@@ -146,7 +141,7 @@ const AddProjectModal = () => {
                     <Textarea
                       {...field}
                       placeholder="Project description"
-                      className="min-h-28 border-gray-800"
+                      className="min-h-28 border-gray-300 dark:border-gray-800"
                     />
                   </FormControl>
                   <FormMessage />
@@ -165,7 +160,7 @@ const AddProjectModal = () => {
                     <Input
                       {...field}
                       placeholder="React, Node.js, PostgreSQL"
-                      className="border-gray-800"
+                      className="border-gray-300 dark:border-gray-800"
                     />
                   </FormControl>
                   <FormMessage />
@@ -203,7 +198,10 @@ const AddProjectModal = () => {
 
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
-              <Button type="submit" className="w-full sm:w-4/5 btn-gradient">
+              <Button
+                type="submit"
+                className="w-full sm:w-4/5 btn-gradient cursor-pointer"
+              >
                 Create Project
               </Button>
 

@@ -38,23 +38,15 @@ const ProfileEditModal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="btn-gradient flex items-center gap-2 px-4 py-2 text-sm font-medium">
+        <Button className="btn-gradient flex items-center gap-2 px-4 py-2 text-sm font-medium cursor-pointer">
           <SquarePen size={16} />
           Edit Info
         </Button>
       </DialogTrigger>
 
-      <DialogContent
-        className="
-          text-white border-gray-800
-          w-[95vw] max-w-[95vw] sm:max-w-lg md:max-w-2xl
-          p-4 sm:p-6
-          max-h-[85vh] overflow-y-auto
-          space-y-6
-        "
-      >
+      <DialogContent className="[&>button]:cursor-pointer [&>button]:text-foreground [&>button]:hover:text-primary [&>button]:transition-colors text-white border-gray-800 w-[95vw] max-w-[95vw] sm:max-w-lg md:max-w-2xl p-4 sm:p-6 max-h-[85vh] overflow-y-auto space-y-6">
         <DialogHeader className="pb-0">
-          <DialogTitle className="text-base sm:text-lg font-semibold">
+          <DialogTitle className="text-base sm:text-lg font-semibold text-black dark:text-white">
             Edit Profile Information
           </DialogTitle>
         </DialogHeader>
@@ -82,8 +74,8 @@ const ProfileEditModal = () => {
                   accept="image/*"
                   onChange={onChange}
                   className="
-                    w-full rounded-md border-gray-700 bg-transparent text-white
-                    file:text-white file:mr-4
+                    w-full rounded-md border-gray-300 dark:border-gray-700 bg-transparent text-black dark:text-white
+                    file:text-black dark:file:text-white file:mr-4
                   "
                 />
                 <Label
@@ -102,12 +94,14 @@ const ProfileEditModal = () => {
                 name="fullName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Full Name</FormLabel>
+                    <FormLabel className="text-black dark:text-white">
+                      Full Name
+                    </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         placeholder="Your Full Name"
-                        className="border-gray-800"
+                        className="border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -120,12 +114,14 @@ const ProfileEditModal = () => {
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Title</FormLabel>
+                    <FormLabel className="text-black dark:text-white">
+                      Title
+                    </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         placeholder="Title"
-                        className="border-gray-800"
+                        className="border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -138,12 +134,14 @@ const ProfileEditModal = () => {
                 name="bio"
                 render={({ field }) => (
                   <FormItem className="sm:col-span-2">
-                    <FormLabel>Bio</FormLabel>
+                    <FormLabel className="text-black dark:text-white">
+                      Bio
+                    </FormLabel>
                     <FormControl>
                       <Textarea
                         {...field}
                         placeholder="Your Bio"
-                        className="min-h-28 border-gray-800"
+                        className="min-h-28 border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -156,12 +154,14 @@ const ProfileEditModal = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel className="text-black dark:text-white">
+                      Email
+                    </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         placeholder="Your Email"
-                        className="border-gray-800"
+                        className="border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -174,12 +174,14 @@ const ProfileEditModal = () => {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Phone</FormLabel>
+                    <FormLabel className="text-black dark:text-white">
+                      Phone
+                    </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         placeholder="Your Phone Number"
-                        className="border-gray-800"
+                        className="border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -192,12 +194,14 @@ const ProfileEditModal = () => {
                 name="address"
                 render={({ field }) => (
                   <FormItem className="sm:col-span-2">
-                    <FormLabel>Address</FormLabel>
+                    <FormLabel className="text-black dark:text-white">
+                      Address
+                    </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         placeholder="Your Address"
-                        className="border-gray-800"
+                        className="border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />
@@ -208,14 +212,17 @@ const ProfileEditModal = () => {
 
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-3">
-              <Button type="submit" className="w-full sm:w-4/5 btn-gradient">
+              <Button
+                type="submit"
+                className="w-full sm:w-4/5 btn-gradient cursor-pointer"
+              >
                 Save Changes
               </Button>
               <DialogClose asChild>
                 <Button
                   type="button"
                   variant="ghost"
-                  className="w-full sm:w-1/5 hover:bg-[#47cfeb]"
+                  className="w-full sm:w-1/5 cursor-pointer text-black dark:text-white hover:bg-[#47cfeb]"
                 >
                   Cancel
                 </Button>

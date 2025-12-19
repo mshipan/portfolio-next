@@ -23,19 +23,19 @@ const ExperiencePill = ({
   onDelete,
 }: ExperiencePillProps) => {
   return (
-    <div className="group flex flex-col sm:flex-row sm:items-start sm:justify-between bg-[#090C11] p-4 sm:p-6 rounded-xl w-full transition-all duration-300 ease-in-out border border-transparent hover:border-[#9767E4]">
+    <div className="group flex flex-col sm:flex-row sm:items-start sm:justify-between bg-[#fdfdfd] dark:bg-[#090C11] p-4 sm:p-6 rounded-xl w-full transition-all duration-300 ease-in-out border border-gray-300 dark:border-gray-800 hover:border-[#9767E4]">
       <div className="flex-1">
-        <h1 className="text-base sm:text-lg leading-7 font-semibold text-white">
+        <h1 className="text-base sm:text-lg leading-7 font-semibold text-black dark:text-white">
           {title}
         </h1>
         <p className="text-sm sm:text-base leading-5 text-[#9767E4]">
           {company}
         </p>
-        <p className="text-xs sm:text-sm leading-4 text-ring inline-flex items-center gap-1">
+        <p className="text-xs sm:text-sm leading-4 text-foreground inline-flex items-center gap-1">
           {startDate} <MoveRight className="w-3" />
           {endDate ? endDate : "Present"}
         </p>
-        <p className="text-sm sm:text-base leading-6 text-ring mt-1">
+        <p className="text-sm sm:text-base leading-6 text-muted-foreground mt-1">
           {description}
         </p>
       </div>

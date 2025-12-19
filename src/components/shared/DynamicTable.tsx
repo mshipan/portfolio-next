@@ -78,9 +78,9 @@ export function DynamicTable<T>({
   };
 
   return (
-    <Card className="w-full bg-[#0B111E] border-gray-800 hover:border-[#9767E4] transition-all duration-500 ease-out">
+    <Card className="w-full bg-[#fdfdfd] dark:bg-[#0B111E] border-gray-300 dark:border-gray-800 hover:border-[#9767E4] transition-all duration-500 ease-out">
       <CardHeader>
-        <CardTitle className="font-inter text-lg font-semibold leading-7 text-white flex items-center gap-2">
+        <CardTitle className="font-inter text-lg font-semibold leading-7 text-black dark:text-white flex items-center gap-2">
           {Icon && <Icon className={iconColor || "text-[#9767e4]"} />}
 
           {title}
@@ -91,12 +91,12 @@ export function DynamicTable<T>({
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow className="hover:bg-gray-800 border-gray-800">
+              <TableRow className="hover:bg-gray-300 dark:hover:bg-gray-800 border-gray-300 dark:border-gray-800">
                 {columns.map((col) => (
                   <TableHead
                     key={String(col.key)}
                     onClick={() => col.sortable && handleSort(col.key)}
-                    className="text-ring select-none"
+                    className="text-foreground select-none"
                   >
                     <div className="flex items-center gap-1">
                       {col.label}
@@ -118,12 +118,12 @@ export function DynamicTable<T>({
                 return (
                   <TableRow
                     key={rowIndex}
-                    className="hover:bg-gray-800 border-gray-800"
+                    className="hover:bg-gray-300 dark:hover:bg-gray-800 border-gray-300 dark:border-gray-800"
                   >
                     {columns.map((col) => (
                       <TableCell
                         key={String(col.key)}
-                        className="text-white align-middle"
+                        className="text-muted-foreground align-middle"
                       >
                         {col.key === "status" && getRowBadge
                           ? (() => {
@@ -157,15 +157,16 @@ export function DynamicTable<T>({
         </div>
 
         <div className="flex justify-between items-center mt-4">
-          <p className="text-sm text-ring">
+          <p className="text-sm text-muted-foreground">
             Page {page} of {totalPages}
           </p>
-          <div className="flex gap-2 text-ring">
+          <div className="flex gap-2 text-foreground">
             <Button
               variant="outline"
               size="sm"
               disabled={page === 1}
               onClick={() => setPage((p) => Math.max(p - 1, 1))}
+              className="cursor-pointer"
             >
               Prev
             </Button>
@@ -174,6 +175,7 @@ export function DynamicTable<T>({
               size="sm"
               disabled={page === totalPages}
               onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
+              className="cursor-pointer"
             >
               Next
             </Button>

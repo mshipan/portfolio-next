@@ -21,11 +21,11 @@ const TimelineBox: FC<TimelineBoxProps> = ({
     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
       {/* Left side */}
       <div className="space-y-1">
-        <h1 className="text-base sm:text-lg font-semibold text-white leading-tight">
+        <h1 className="text-base sm:text-lg font-semibold text-black dark:text-white leading-tight">
           {title}
         </h1>
-        <p className="text-sm text-gray-400">{company}</p>
-        <p className="text-sm sm:text-base text-gray-300 font-medium inline-flex items-center gap-1">
+        <p className="text-sm text-muted-foreground">{company}</p>
+        <p className="text-sm sm:text-base text-foreground font-medium inline-flex items-center gap-1">
           {start} <MoveRight width={14} height={14} /> {end}
         </p>
       </div>
@@ -33,7 +33,7 @@ const TimelineBox: FC<TimelineBoxProps> = ({
       {/* Right side */}
       <Badge
         variant="outline"
-        className="self-start sm:self-auto text-white text-xs sm:text-sm font-medium flex flex-row items-center gap-1 whitespace-nowrap"
+        className="self-start sm:self-auto text-muted-foreground text-xs sm:text-sm font-medium flex flex-row items-center gap-1 whitespace-nowrap"
       >
         <Calendar size={16} /> <span>{duration}</span>
       </Badge>

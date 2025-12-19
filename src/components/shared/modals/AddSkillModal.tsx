@@ -27,21 +27,13 @@ const AddSkillModal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="btn-gradient flex items-center gap-2 px-4 py-2 text-sm font-medium">
+        <Button className="btn-gradient flex items-center gap-2 px-4 py-2 text-sm font-medium cursor-pointer">
           <Plus size={16} />
           Add Skill
         </Button>
       </DialogTrigger>
 
-      <DialogContent
-        className="
-          text-white border-gray-800
-          
-          p-4 sm:p-6
-           overflow-y-auto
-          space-y-6
-        "
-      >
+      <DialogContent className="[&>button]:cursor-pointer [&>button]:text-foreground [&>button]:hover:text-primary [&>button]:transition-colors text-black dark:text-white border-gray-300 dark:border-gray-800 p-4 sm:p-6 overflow-y-auto space-y-6">
         <DialogHeader className="pb-0">
           <DialogTitle className="text-base sm:text-lg font-semibold">
             Add New Skill
@@ -57,10 +49,12 @@ const AddSkillModal = () => {
                 name="photo"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Skill Logo/Icon</FormLabel>
+                    <FormLabel className="text-black dark:text-white">
+                      Skill Logo/Icon
+                    </FormLabel>
                     <div className="flex items-center gap-3">
                       {/* Preview box */}
-                      <div className="w-20 h-16 bg-white rounded flex items-center justify-center overflow-hidden relative">
+                      <div className="w-20 h-16 bg-[#f7f1f1] dark:bg-white rounded flex items-center justify-center overflow-hidden relative">
                         {field.value ? (
                           <Image
                             src={URL.createObjectURL(field.value)}
@@ -79,7 +73,7 @@ const AddSkillModal = () => {
                           type="file"
                           accept="image/*"
                           onChange={(e) => field.onChange(e.target.files?.[0])}
-                          className="border-gray-800 file:text-white file:mr-2"
+                          className="border-gray-300 dark:border-gray-800 file:text-black dark:file:text-white file:mr-2"
                         />
                       </FormControl>
                     </div>
@@ -93,12 +87,14 @@ const AddSkillModal = () => {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Skill Name</FormLabel>
+                    <FormLabel className="text-black dark:text-white">
+                      Skill Name
+                    </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         placeholder="Skill Name"
-                        className="border-gray-800"
+                        className="border-gray-300 dark:border-gray-800"
                       />
                     </FormControl>
                     <FormMessage />

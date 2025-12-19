@@ -13,7 +13,7 @@ const DashboardLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
     <SidebarProvider>
       <AppSidebar />
 
-      <SidebarInset className="relative flex flex-col w-full">
+      <SidebarInset className="relative flex flex-col w-full overflow-hidden">
         <header className="sticky top-0 z-30 flex h-16 shrink-0 items-center justify-between border-b border-gray-300 dark:border-gray-800 bg-background/80 backdrop-blur-sm px-4 pr-6 shadow-lg dark:shadow-none">
           <div className="flex items-center gap-2">
             <SidebarTrigger className="-ml-1 text-black hover:text-white dark:text-white hover:bg-[#47cfeb] cursor-pointer" />

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Eye, Trash2 } from "lucide-react";
+import { Clock10, ClockCheck, Eye, Trash2 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -17,7 +17,7 @@ const ManageBlogTable = () => {
   const posts: BlogRow[] = [
     {
       id: "1",
-      cover: "/images/user.png",
+      cover: "/images/blog1.jpeg",
       title: "Building Scalable React Applications",
       slug: "building-scalable-react-applications",
       category: "React",
@@ -35,7 +35,62 @@ const ManageBlogTable = () => {
       summary: "Deep dive into advanced TypeScript types and patterns",
       content: "Full blog content here...",
       date: "Nov 28, 2024",
-      status: "published",
+      status: "draft",
+    },
+    {
+      id: "3",
+      cover: "/images/user.png",
+      title: "Mastering TypeScript: Advanced Types",
+      slug: "mastering-typescript-advanced-types",
+      category: "TypeScript",
+      summary: "Deep dive into advanced TypeScript types and patterns",
+      content: "Full blog content here...",
+      date: "Nov 28, 2024",
+      status: "draft",
+    },
+    {
+      id: "4",
+      cover: "/images/user.png",
+      title: "Mastering TypeScript: Advanced Types",
+      slug: "mastering-typescript-advanced-types",
+      category: "TypeScript",
+      summary: "Deep dive into advanced TypeScript types and patterns",
+      content: "Full blog content here...",
+      date: "Nov 28, 2024",
+      status: "draft",
+    },
+    {
+      id: "5",
+      cover: "/images/user.png",
+      title: "Mastering TypeScript: Advanced Types",
+      slug: "mastering-typescript-advanced-types",
+      category: "TypeScript",
+      summary: "Deep dive into advanced TypeScript types and patterns",
+      content: "Full blog content here...",
+      date: "Nov 28, 2024",
+      status: "draft",
+    },
+    {
+      id: "6",
+      cover: "/images/user.png",
+      title: "Mastering TypeScript: Advanced Types",
+      slug: "mastering-typescript-advanced-types",
+      category: "TypeScript",
+      summary: "Deep dive into advanced TypeScript types and patterns",
+      content: "Full blog content here...",
+      date: "Nov 28, 2024",
+      status: "draft",
+    },
+    {
+      id: "7",
+      cover: "/images/user.png",
+      title: "Mastering TypeScript: Advanced Types",
+      slug: "mastering-typescript-advanced-types",
+      category: "TypeScript",
+      summary: "Deep dive into advanced TypeScript types and patterns",
+      content: "Full blog content here...",
+      date: "Nov 28, 2024",
+      status: "draft",
     },
   ];
 
@@ -67,7 +122,7 @@ const ManageBlogTable = () => {
           key: "category",
           label: "Category",
           render: (row: BlogRow) => (
-            <Badge className="bg-[#29A3FE] text-black px-3">
+            <Badge className="border-[#29A3FE] bg-white dark:bg-[#29A3FE] text-[#29A3FE] dark:text-white px-3">
               {row.category}
             </Badge>
           ),
@@ -81,11 +136,6 @@ const ManageBlogTable = () => {
           key: "status",
           label: "Status",
           sortable: true,
-          render: (row: BlogRow) => (
-            <Badge className="bg-purple-600 text-white px-3">
-              {row.status === "published" ? "Published" : "Draft"}
-            </Badge>
-          ),
         },
         {
           key: "id",
@@ -132,6 +182,25 @@ const ManageBlogTable = () => {
           ),
         },
       ]}
+      getRowBadge={(row) => {
+        if (row.status === "published")
+          return {
+            label: "Published",
+            color:
+              "border border-purple-600 text-purple-600! dark:text-white! bg-white dark:bg-purple-600",
+            variant: "default",
+            icon: ClockCheck,
+          };
+        if (row.status === "draft")
+          return {
+            label: "Draft",
+            color:
+              "border border-gray-600 text-gray-600! dark:text-white! bg-white dark:bg-gray-600",
+            variant: "destructive",
+            icon: Clock10,
+          };
+        return null;
+      }}
       // If your DynamicTable still supports getRowBadge and you want to disable it:
       // getRowBadge={() => null}
     />

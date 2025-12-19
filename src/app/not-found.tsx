@@ -4,9 +4,9 @@ import Link from "next/link";
 const NotFoundPage = () => {
   return (
     <div className="grid min-h-screen place-content-center px-6 py-24 sm:px-6 lg:px-8">
-      <div className="text-center border border-gray-800 p-8 rounded-2xl hover:border-purple-600 transition-all duration-500 ease-in shadow-xl hover:shadow-purple-500/20">
-        <h5 className="text-base font-semibold text-site-gradient">404</h5>
-        <h1 className="mt-4 text-3xl font-semibold tracking-tight text-balance text-primary-foreground sm:text-4xl md:text-5xl">
+      <div className="text-center border border-gray-300 dark:border-gray-800 p-8 rounded-2xl hover:border-purple-600 transition-all duration-500 ease-in shadow-xl hover:shadow-purple-500/20">
+        <h5 className="text-xl font-semibold text-site-gradient">404</h5>
+        <h1 className="mt-4 text-3xl font-semibold tracking-tight text-balance text-black dark:text-white sm:text-4xl md:text-5xl capitalize whitespace-nowrap">
           Page not found
         </h1>
 

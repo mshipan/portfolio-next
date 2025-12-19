@@ -20,7 +20,7 @@ const ManageTechCard = () => {
     { name: "React", image: "/images/react.svg" },
   ];
   return (
-    <Card className="w-full bg-[#0B111E] border-gray-800 hover:border-[#9767E4] transition-all duration-500 ease-out text-white">
+    <Card className="w-full bg-[#fdfdfd] dark:bg-[#0B111E] border-gray-300 dark:border-gray-800 hover:border-[#9767E4] transition-all duration-500 ease-out text-white">
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
           {techs.map((tech, i) => (
