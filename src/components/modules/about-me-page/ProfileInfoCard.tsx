@@ -12,7 +12,7 @@ import ProfileEditModal from "@/components/shared/modals/ProfileEditModal";
 
 const ProfileInfoCard = () => {
   return (
-    <Card className="w-full bg-[#fdfdfd] dark:bg-[#0B111E] border border-gray-300 dark:border-gray-800 text-white shadow-[0_0_25px_#000000] hover:shadow-[0_0_40px_#000000] transition-shadow duration-500 ease-out">
+    <Card className="w-full bg-[#fdfdfd] dark:bg-[#0B111E] border border-gray-300 dark:border-gray-800 text-white hover:shadow-xl transition-shadow duration-500 ease-out">
       <CardHeader className="flex flex-col md:flex-row items-center justify-between pb-2">
         <div className="flex flex-col items-center md:items-start">
           <CardTitle className="font-inter text-lg font-semibold text-black dark:text-white">

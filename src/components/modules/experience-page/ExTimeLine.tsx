@@ -42,7 +42,7 @@ const ExTimeLine = () => {
   };
 
   return (
-    <Card className="w-full bg-[#fdfdfd] dark:bg-[#0B111E] border border-gray-800 text-black dark:text-white shadow-[0_0_25px_#000000] hover:shadow-[0_0_40px_#000000] transition-shadow duration-500 ease-out">
+    <Card className="w-full bg-[#fdfdfd] dark:bg-[#0B111E] border border-gray-300 dark:border-gray-800 text-black dark:text-white hover:shadow-xl transition-shadow duration-500 ease-out">
       <CardHeader className="flex flex-col lg:flex-row items-start justify-between pb-2">
         <div className="flex flex-col items-center md:items-start">
           <CardTitle className="font-inter text-lg font-semibold text-black dark:text-white">
@@ -64,17 +64,10 @@ const ExTimeLine = () => {
               {/* Header Section */}
               <TimelineHeader>
                 {/* Vertical Line */}
-                <TimelineSeparator className="group-data-[orientation=vertical]/timeline:-left-7 border border-gray-800 group-data-[orientation=vertical]/timeline:h-[calc(100%-1.59rem-0.25rem)] group-data-[orientation=vertical]/timeline:translate-y-6.5" />
+                <TimelineSeparator className="group-data-[orientation=vertical]/timeline:-left-7 border border-gray-300 dark:border-gray-800 group-data-[orientation=vertical]/timeline:h-[calc(100%-1.59rem-0.25rem)] group-data-[orientation=vertical]/timeline:translate-y-6.5" />
 
                 {/* Indicator Icon */}
-                <TimelineIndicator
-                  className="
-                    flex size-8 items-center justify-center
-                    group-data-[orientation=vertical]/timeline:-left-7
-                    bg-[#d6c4f2] dark:bg-[#2C2951] text-[#9767E4] rounded-full
-                    
-                  "
-                >
+                <TimelineIndicator className="flex size-8 items-center justify-center group-data-[orientation=vertical]/timeline:-left-7 bg-[#d6c4f2] dark:bg-[#2C2951] text-[#9767E4] rounded-full">
                   <Briefcase size={16} />
                 </TimelineIndicator>
 

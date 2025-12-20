@@ -21,6 +21,9 @@ const DashboardLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
               orientation="vertical"
               className="mr-2 data-[orientation=vertical]:h-4"
             />
+            <h1 className="text-site-gradient text-2xl capitalize font-bold pb-0! font-inter">
+              dashboard
+            </h1>
           </div>
 
           <ModeToggler />

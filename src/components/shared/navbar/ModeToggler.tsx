@@ -1,43 +1,40 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 const ModeToggler = () => {
-  const { setTheme } = useTheme();
+  const { theme, setTheme, systemTheme } = useTheme();
 
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  const currentTheme = theme === "system" ? systemTheme : theme;
+
+  const toggleTheme = () => {
+    setTheme(currentTheme === "dark" ? "light" : "dark");
+  };
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          size="icon"
-          className="cursor-pointer bg-white text-black dark:text-white border-none hover:bg-[#47cfeb] dark:hover:bg-[#47cfeb] dark:hover:text-black"
-        >
-          <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="cursor-pointer!">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Button
+      onClick={toggleTheme}
+      variant="outline"
+      size="icon"
+      className="cursor-pointer bg-white text-black dark:text-white border-none hover:bg-[#47cfeb] dark:hover:bg-[#47cfeb] dark:hover:text-black"
+    >
+      {currentTheme === "dark" ? (
+        <Sun className="h-[1.2rem] w-[1.2rem]" />
+      ) : (
+        <Moon className="h-[1.2rem] w-[1.2rem]" />
+      )}
+      <span className="sr-only">Toggle theme</span>
+    </Button>
   );
 };
 
