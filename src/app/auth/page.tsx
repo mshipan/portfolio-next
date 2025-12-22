@@ -10,9 +10,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useLoginMutation } from "@/redux/features/auth/auth.api";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
-interface LoginForm {
+export interface LoginForm {
   email: string;
   password: string;
 }
@@ -24,6 +26,23 @@ const LoginPage = () => {
       password: "",
     },
   });
+
+  const [login] = useLoginMutation();
+
+  const onSubmit = async (data: LoginForm) => {
+    const toastId = toast.loading("Logging in...");
+    try {
+      await login(data).unwrap();
+      toast.success("Login successful", { id: toastId });
+    } catch (error: unknown) {
+      if (typeof error === "object" && error !== null && "message" in error) {
+        toast.error(String(error.message), { id: toastId });
+      } else {
+        toast.error("Something went wrong", { id: toastId });
+      }
+    }
+  };
+
   return (
     <div className="bg-white dark:bg-[#0d1321] w-full h-screen flex items-center justify-center px-2.5 md:px-0">
       <div className="bg-[#fcfcfc] dark:bg-[#0e1626] p-5 md:p-10 w-full md:w-2/3 lg:w-2/3 xl:w-1/3 space-y-5 md:space-y-10 border border-gray-100 dark:border-gray-800 rounded-2xl font-inter shadow-xl">
@@ -38,7 +57,7 @@ const LoginPage = () => {
 
         <div>
           <Form {...form}>
-            <form className="space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               {/* Fields */}
               <div className="flex flex-col gap-5">
                 <FormField
