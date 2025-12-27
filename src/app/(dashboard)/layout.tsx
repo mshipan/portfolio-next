@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+"use client";
+
 import { AppSidebar } from "@/components/AppSidebar";
 import ModeToggler from "@/components/shared/navbar/ModeToggler";
 import { Separator } from "@/components/ui/separator";
@@ -6,9 +9,22 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { ReactNode } from "react";
+import { useGetMeQuery } from "@/redux/features/auth/auth.api";
+import { useRouter } from "next/navigation";
+import { ReactNode, useEffect } from "react";
 
 const DashboardLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
+  const router = useRouter();
+  const { data, isLoading, isError, isFetching } = useGetMeQuery();
+
+  useEffect(() => {
+    if (!isLoading && isError) {
+      router.replace("/unauthorized");
+    }
+  }, [isLoading, isError, router]);
+
+  if (isLoading || isFetching) return <div>Loading...</div>;
+
   return (
     <SidebarProvider>
       <AppSidebar />

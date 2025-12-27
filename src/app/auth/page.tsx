@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -20,6 +22,7 @@ export interface LoginForm {
 }
 
 const LoginPage = () => {
+  const router = useRouter();
   const form = useForm<LoginForm>({
     defaultValues: {
       email: "",
@@ -34,6 +37,10 @@ const LoginPage = () => {
     try {
       await login(data).unwrap();
       toast.success("Login successful", { id: toastId });
+
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 500);
     } catch (error: unknown) {
       if (typeof error === "object" && error !== null && "message" in error) {
         toast.error(String(error.message), { id: toastId });
@@ -112,10 +119,10 @@ const LoginPage = () => {
                   sign in
                 </Button>
                 <Button
-                  type="submit"
+                  type="button"
                   className="w-fit capitalize text-black dark:text-white md:py-6 text-sm md:text-base cursor-pointer bg-transparent hover:text-white hover:bg-[#47cfeb]"
                 >
-                  back to home
+                  <Link href="/">back to home</Link>
                 </Button>
               </div>
             </form>

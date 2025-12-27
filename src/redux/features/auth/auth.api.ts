@@ -37,7 +37,49 @@ export const authApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["USER"],
     }),
+
+    logout: builder.mutation<void, void>({
+      query: () => ({
+        url: "/auth/logout",
+        method: "POST",
+      }),
+
+      invalidatesTags: ["USER"],
+    }),
+
+    getMe: builder.query<ILoginPayload, void>({
+      query: () => ({
+        url: "/auth/me",
+        method: "GET",
+        credentials: "include",
+      }),
+
+      transformResponse: (response: ILoginSuccess<ILoginPayload>) => {
+        if (!response.success) {
+          throw new Error(response.message);
+        }
+
+        return response.data;
+      },
+
+      transformErrorResponse: (error: FetchBaseQueryError) => {
+        let message = "Failed to fetch user";
+
+        if (
+          "data" in error &&
+          typeof error.data === "object" &&
+          error.data !== null &&
+          "message" in error.data
+        ) {
+          message = String((error.data as ILoginError).message);
+        }
+
+        return { message };
+      },
+
+      providesTags: ["USER"],
+    }),
   }),
 });
 
-export const { useLoginMutation } = authApi;
+export const { useLoginMutation, useLogoutMutation, useGetMeQuery } = authApi;

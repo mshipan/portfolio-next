@@ -23,6 +23,9 @@ import {
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { ComponentProps } from "react";
+import { useLogoutMutation } from "@/redux/features/auth/auth.api";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 // This is sample data.
 const data = {
@@ -67,6 +70,23 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
+  const [logout] = useLogoutMutation();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await logout().unwrap();
+
+      toast.success("Logged out successfully.");
+
+      setTimeout(() => {
+        router.push("/auth");
+      }, 500);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      toast.error("Logout failed. Please try again.");
+    }
+  };
   return (
     <Sidebar
       collapsible="icon"
@@ -86,7 +106,10 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
               </Button>
             </Link>
 
-            <Button className="flex items-center justify-start gap-1 w-full bg-transparent hover:bg-red-500/20 text-black dark:text-white hover:text-red-500 dark:hover:text-red-500 cursor-pointer">
+            <Button
+              onClick={handleLogout}
+              className="flex items-center justify-start gap-1 w-full bg-transparent hover:bg-red-500/20 text-black dark:text-white hover:text-red-500 dark:hover:text-red-500 cursor-pointer"
+            >
               <LogOut />
               <p>Logout</p>
             </Button>
