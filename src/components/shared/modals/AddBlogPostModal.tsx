@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 
@@ -23,7 +24,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus } from "lucide-react";
+import { Loader2, Plus } from "lucide-react";
+import { useCreateBlogMutation } from "@/redux/features/blog/blog.api";
+import { toast } from "sonner";
 
 type BlogFormValues = {
   title: string;
@@ -49,15 +52,62 @@ const AddBlogPostModal = () => {
     },
   });
 
-  const handleSubmitWithStatus = (publish: boolean) =>
-    form.handleSubmit((values) => {
-      // TODO: call API route / server action to create blog post using Prisma
-      console.log({
-        ...values,
-        coverPreview: preview,
-        published: publish,
+  const watchedTitle = form.watch("title");
+
+  useEffect(() => {
+    const slug = watchedTitle
+      ? watchedTitle
+          .toLowerCase()
+          .trim()
+          .replace(/[^\w\s-]/g, "")
+          .replace(/[\s_-]+/g, "-")
+          .replace(/^-+|-+$/g, "")
+      : "";
+
+    form.setValue("slug", slug);
+  }, [watchedTitle, form]);
+
+  const [createBlog, { isLoading }] = useCreateBlogMutation();
+
+  const handleOnSubmit = async (publish: boolean) => {
+    const values = form.getValues();
+
+    const successMessage = publish
+      ? "Blog post published successfully!"
+      : "Blog post saved as draft successfully!";
+
+    const formData = new FormData();
+    const blogData = {
+      title: values.title,
+      category: values.category,
+      summary: values.summary,
+      content: values.content,
+      published: publish,
+    };
+
+    formData.append("data", JSON.stringify(blogData));
+    if (values.coverImage) {
+      formData.append("file", values.coverImage);
+    }
+
+    const toastId = toast.loading(
+      publish ? "Publishing blog..." : "Saving draft..."
+    );
+
+    try {
+      await createBlog(formData).unwrap();
+      toast.success(successMessage, { id: toastId });
+
+      setTimeout(() => {
+        form.reset();
+        setPreview(null);
+      }, 100);
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Failed to process blog post", {
+        id: toastId,
       });
-    })();
+    }
+  };
 
   return (
     <Dialog>
@@ -146,8 +196,9 @@ const AddBlogPostModal = () => {
                     <FormControl>
                       <Input
                         {...field}
+                        readOnly
                         placeholder="post-url-slug"
-                        className="border-gray-300 dark:border-gray-800"
+                        className="border-gray-300 dark:border-gray-800 pointer-events-none"
                       />
                     </FormControl>
                     <FormMessage />
@@ -218,18 +269,34 @@ const AddBlogPostModal = () => {
               <Button
                 type="button"
                 className="w-full sm:flex-1 btn-gradient cursor-pointer"
-                onClick={() => handleSubmitWithStatus(true)}
+                disabled={isLoading}
+                onClick={() => handleOnSubmit(true)}
               >
-                Publish Post
+                {isLoading ? (
+                  <>
+                    <Loader2 className="animate-spin mr-2" size={18} />
+                    Processing...
+                  </>
+                ) : (
+                  "Publish Post"
+                )}
               </Button>
 
               <Button
                 type="button"
                 variant="outline"
                 className="w-full sm:flex-1 border-gray-700 cursor-pointer"
-                onClick={() => handleSubmitWithStatus(false)}
+                disabled={isLoading}
+                onClick={() => handleOnSubmit(false)}
               >
-                Save as Draft
+                {isLoading ? (
+                  <>
+                    <Loader2 className="animate-spin mr-2" size={18} />
+                    Processing...
+                  </>
+                ) : (
+                  "Save as Draft"
+                )}
               </Button>
 
               <DialogClose asChild>

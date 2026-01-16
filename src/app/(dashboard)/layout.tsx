@@ -10,6 +10,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { useGetMeQuery } from "@/redux/features/auth/auth.api";
+import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 
@@ -23,7 +24,15 @@ const DashboardLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
     }
   }, [isLoading, isError, router]);
 
-  if (isLoading || isFetching) return <div>Loading...</div>;
+  if (isLoading || isFetching)
+    return (
+      <div className="w-full h-screen flex flex-col items-center justify-center gap-2">
+        <Loader className="h-10 w-10 animate-spin text-[#47cfeb]" />
+        <p className="text-lg font-medium animate-pulse text-black dark:text-white">
+          Loading...
+        </p>
+      </div>
+    );
 
   return (
     <SidebarProvider>

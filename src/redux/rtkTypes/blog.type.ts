@@ -2,7 +2,7 @@ export interface IBlogPayload {
   id: string;
   authorId: string;
   title: string;
-  slug: string;
+  // slug: string;
   summary: string;
   content: string;
   published: boolean;
