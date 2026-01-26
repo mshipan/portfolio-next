@@ -13,6 +13,13 @@ import { Badge } from "../ui/badge";
 import { ChevronUp, ChevronDown } from "lucide-react";
 import { useState, useMemo, ElementType } from "react";
 import { Button } from "../ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 interface Column<T> {
   key: keyof T;
@@ -27,7 +34,11 @@ interface DynamicTableProps<T> {
   iconColor?: string;
   columns: Column<T>[];
   data: T[];
-  rowsPerPage?: number;
+  currentPage: number;
+  totalPages: number;
+  rowsPerPage: number;
+  onRowsPerPageChange: (limit: number) => void;
+  onPageChange: (page: number) => void;
   getRowBadge?: (row: T) => {
     label: string;
     color?: string;
@@ -42,7 +53,11 @@ export function DynamicTable<T>({
   iconColor,
   columns,
   data,
-  rowsPerPage = 5,
+  currentPage,
+  totalPages,
+  onPageChange,
+  rowsPerPage,
+  onRowsPerPageChange,
   getRowBadge,
 }: DynamicTableProps<T>) {
   const [sortConfig, setSortConfig] = useState<{
@@ -50,25 +65,16 @@ export function DynamicTable<T>({
     direction: "asc" | "desc";
   }>({ key: null, direction: "asc" });
 
-  const [page, setPage] = useState(1);
-
   const sortedData = useMemo(() => {
     if (!sortConfig.key) return data;
-    const sorted = [...data].sort((a, b) => {
+    return [...data].sort((a, b) => {
       const valA = a[sortConfig.key!];
       const valB = b[sortConfig.key!];
       if (valA! < valB!) return sortConfig.direction === "asc" ? -1 : 1;
       if (valA! > valB!) return sortConfig.direction === "asc" ? 1 : -1;
       return 0;
     });
-    return sorted;
   }, [data, sortConfig]);
-
-  const totalPages = Math.ceil(sortedData.length / rowsPerPage);
-  const paginatedData = sortedData.slice(
-    (page - 1) * rowsPerPage,
-    page * rowsPerPage
-  );
 
   const handleSort = (key: keyof T) => {
     setSortConfig((prev) => ({
@@ -114,7 +120,7 @@ export function DynamicTable<T>({
             </TableHeader>
 
             <TableBody>
-              {paginatedData.map((row, rowIndex) => {
+              {sortedData.map((row, rowIndex) => {
                 return (
                   <TableRow
                     key={rowIndex}
@@ -145,8 +151,8 @@ export function DynamicTable<T>({
                               );
                             })()
                           : col.render
-                          ? col.render(row)
-                          : String(row[col.key])}
+                            ? col.render(row)
+                            : String(row[col.key])}
                       </TableCell>
                     ))}
                   </TableRow>
@@ -156,25 +162,50 @@ export function DynamicTable<T>({
           </Table>
         </div>
 
-        <div className="flex justify-between items-center mt-4">
-          <p className="text-sm text-muted-foreground">
-            Page {page} of {totalPages}
+        <div className="flex flex-col gap-4 mt-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-muted-foreground whitespace-nowrap">
+              Rows per page
+            </span>
+
+            <Select
+              value={String(rowsPerPage)}
+              onValueChange={(value) => onRowsPerPageChange(Number(value))}
+            >
+              <SelectTrigger className="h-8 w-18">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {[5, 10, 15].map((pageSize) => (
+                  <SelectItem key={pageSize} value={String(pageSize)}>
+                    {pageSize}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <p className="text-sm text-muted-foreground text-center">
+            Page <span className="font-medium">{currentPage}</span> of{" "}
+            <span className="font-medium">{totalPages}</span>
           </p>
-          <div className="flex gap-2 text-foreground">
+
+          <div className="flex items-center justify-end gap-2">
             <Button
               variant="outline"
               size="sm"
-              disabled={page === 1}
-              onClick={() => setPage((p) => Math.max(p - 1, 1))}
+              disabled={currentPage === 1}
+              onClick={() => onPageChange(currentPage - 1)}
               className="cursor-pointer"
             >
               Prev
             </Button>
+
             <Button
               variant="outline"
               size="sm"
-              disabled={page === totalPages}
-              onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
+              disabled={currentPage === totalPages}
+              onClick={() => onPageChange(currentPage + 1)}
               className="cursor-pointer"
             >
               Next

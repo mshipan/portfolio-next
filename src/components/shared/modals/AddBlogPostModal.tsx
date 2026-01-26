@@ -38,7 +38,11 @@ type BlogFormValues = {
 };
 
 const AddBlogPostModal = () => {
+  const [open, setOpen] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
+  const [submitType, setSubmitType] = useState<"publish" | "draft" | null>(
+    null,
+  );
   const fileRef = useRef<HTMLInputElement | null>(null);
 
   const form = useForm<BlogFormValues>({
@@ -70,11 +74,9 @@ const AddBlogPostModal = () => {
   const [createBlog, { isLoading }] = useCreateBlogMutation();
 
   const handleOnSubmit = async (publish: boolean) => {
-    const values = form.getValues();
+    setSubmitType(publish ? "publish" : "draft");
 
-    const successMessage = publish
-      ? "Blog post published successfully!"
-      : "Blog post saved as draft successfully!";
+    const values = form.getValues();
 
     const formData = new FormData();
     const blogData = {
@@ -91,26 +93,32 @@ const AddBlogPostModal = () => {
     }
 
     const toastId = toast.loading(
-      publish ? "Publishing blog..." : "Saving draft..."
+      publish ? "Publishing blog..." : "Saving draft...",
     );
 
     try {
       await createBlog(formData).unwrap();
-      toast.success(successMessage, { id: toastId });
+      toast.success(
+        publish
+          ? "Blog post published successfully!"
+          : "Blog post saved as draft successfully!",
+        { id: toastId },
+      );
 
-      setTimeout(() => {
-        form.reset();
-        setPreview(null);
-      }, 100);
+      form.reset();
+      setPreview(null);
+      setOpen(false);
     } catch (error: any) {
       toast.error(error?.data?.message || "Failed to process blog post", {
         id: toastId,
       });
+    } finally {
+      setSubmitType(null);
     }
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="btn-gradient flex items-center gap-2 px-4 py-2 text-sm font-medium cursor-pointer">
           <Plus size={16} />
@@ -272,10 +280,10 @@ const AddBlogPostModal = () => {
                 disabled={isLoading}
                 onClick={() => handleOnSubmit(true)}
               >
-                {isLoading ? (
+                {submitType === "publish" && isLoading ? (
                   <>
                     <Loader2 className="animate-spin mr-2" size={18} />
-                    Processing...
+                    Publishing...
                   </>
                 ) : (
                   "Publish Post"
@@ -289,10 +297,10 @@ const AddBlogPostModal = () => {
                 disabled={isLoading}
                 onClick={() => handleOnSubmit(false)}
               >
-                {isLoading ? (
+                {submitType === "draft" && isLoading ? (
                   <>
                     <Loader2 className="animate-spin mr-2" size={18} />
-                    Processing...
+                    Saving...
                   </>
                 ) : (
                   "Save as Draft"

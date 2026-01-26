@@ -23,7 +23,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Edit } from "lucide-react";
+import { Edit, Loader2 } from "lucide-react";
+import { useUpdateBlogMutation } from "@/redux/features/blog/blog.api";
+import { toast } from "sonner";
 
 export type BlogRow = {
   id?: string;
@@ -51,8 +53,14 @@ type Props = {
 };
 
 const EditBlogPostModal = ({ post }: Props) => {
+  const [open, setOpen] = useState(false);
   const [preview, setPreview] = useState<string | null>(post.cover || null);
   const fileRef = useRef<HTMLInputElement | null>(null);
+
+  const [editBlog, { isLoading }] = useUpdateBlogMutation();
+
+  const [loadingPublish, setLoadingPublish] = useState(false);
+  const [loadingDraft, setLoadingDraft] = useState(false);
 
   const form = useForm<BlogFormValues>({
     defaultValues: {
@@ -65,23 +73,78 @@ const EditBlogPostModal = ({ post }: Props) => {
     },
   });
 
+  const watchedTitle = form.watch("title");
+
+  useEffect(() => {
+    const slug = watchedTitle
+      ? watchedTitle
+          .toLowerCase()
+          .trim()
+          .replace(/[^\w\s-]/g, "")
+          .replace(/[\s_-]+/g, "-")
+          .replace(/^-+|-+$/g, "")
+      : post.slug;
+    form.setValue("slug", slug);
+  }, [watchedTitle, form, post.slug]);
+
   useEffect(() => {
     setPreview(post.cover || null);
   }, [post.cover]);
 
-  const handleSubmitWithStatus = (publish: boolean) =>
-    form.handleSubmit((values) => {
-      // TODO: call API route / server action to update blog post using Prisma
-      console.log({
-        id: post.id,
-        ...values,
-        coverPreview: preview,
-        published: publish,
+  const handleSubmitWithStatus = async (publish: boolean) => {
+    const values = form.getValues();
+    const formData = new FormData();
+
+    const blogData = {
+      title: values.title,
+      slug: values.slug,
+      category: values.category,
+      summary: values.summary,
+      content: values.content,
+      published: publish,
+    };
+
+    formData.append("data", JSON.stringify(blogData));
+    if (values.coverImage) formData.append("file", values.coverImage);
+
+    const toastId = toast.loading(
+      publish ? "Publishing blog..." : "Updating draft...",
+    );
+
+    try {
+      publish ? setLoadingPublish(true) : setLoadingDraft(true);
+
+      await editBlog({ slug: post.slug!, formData }).unwrap();
+
+      toast.success(
+        publish
+          ? "Blog updated & published successfully!"
+          : "Blog saved as draft successfully!",
+        { id: toastId },
+      );
+
+      form.reset({
+        title: values.title,
+        slug: values.slug,
+        category: values.category,
+        summary: values.summary,
+        content: values.content,
+        coverImage: null,
       });
-    })();
+
+      setPreview(
+        values.coverImage ? URL.createObjectURL(values.coverImage) : post.cover,
+      );
+      setOpen(false);
+    } catch (error: any) {
+      toast.error(error?.message || "Failed to update blog", { id: toastId });
+    } finally {
+      publish ? setLoadingPublish(false) : setLoadingDraft(false);
+    }
+  };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           variant="ghost"
@@ -169,8 +232,9 @@ const EditBlogPostModal = ({ post }: Props) => {
                     <FormControl>
                       <Input
                         {...field}
+                        readOnly
                         placeholder="post-url-slug"
-                        className="border-gray-300 dark:border-gray-800"
+                        className="border-gray-300 dark:border-gray-800 pointer-events-none"
                       />
                     </FormControl>
                     <FormMessage />
@@ -241,18 +305,34 @@ const EditBlogPostModal = ({ post }: Props) => {
               <Button
                 type="button"
                 className="w-full sm:flex-1 btn-gradient cursor-pointer"
+                disabled={loadingPublish}
                 onClick={() => handleSubmitWithStatus(true)}
               >
-                Update &amp; Publish
+                {loadingPublish ? (
+                  <>
+                    <Loader2 className="animate-spin mr-2" size={18} />
+                    Publishing...
+                  </>
+                ) : (
+                  "Update & Publish"
+                )}
               </Button>
 
               <Button
                 type="button"
                 variant="outline"
                 className="w-full sm:flex-1 border-gray-700 cursor-pointer"
+                disabled={loadingDraft}
                 onClick={() => handleSubmitWithStatus(false)}
               >
-                Update as Draft
+                {loadingDraft ? (
+                  <>
+                    <Loader2 className="animate-spin mr-2" size={18} />
+                    Saving...
+                  </>
+                ) : (
+                  "Update as Draft"
+                )}
               </Button>
 
               <DialogClose asChild>
