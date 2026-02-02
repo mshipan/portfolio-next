@@ -224,28 +224,45 @@ const ManageBlogTable = () => {
               key: "category",
               label: "Category",
               render: (row: BlogRow) => {
-                const categories = row.category ? row.category.split(",") : [];
+                const categories = row.category
+                  ? row.category.split(",").map((c) => c.trim())
+                  : [];
+
+                const visibleCategories = categories.slice(0, 2);
+                const remainingCount =
+                  categories.length - visibleCategories.length;
 
                 return (
                   <div className="flex flex-wrap gap-1.5">
-                    {categories.length > 0 ? (
-                      categories.map((cat, index) => (
-                        <Badge
-                          key={index}
-                          className="border-[#29A3FE] bg-white dark:bg-[#29A3FE] 
-                         text-[#29A3FE] dark:text-white 
-                         px-3 py-0.5 capitalize text-xs"
-                        >
-                          {cat.trim()}
-                        </Badge>
-                      ))
-                    ) : (
+                    {visibleCategories.map((cat, index) => (
+                      <Badge
+                        key={index}
+                        className="border-[#29A3FE] bg-white dark:bg-[#29A3FE]
+            text-[#29A3FE] dark:text-white
+            px-3 py-0.5 capitalize text-xs"
+                      >
+                        {cat}
+                      </Badge>
+                    ))}
+
+                    {remainingCount > 0 && (
+                      <Badge
+                        className="border-dashed border-gray-400 text-gray-500
+            bg-gray-100 dark:bg-gray-700
+            px-3 py-0.5 text-xs"
+                      >
+                        +{remainingCount}
+                      </Badge>
+                    )}
+
+                    {categories.length === 0 && (
                       <span className="text-xs text-gray-400">No Category</span>
                     )}
                   </div>
                 );
               },
             },
+
             { key: "date", label: "Date" },
             { key: "status", label: "Status" },
             {
@@ -257,7 +274,7 @@ const ManageBlogTable = () => {
                   <ViewSingleBlogModal slug={row?.slug} />
                   <DeleteConfirmModal
                     title="Delete Blog"
-                    description="This action cannot be undone."
+                    description="Are you sure you want to delete this blog post? This action cannot be undone."
                     onDelete={() => handleDeleteBlog(row.slug)}
                     isLoading={isDeleting}
                     trigger={
