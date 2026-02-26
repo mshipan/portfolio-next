@@ -9,6 +9,7 @@ import ModeToggler from "./ModeToggler";
 import ToggleButton from "./ToggleButton";
 import { useState } from "react";
 import { useTheme } from "next-themes";
+import { scrollToSection } from "@/lib/scrollTo";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -24,13 +25,26 @@ const Navbar = () => {
     { to: "/dashboard", label: "dashboard" },
   ];
 
+  const handleLinkClick = (to: string) => {
+    if (to.startsWith("#")) {
+      const id = to.replace("#", "");
+      scrollToSection(id, { offset: 20, smooth: true });
+    } else {
+      window.location.href = to;
+    }
+  };
+
   return (
     <nav className="sticky top-0 z-50 py-4 shadow-md bg-background/10 backdrop-blur-xs">
       <div className="flex items-center justify-between max-w-7xl mx-auto px-4">
         <Link href="/">
           <Logo />
         </Link>
-        <NavMenu className="hidden md:block" navLinks={navLinks} />
+        <NavMenu
+          className="hidden md:block"
+          navLinks={navLinks}
+          onLinkClick={handleLinkClick}
+        />
         <div className="flex items-center gap-2 md:hidden">
           <ModeToggler />
           <ToggleButton
@@ -40,7 +54,14 @@ const Navbar = () => {
           />
         </div>
       </div>
-      <MobileNav navLinks={navLinks} open={open} />
+      <MobileNav
+        navLinks={navLinks}
+        open={open}
+        onLinkClick={(to) => {
+          handleLinkClick(to);
+          setOpen(false);
+        }}
+      />
     </nav>
   );
 };

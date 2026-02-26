@@ -5,11 +5,9 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { NavMenuProps } from "@/types";
-
-import Link from "next/link";
 import ModeToggler from "./ModeToggler";
 
-const NavMenu = ({ navLinks, ...props }: NavMenuProps) => {
+const NavMenu = ({ navLinks, onLinkClick, ...props }: NavMenuProps) => {
   return (
     <NavigationMenu {...props}>
       <NavigationMenuList className="gap-6">
@@ -17,14 +15,14 @@ const NavMenu = ({ navLinks, ...props }: NavMenuProps) => {
           <NavigationMenuItem key={link.to}>
             <NavigationMenuLink
               asChild
-              className="hover:bg-transparent focus:outline-none focus:bg-transparent focus:text-black dark:focus:text-white"
+              className="hover:bg-transparent focus:outline-none focus:bg-transparent focus:text-black dark:focus:text-white cursor-pointer"
             >
-              <Link
-                href={link.to}
+              <button
+                onClick={() => onLinkClick?.(link.to)}
                 className="text-ring dark:hover:text-white capitalize font-semibold"
               >
                 {link.label}
-              </Link>
+              </button>
             </NavigationMenuLink>
           </NavigationMenuItem>
         ))}

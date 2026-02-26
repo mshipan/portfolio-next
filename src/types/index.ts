@@ -8,6 +8,7 @@ export interface NavLink {
 
 export interface NavMenuProps extends ComponentProps<typeof NavigationMenu> {
   navLinks: NavLink[];
+  onLinkClick?: (to: string) => void;
 }
 
 export interface SectionHeader {

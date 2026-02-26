@@ -4,13 +4,19 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Mouse } from "lucide-react";
 import { Github, Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 import { useGetAboutQuery } from "@/redux/features/about/about.api";
+import gsap from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { scrollToSection } from "@/lib/scrollTo";
+
+gsap.registerPlugin(ScrollToPlugin);
 
 const Banner = () => {
   const [index, setIndex] = useState(0);
   const { data } = useGetAboutQuery(undefined);
+  const textRef = useRef<HTMLDivElement>(null);
+  const mouseRef = useRef<HTMLDivElement>(null);
 
   const aboutMe = data?.data;
 
@@ -28,12 +34,47 @@ const Banner = () => {
   ];
 
   useEffect(() => {
-    const timeOut = setTimeout(() => {
-      setIndex((prev) => (prev + 1) % texts.length);
+    const interval = setInterval(() => {
+      if (!textRef.current) return;
+
+      gsap.to(textRef.current, {
+        opacity: 0,
+        y: 30,
+        duration: 0.3,
+        onComplete: () => {
+          setIndex((prev) => (prev + 1) % texts.length);
+
+          gsap.fromTo(
+            textRef.current,
+            { opacity: 0, y: -30 },
+            { opacity: 1, y: 0, duration: 0.3 },
+          );
+        },
+      });
     }, 2000);
 
-    return () => clearTimeout(timeOut);
-  }, [index, texts.length]);
+    return () => clearInterval(interval);
+  }, [texts.length]);
+
+  useEffect(() => {
+    if (!mouseRef.current) return;
+
+    gsap.to(mouseRef.current, {
+      y: -30,
+      duration: 1,
+      repeat: -1,
+      yoyo: true,
+      ease: "power1.inOut",
+    });
+  }, []);
+
+  const handleScrollToContact = () => {
+    scrollToSection("contact");
+  };
+
+  const handleScrollToProjects = () => {
+    scrollToSection("projects");
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 min-h-svh">
@@ -46,18 +87,12 @@ const Banner = () => {
         </h4>
 
         <div className="h-36 md:h-52 flex items-center justify-center overflow-hidden">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={texts[index]}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 30 }}
-              transition={{ duration: 0.3 }}
-              className="text-site-gradient text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-black capitalize text-center max-w-3xl"
-            >
-              {texts[index]}
-            </motion.div>
-          </AnimatePresence>
+          <div
+            ref={textRef}
+            className="text-site-gradient text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-black capitalize text-center max-w-3xl"
+          >
+            {texts[index]}
+          </div>
         </div>
 
         <p className="text-xl leading-7 font-normal text-[#6b7280] dark:text-white max-w-2xl text-center">
@@ -67,11 +102,17 @@ const Banner = () => {
         </p>
 
         <div className="flex items-center gap-6">
-          <Button className="py-6 text-[14px] font-semibold leading-5 bg-linear-to-r from-[#9767e4] to-[#47cfeb] cursor-pointer">
+          <Button
+            onClick={handleScrollToContact}
+            className="py-6 text-[14px] font-semibold leading-5 bg-linear-to-r from-[#9767e4] to-[#47cfeb] cursor-pointer"
+          >
             <span className="capitalize">get in touch</span>
             <ArrowRight />
           </Button>
-          <Button className="py-6 text-[14px] font-semibold leading-5 capitalize bg-[#0b111e] hover:bg-[#47cfeb] duration-300 border-[0.5px] hover:border-[#47cfeb] dark:border-gray-800 cursor-pointer dark:text-white">
+          <Button
+            onClick={handleScrollToProjects}
+            className="py-6 text-[14px] font-semibold leading-5 capitalize bg-[#0b111e] hover:bg-[#47cfeb] duration-300 border-[0.5px] hover:border-[#47cfeb] dark:border-gray-800 cursor-pointer dark:text-white"
+          >
             view projects
           </Button>
         </div>
@@ -88,21 +129,9 @@ const Banner = () => {
             </div>
           ))}
         </div>
-        <motion.div
-          initial={{ y: 0 }}
-          animate={{ y: -30 }}
-          transition={{
-            type: "spring",
-            stiffness: 200,
-            damping: 15,
-            repeat: Infinity,
-            repeatType: "mirror",
-            repeatDelay: 0.5,
-          }}
-          className="absolute bottom-0"
-        >
+        <div ref={mouseRef} className="absolute bottom-0">
           <Mouse className="w-10 h-14 text-[#6b7280] dark:text-white" />
-        </motion.div>
+        </div>
       </div>
     </div>
   );
