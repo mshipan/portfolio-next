@@ -1,79 +1,73 @@
 "use client";
 
-import { DynamicTable } from "../shared/DynamicTable";
 import { FolderKanban } from "lucide-react";
+import { DynamicTable } from "../shared/DynamicTable";
+import { useState } from "react";
 
-const LatestProjectsTable = () => {
-  const projects = [
-    {
-      name: "Portfolio Website",
-      tech: "Next.js",
-      status: "completed",
-      date: "2025-10-05",
-    },
-    {
-      name: "Ride Booking App",
-      tech: "Express",
-      status: "ongoing",
-      date: "2025-09-22",
-    },
-    {
-      name: "Admin Dashboard",
-      tech: "React",
-      status: "pending",
-      date: "2025-11-02",
-    },
-    {
-      name: "Portfolio Website",
-      tech: "Next.js",
-      status: "completed",
-      date: "2025-10-05",
-    },
-    {
-      name: "Admin Dashboard",
-      tech: "React",
-      status: "pending",
-      date: "2025-11-02",
-    },
-    {
-      name: "Ride Booking App",
-      tech: "Express",
-      status: "ongoing",
-      date: "2025-09-22",
-    },
-  ];
+interface Project {
+  id: string;
+  title: string;
+  techStack: string[];
+  featured: boolean;
+  shortDescription?: string;
+  published: boolean;
+  createdAt: string;
+}
+
+interface LatestProjectsTableProps {
+  data: Project[];
+}
+
+const LatestProjectsTable = ({ data }: LatestProjectsTableProps) => {
+  const projects = data?.map((p) => ({
+    name: p.title,
+    tech: p.techStack.join(", "),
+    status: p.featured ? "featured" : "regular",
+    date: new Date(p.createdAt).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    }),
+  }));
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 5;
+  const totalPages = Math.ceil(projects.length / rowsPerPage);
+
+  const paginatedData = projects.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage,
+  );
   return (
     <DynamicTable
       title="Latest Projects"
       icon={FolderKanban}
       iconColor="text-purple-500"
-      data={projects}
+      data={paginatedData}
       columns={[
         { key: "name", label: "Project", sortable: true },
         { key: "tech", label: "Tech", sortable: true },
         { key: "status", label: "Status", sortable: true },
         { key: "date", label: "Date", sortable: true },
       ]}
+      currentPage={currentPage}
+      totalPages={totalPages}
+      rowsPerPage={rowsPerPage}
+      onPageChange={setCurrentPage}
+      onRowsPerPageChange={() => {}}
       getRowBadge={(row) => {
-        if (row.status === "completed")
+        if (row.status === "featured")
           return {
-            label: "Done",
+            label: "Featured",
             color:
-              "border border-green-600 text-green-600! dark:text-white! bg-white dark:bg-green-600",
+              "border border-purple-600 text-purple-600 dark:text-white bg-white dark:bg-purple-600",
             variant: "default",
           };
-        if (row.status === "ongoing")
+        if (row.status === "regular")
           return {
-            label: "Live",
+            label: "Regular",
             color:
-              "border border-purple-600 text-purple-600! dark:text-white! bg-white dark:bg-purple-600",
-            variant: "default",
-          };
-        if (row.status === "pending")
-          return {
-            label: "Development",
-            color:
-              "border border-gray-600 text-gray-600! dark:text-white! bg-white dark:bg-gray-600",
+              "border border-gray-600 text-gray-600 dark:text-white bg-white dark:bg-gray-600",
             variant: "destructive",
           };
         return null;

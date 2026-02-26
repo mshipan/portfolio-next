@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,26 +18,114 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  useCreateOrUpdateAboutMutation,
+  useGetAboutQuery,
+} from "@/redux/features/about/about.api";
 import { SquarePen } from "lucide-react";
 import Image from "next/image";
-import { ChangeEvent, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+
+export type AboutFormValues = {
+  name: string;
+  title: string;
+  bio: string;
+  email: string;
+  phone?: string;
+  address?: string;
+  photo: File | null;
+  github?: string;
+  linkedIn?: string;
+};
 
 const ProfileEditModal = () => {
-  const [preview, setPreview] = useState("/images/user.png");
+  const [open, setOpen] = useState(false);
+  const [preview, setPreview] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement | null>(null);
-  const form = useForm();
+  const { data } = useGetAboutQuery(undefined);
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setPreview(URL.createObjectURL(file));
+  const form = useForm<AboutFormValues>({
+    defaultValues: {
+      name: "",
+      title: "",
+      bio: "",
+      email: "",
+      phone: "",
+      address: "",
+      github: "",
+      linkedIn: "",
+      photo: null,
+    },
+  });
+
+  const [createOrUpdateAbout, { isLoading }] = useCreateOrUpdateAboutMutation();
+
+  useEffect(() => {
+    if (data?.data) {
+      const about = data.data;
+
+      form.reset({
+        name: about.name ?? "",
+        title: about.title ?? "",
+        bio: about.bio ?? "",
+        email: about.email ?? "",
+        phone: about.phone ?? "",
+        address: about.address ?? "",
+        github: about.github ?? "",
+        linkedIn: about.linkedIn ?? "",
+        photo: null,
+      });
+
+      setPreview(about.photo ?? "/images/user.png");
+    }
+  }, [data, form]);
+
+  const onSubmit = async () => {
+    const values = form.getValues();
+
+    const formData = new FormData();
+
+    const aboutData = {
+      name: values.name,
+      title: values.title,
+      bio: values.bio,
+      email: values.email,
+      phone: values.phone,
+      github: values.github,
+      linkedIn: values.linkedIn,
+      address: values.address,
+    };
+
+    formData.append("data", JSON.stringify(aboutData));
+
+    if (values.photo) {
+      formData.append("file", values.photo);
+    }
+
+    const toastId = toast.loading("Saving profile information...");
+
+    try {
+      await createOrUpdateAbout(formData).unwrap();
+
+      toast.success("Profile updated successfully!", {
+        id: toastId,
+      });
+
+      form.reset();
+      setPreview(null);
+      setOpen(false);
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Failed to update profile", {
+        id: toastId,
+      });
+    }
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="btn-gradient flex items-center gap-2 px-4 py-2 text-sm font-medium cursor-pointer">
           <SquarePen size={16} />
@@ -52,12 +141,12 @@ const ProfileEditModal = () => {
         </DialogHeader>
 
         <Form {...form}>
-          <form className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
               <div className="flex items-center gap-3 sm:gap-4">
                 <div className="relative w-20 h-20 rounded-full overflow-hidden border-4 border-ring bg-white shrink-0">
                   <Image
-                    src={preview}
+                    src={preview || "/images/user.png"}
                     alt="Profile photo"
                     fill
                     className="object-cover"
@@ -66,32 +155,43 @@ const ProfileEditModal = () => {
                 </div>
               </div>
 
-              <div className="w-full">
-                <Input
-                  ref={fileRef}
-                  id="profile-photo"
-                  type="file"
-                  accept="image/*"
-                  onChange={onChange}
-                  className="
-                    w-full rounded-md border-gray-300 dark:border-gray-700 bg-transparent text-black dark:text-white
-                    file:text-black dark:file:text-white file:mr-4
-                  "
-                />
-                <Label
-                  htmlFor="profile-photo"
-                  className="block mt-1 text-xs text-muted-foreground"
-                >
-                  Upload a new profile photo
-                </Label>
-              </div>
+              <FormField
+                control={form.control}
+                name="photo"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel className="text-black dark:text-white">
+                      Upload a new profile photo
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        ref={fileRef}
+                        type="file"
+                        accept="image/*"
+                        className="border-gray-300 dark:border-gray-800 file:text-black dark:file:text-white file:mr-4"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0] || null;
+                          field.onChange(file);
+
+                          if (file) {
+                            setPreview(URL.createObjectURL(file));
+                          } else {
+                            setPreview("/images/user.png");
+                          }
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
 
             {/* Fields */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
-                name="fullName"
+                name="name"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-black dark:text-white">
@@ -208,15 +308,56 @@ const ProfileEditModal = () => {
                   </FormItem>
                 )}
               />
+
+              <FormField
+                control={form.control}
+                name="github"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-black dark:text-white">
+                      Github
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Your Github Profile URL"
+                        className="border-gray-300 dark:border-gray-800"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="linkedIn"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-black dark:text-white">
+                      LinkedIn
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Your LinkedIn Profile URL"
+                        className="border-gray-300 dark:border-gray-800"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
 
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-3">
               <Button
                 type="submit"
+                disabled={isLoading}
                 className="w-full sm:w-4/5 btn-gradient cursor-pointer"
               >
-                Save Changes
+                {isLoading ? "Saving..." : "Save Changes"}
               </Button>
               <DialogClose asChild>
                 <Button

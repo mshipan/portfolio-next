@@ -10,33 +10,13 @@ import {
 import { GraduationCap } from "lucide-react";
 import EducationPill from "./EducationPill";
 import AddEducationModal from "@/components/shared/modals/AddEducationModal";
+import { useGetAboutQuery } from "@/redux/features/about/about.api";
 
 const EducationCard = () => {
-  const educations = [
-    {
-      degree: "B.Sc. in Computer Science",
-      institution: "Tech University",
-      startYear: "2016",
-      endYear: "2020",
-      description: "Focused on software engineering and web technologies",
-    },
-    {
-      degree: "Frontend Bootcamp",
-      institution: "Creative Studio",
-      startYear: "2021-03",
-      endYear: "2021-08",
-      description:
-        "Specialized in building interactive, responsive UI using React.js",
-    },
-  ];
+  const { data, isLoading, isError } = useGetAboutQuery(undefined);
 
-  const handleEdit = (degree: string) => {
-    console.log("Edit:", degree);
-  };
+  const educations = data?.data?.educations || [];
 
-  const handleDelete = (degree: string) => {
-    console.log("Delete:", degree);
-  };
   return (
     <Card className="w-full bg-[#fdfdfd] dark:bg-[#0B111E] border border-gray-300 dark:border-gray-800 text-black dark:text-white hover:shadow-xl transition-shadow duration-500 ease-out">
       <CardHeader className="flex flex-col md:flex-row justify-between gap-4 md:gap-0 pb-2">
@@ -54,20 +34,33 @@ const EducationCard = () => {
       </CardHeader>
 
       <CardContent className="px-6">
-        <div className="flex flex-col gap-6">
-          {educations?.slice(0, 2)?.map((edu, i) => (
-            <EducationPill
-              key={i}
-              degree={edu.degree}
-              institution={edu.institution}
-              startYear={edu.startYear}
-              endYear={edu.endYear}
-              description={edu.description}
-              onEdit={() => handleEdit(edu.degree)}
-              onDelete={() => handleDelete(edu.degree)}
-            />
-          ))}
-        </div>
+        {isLoading && (
+          <p className="text-sm text-gray-400 animate-pulse">
+            Loading educations...
+          </p>
+        )}
+
+        {isError && (
+          <div className="flex justify-center items-center py-5">
+            <p className="text-sm text-red-500">
+              Failed to load educations. Please try again.
+            </p>
+          </div>
+        )}
+
+        {!isLoading && !isError && educations?.length === 0 && (
+          <div className="flex justify-center items-center py-5">
+            <p className="text-sm text-gray-400">No education added yet.</p>
+          </div>
+        )}
+
+        {!isLoading && !isError && educations?.length > 0 && (
+          <div className="flex flex-col gap-6">
+            {educations?.slice(0, 2)?.map((edu) => (
+              <EducationPill key={edu.id} education={edu} />
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );

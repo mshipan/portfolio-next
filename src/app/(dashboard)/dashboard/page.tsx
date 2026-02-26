@@ -16,8 +16,32 @@ import {
   TrendingUp,
 } from "lucide-react";
 import MonthlyBlogSummary from "@/components/dashboard/MonthlyBlogSummary";
+import { useGetDashboardOverviewQuery } from "@/redux/features/dashboard/dashboard.api";
 
 const DashboardAnalytics = () => {
+  const { data, isLoading, isError } = useGetDashboardOverviewQuery();
+
+  const dashboard = data?.data;
+  const stats = dashboard?.stats;
+  const blogs = stats?.blogs;
+  const projects = stats?.projects;
+  const about = stats?.about;
+
+  const latestProjects = dashboard?.latestProjects;
+  const latestBlogs = dashboard?.latestBlogs;
+  const experienceTimeline = dashboard?.experienceTimeline;
+  const blogGrowth = stats?.blogs?.blogGrowth;
+
+  if (isLoading) {
+    return <div className="p-10">Loading dashboard...</div>;
+  }
+
+  if (isError || !dashboard) {
+    return (
+      <div className="p-10 text-red-500">Failed to load dashboard data.</div>
+    );
+  }
+
   return (
     <div className="space-y-8">
       <div>
@@ -34,27 +58,32 @@ const DashboardAnalytics = () => {
           mainIcon={FileText}
           mainIconColor="#9767e4"
           title="Total Blogs"
-          total={45}
+          total={blogs?.total ?? 0}
           extraIcon={TrendingUp}
           details={[
             {
-              value: 38,
+              value: blogs?.published ?? 0,
               label: "Published",
               icon: CircleCheck,
               iconColor: "#9767e4",
             },
-            { value: 7, label: "Drafts", icon: Clock3, iconColor: "#9767e4" },
+            {
+              value: blogs?.drafts ?? 0,
+              label: "Drafts",
+              icon: Clock3,
+              iconColor: "#9767e4",
+            },
           ]}
         />
         <Stats
           mainIcon={FolderKanban}
           mainIconColor="#47cfeb"
           title="Total Projects"
-          total={24}
+          total={projects?.total ?? 0}
           extraIcon={TrendingUp}
           details={[
             {
-              value: 8,
+              value: projects?.featured ?? 0,
               label: "Featured",
               icon: CircleCheck,
               iconColor: "#9767e4",
@@ -65,41 +94,41 @@ const DashboardAnalytics = () => {
           mainIcon={ChevronsLeftRight}
           mainIconColor="#47cfeb"
           title="Skills"
-          total={32}
+          total={about?.totalSkills ?? 0}
           extraIcon={TrendingUp}
         />
         <Stats
           mainIcon={Briefcase}
           mainIconColor="#9767e4"
           title="Experiences"
-          total={5}
+          total={about?.totalExperiences ?? 0}
           extraIcon={TrendingUp}
         />
         <Stats
           mainIcon={GraduationCap}
           mainIconColor="#47cfeb"
           title="Educations"
-          total={3}
+          total={about?.totalEducations ?? 0}
           extraIcon={TrendingUp}
         />
       </div>
 
       <div className="flex flex-col lg:flex-row items-center gap-4 w-full h-fit">
-        <BlogGrowthChart />
-        <TechStackChart />
+        <BlogGrowthChart data={blogs?.blogGrowth ?? []} />
+        <TechStackChart data={projects?.techStackCount ?? []} />
       </div>
 
       <div className="flex flex-col lg:flex-row items-start gap-4 w-full h-fit">
-        <LatestProjectsTable />
-        <LatestBlogTable />
+        <LatestProjectsTable data={latestProjects ?? []} />
+        <LatestBlogTable data={latestBlogs ?? []} />
       </div>
 
       <div>
-        <ExperienceTimeline />
+        <ExperienceTimeline data={experienceTimeline} />
       </div>
 
       <div>
-        <MonthlyBlogSummary />
+        <MonthlyBlogSummary data={blogGrowth ?? []} />
       </div>
     </div>
   );

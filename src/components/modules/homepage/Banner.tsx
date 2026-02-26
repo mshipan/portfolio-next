@@ -6,9 +6,13 @@ import { Github, Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { useGetAboutQuery } from "@/redux/features/about/about.api";
 
 const Banner = () => {
   const [index, setIndex] = useState(0);
+  const { data } = useGetAboutQuery(undefined);
+
+  const aboutMe = data?.data;
 
   const connectLinks = [
     { path: "https://github.com", icon: Github },
@@ -37,7 +41,7 @@ const Banner = () => {
         <h4 className="capitalize text-xl leading-7 font-normal text-[#6b7280] dark:text-white">
           hi, i&apos;m{" "}
           <span className="text-site-gradient font-semibold">
-            shipan mallik
+            {aboutMe?.name}
           </span>
         </h4>
 

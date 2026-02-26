@@ -1,24 +1,69 @@
 "use client";
 import { Input } from "@/components/ui/input";
-import { ImageUp } from "lucide-react";
+import { useUploadAboutPhotoMutation } from "@/redux/features/about/about.api";
+import { ImageUp, Loader2 } from "lucide-react";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 
-const ProfileImageUploader = () => {
-  const [image, setImage] = useState("/images/user.png");
+interface Props {
+  photo?: string | null;
+}
+
+const ProfileImageUploader = ({ photo }: Props) => {
+  const [image, setImage] = useState<string>("/images/user.png");
+  const [uploadPhoto, { isLoading }] = useUploadAboutPhotoMutation();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    if (photo) {
+      setImage(photo);
+    } else {
+      setImage("/images/user.png");
+    }
+  }, [photo]);
+
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setImage(imageUrl);
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please select a valid image file.");
+      return;
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+      toast.error("Image size should be less than 2MB.");
+      return;
+    }
+
+    const previewUrl = URL.createObjectURL(file);
+    setImage(previewUrl);
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const toastId = toast.loading("Uploading profile photo...");
+
+    try {
+      await uploadPhoto(formData).unwrap();
+
+      toast.success("Profile photo updated successfully!", { id: toastId });
+    } catch (error: any) {
+      toast.error(error.message || "Failed to upload profile photo.", {
+        id: toastId,
+      });
+
+      setImage(photo || "/images/user.png");
     }
   };
 
   const handleClick = () => {
-    fileInputRef.current?.click();
+    if (!isLoading) {
+      fileInputRef.current?.click();
+    }
   };
+
   return (
     <div className="group relative w-32 h-32 rounded-full border-4 border-ring overflow-hidden cursor-pointer">
       <Image
@@ -32,9 +77,13 @@ const ProfileImageUploader = () => {
         onClick={handleClick}
         className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"
       >
-        <div className="bg-white/20 p-2 rounded-full backdrop-blur-sm">
-          <ImageUp size={26} className="text-white" />
-        </div>
+        {isLoading ? (
+          <Loader2 className="animate-spin text-white" size={28} />
+        ) : (
+          <div className="bg-white/20 p-2 rounded-full backdrop-blur-sm">
+            <ImageUp size={26} className="text-white" />
+          </div>
+        )}
       </div>
 
       <Input

@@ -1,15 +1,29 @@
 import DeleteConfirmModal from "@/components/shared/modals/DeleteConfirmModal";
 import EditSkillModal from "@/components/shared/modals/EditSkillModal";
+import { useDeleteSkillMutation } from "@/redux/features/skill/skill.api";
+import { ISkill } from "@/redux/rtkTypes/skill.type";
 import Image from "next/image";
+import { toast } from "sonner";
 
 interface TechPillProps {
-  name: string;
-  image: string;
-  onEdit?: () => void;
-  onDelete?: () => void;
+  skill: ISkill;
 }
 
-const TechPill = ({ name, image, onEdit, onDelete }: TechPillProps) => {
+const TechPill = ({ skill }: TechPillProps) => {
+  const [deleteSkill, { isLoading }] = useDeleteSkillMutation();
+
+  const handleDelete = async () => {
+    if (!skill.id) return;
+
+    const toastId = toast.loading("Deleting skill...");
+
+    try {
+      await deleteSkill(skill.id).unwrap();
+      toast.success("Skill deleted successfully!", { id: toastId });
+    } catch (error) {
+      toast.error("Failed to delete skill.", { id: toastId });
+    }
+  };
   return (
     <div
       className="
@@ -21,15 +35,21 @@ const TechPill = ({ name, image, onEdit, onDelete }: TechPillProps) => {
     >
       <div className="flex items-center gap-2">
         <div className="relative w-8 h-8">
-          <Image
-            src={image}
-            alt={`${name} logo`}
-            fill
-            className="absolute top-0 object-contain"
-          />
+          {skill?.photo ? (
+            <Image
+              src={skill?.photo}
+              alt={`${skill?.name} logo`}
+              fill
+              className="absolute top-0 object-contain"
+            />
+          ) : (
+            <div className="w-full h-full bg-gray-300 dark:bg-gray-700 rounded flex items-center justify-center text-xs text-gray-600">
+              N/A
+            </div>
+          )}
         </div>
         <h1 className="text-sm leading-5 font-medium text-black dark:text-white">
-          {name}
+          {skill?.name}
         </h1>
       </div>
 
@@ -39,12 +59,13 @@ const TechPill = ({ name, image, onEdit, onDelete }: TechPillProps) => {
           group-hover:opacity-100 transition-opacity duration-300
         "
       >
-        <EditSkillModal />
+        <EditSkillModal skill={skill} />
 
         <DeleteConfirmModal
           title="Delete Skill"
           description="Are you sure you want to delete this skill? This action cannot be undone."
-          onDelete={() => console.log("Skill deleted")}
+          onDelete={handleDelete}
+          isLoading={isLoading}
         />
       </div>
     </div>

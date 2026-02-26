@@ -1,27 +1,37 @@
 import DeleteConfirmModal from "@/components/shared/modals/DeleteConfirmModal";
 import EditEducationModal from "@/components/shared/modals/EditEducationModal";
 import { Button } from "@/components/ui/button";
+import { useDeleteEducationMutation } from "@/redux/features/education/education.api";
+import { IEducation } from "@/redux/rtkTypes/education.type";
 import { MoveRight, Trash2 } from "lucide-react";
+import { toast } from "sonner";
 
 interface EducationPillProps {
-  degree: string;
-  institution: string;
-  startYear: string;
-  endYear?: string;
-  description: string;
-  onEdit?: () => void;
-  onDelete?: () => void;
+  education: IEducation;
 }
 
-const EducationPill = ({
-  degree,
-  institution,
-  startYear,
-  endYear,
-  description,
-  onEdit,
-  onDelete,
-}: EducationPillProps) => {
+const EducationPill = ({ education }: EducationPillProps) => {
+  const { id, degree, institution, startYear, endYear, description } =
+    education;
+
+  const [deleteEducation, { isLoading }] = useDeleteEducationMutation();
+
+  const handleDelete = async () => {
+    if (!education.id) return;
+
+    const toastId = toast.loading("Deleting education...");
+
+    try {
+      await deleteEducation(id).unwrap();
+      toast.success("Education deleted successfully.", {
+        id: toastId,
+      });
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Delete failed", {
+        id: toastId,
+      });
+    }
+  };
   return (
     <div className="group flex flex-col sm:flex-row sm:items-start sm:justify-between bg-[#fdfdfd] dark:bg-[#090C11] p-4 sm:p-6 rounded-xl w-full transition-all duration-300 ease-in-out border border-gray-300 dark:border-gray-800 hover:border-[#9767E4]">
       <div className="flex-1">
@@ -41,16 +51,16 @@ const EducationPill = ({
       </div>
 
       <div className="flex items-center gap-3 sm:gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-3 sm:mt-0">
-        <EditEducationModal />
+        <EditEducationModal education={education} />
 
         <DeleteConfirmModal
           title="Delete Education"
           description="Are you sure you want to delete this education? This action cannot be undone."
-          onDelete={() => console.log("Education Deleted deleted")}
+          onDelete={handleDelete}
           trigger={
             <Button
               variant="ghost"
-              onClick={onDelete}
+              disabled={isLoading}
               className="transition-all duration-300 ease-linear cursor-pointer hover:bg-red-400 hover:text-red-700 p-2.5 sm:p-3 rounded-xl"
             >
               <Trash2 className="w-5 h-5 sm:w-6 sm:h-6" />

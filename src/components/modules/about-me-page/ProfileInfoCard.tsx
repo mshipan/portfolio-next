@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -9,8 +11,13 @@ import {
 import { FileText, Mail, MapPin, Phone } from "lucide-react";
 import ProfileImageUploader from "./ProfileImageUploader";
 import ProfileEditModal from "@/components/shared/modals/ProfileEditModal";
+import { useGetAboutQuery } from "@/redux/features/about/about.api";
 
 const ProfileInfoCard = () => {
+  const { data } = useGetAboutQuery();
+
+  const aboutData = data?.data;
+
   return (
     <Card className="w-full bg-[#fdfdfd] dark:bg-[#0B111E] border border-gray-300 dark:border-gray-800 text-white hover:shadow-xl transition-shadow duration-500 ease-out">
       <CardHeader className="flex flex-col md:flex-row items-center justify-between pb-2">
@@ -29,14 +36,14 @@ const ProfileInfoCard = () => {
       <CardContent className="px-4">
         <div className="flex flex-col lg:flex-row items-start md:items-center justify-between gap-10 md:gap-16">
           <div className="flex flex-col items-center gap-3 w-full md:w-1/3">
-            <ProfileImageUploader />
+            <ProfileImageUploader photo={aboutData?.photo} />
 
             <div className="flex flex-col items-center mt-3">
               <h1 className="text-lg font-bold text-black dark:text-white">
-                John Doe
+                {aboutData?.name}
               </h1>
               <p className="text-sm text-muted-foreground">
-                Full Stack Developer
+                {aboutData?.title}
               </p>
             </div>
           </div>
@@ -49,9 +56,7 @@ const ProfileInfoCard = () => {
                   Bio
                 </h2>
                 <p className="text-sm text-muted-foreground leading-relaxed max-w-xl">
-                  Passionate developer with 5+ years of experience in building
-                  web applications. Specialized in React, Node.js, and cloud
-                  technologies.
+                  {aboutData?.bio}
                 </p>
               </div>
             </div>
@@ -60,11 +65,11 @@ const ProfileInfoCard = () => {
 
             <div className="grid sm:grid-cols-2 gap-y-4 gap-x-10">
               <div className="flex items-center gap-3">
-                <Mail className="text-[#9CA3AF]" size={18} />
+                <Mail className="text-[#9CA3AF] shrink-0" size={18} />
                 <div>
                   <p className="text-xs text-muted-foreground">Email</p>
                   <p className="text-sm font-medium text-black dark:text-white">
-                    john.doe@example.com
+                    {aboutData?.email}
                   </p>
                 </div>
               </div>
@@ -74,7 +79,9 @@ const ProfileInfoCard = () => {
                 <div>
                   <p className="text-xs text-muted-foreground">Phone</p>
                   <p className="text-sm font-medium text-black dark:text-white">
-                    +880 1322 456678
+                    {aboutData?.phone
+                      ? `+880 ${aboutData.phone.slice(1, 5)} ${aboutData.phone.slice(5)}`
+                      : ""}
                   </p>
                 </div>
               </div>
@@ -84,7 +91,7 @@ const ProfileInfoCard = () => {
                 <div>
                   <p className="text-xs text-muted-foreground">Location</p>
                   <p className="text-sm font-medium text-black dark:text-white">
-                    San Francisco, CA
+                    {aboutData?.address}
                   </p>
                 </div>
               </div>

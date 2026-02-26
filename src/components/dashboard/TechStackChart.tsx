@@ -17,25 +17,29 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
+interface TechStackChartProps {
+  data: {
+    tech: string;
+    count: number;
+  }[];
+}
+
 export const description = "A bar chart with styled grid lines";
 
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-];
+export function TechStackChart({ data }: TechStackChartProps) {
+  const chartData =
+    data?.map((item) => ({
+      tech: item.tech,
+      count: item.count,
+    })) ?? [];
 
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "var(--chart-1)",
-  },
-} satisfies ChartConfig;
+  const chartConfig = {
+    count: {
+      label: "Usage",
+      color: "var(--chart-1)",
+    },
+  } satisfies ChartConfig;
 
-export function TechStackChart() {
   return (
     <Card className="w-full bg-[#fdfdfd] dark:bg-[#0B111E] border-gray-300 dark:border-gray-800 hover:border-[#9767E4] transition-all duration-500 ease-out">
       <CardHeader>
@@ -48,64 +52,44 @@ export function TechStackChart() {
         <CardDescription>Most used technologies</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
-          <BarChart
-            accessibilityLayer
-            data={chartData}
-            margin={{
-              top: 20,
-              left: 12,
-              right: 12,
-              bottom: 20,
-            }}
-            // width={600}
-            height={300} // ensures grid boxes look more square
-          >
-            {/* Dotted grid with low opacity */}
-            <CartesianGrid
-              strokeDasharray="3 3"
-              stroke="rgba(255,255,255,0.3)"
-              strokeOpacity={0.2}
-              vertical={true}
-              horizontal={true}
-            />
+        {chartData?.length === 0 ? (
+          <div className="flex items-center justify-center h-75 text-muted-foreground">
+            No tech stack data available
+          </div>
+        ) : (
+          <ChartContainer config={chartConfig}>
+            <BarChart
+              data={chartData}
+              height={300}
+              margin={{ top: 20, left: 12, right: 12, bottom: 20 }}
+            >
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="rgba(255,255,255,0.3)"
+                strokeOpacity={0.2}
+                vertical
+                horizontal
+              />
 
-            {/* Y Axis (left line) — strong opacity */}
-            <YAxis
-              tickLine={false}
-              axisLine={{
-                stroke: "var(--foreground)",
-                strokeWidth: 1.5,
-              }}
-              tick={{ fill: "rgba(255,255,255,0.6)", fontSize: 12 }}
-              domain={[0, "auto"]}
-            />
+              <YAxis tickLine={false} axisLine={false} domain={[0, "auto"]} />
 
-            {/* X Axis (bottom line) — strong opacity */}
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              axisLine={{
-                stroke: "var(--foreground)",
-                strokeWidth: 1.5,
-              }}
-              tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
-              tick={{
-                fill: "var(--muted-foreground)",
-                fontSize: 12,
-              }}
-            />
+              <XAxis
+                dataKey="tech"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                tick={{ fontSize: 12, fill: "var(--muted-foreground)" }}
+              />
 
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent hideLabel />}
+              />
 
-            {/* Bars */}
-            <Bar dataKey="desktop" fill="#47cfeb" radius={[8, 8, 0, 0]} />
-          </BarChart>
-        </ChartContainer>
+              <Bar dataKey="count" fill="#47cfeb" radius={[8, 8, 0, 0]} />
+            </BarChart>
+          </ChartContainer>
+        )}
       </CardContent>
     </Card>
   );

@@ -18,13 +18,55 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useCreateEducationMutation } from "@/redux/features/education/education.api";
 import { Plus } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+
+type FormValues = {
+  degree: string;
+  institution: string;
+  startYear: string;
+  endYear?: string;
+  description?: string;
+};
 
 const AddEducationModal = () => {
-  const form = useForm();
+  const [open, setOpen] = useState(false);
+  const form = useForm<FormValues>({
+    defaultValues: {
+      degree: "",
+      institution: "",
+      startYear: "",
+      endYear: "",
+      description: "",
+    },
+  });
+
+  const [createEducation, { isLoading }] = useCreateEducationMutation();
+
+  const onSubmit = async (data: FormValues) => {
+    const toastId = toast.loading("Creating education...");
+
+    try {
+      await createEducation(data).unwrap();
+
+      toast.success("Education added successfully!", {
+        id: toastId,
+      });
+
+      form.reset();
+      setOpen(false);
+    } catch (error) {
+      toast.error("Failed to add education. Please try again.", {
+        id: toastId,
+      });
+    }
+  };
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="btn-gradient flex items-center gap-2 px-4 py-2 text-sm font-medium cursor-pointer">
           <Plus size={16} />
@@ -40,7 +82,7 @@ const AddEducationModal = () => {
         </DialogHeader>
 
         <Form {...form}>
-          <form className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -136,9 +178,10 @@ const AddEducationModal = () => {
             <div className="flex flex-col sm:flex-row gap-3">
               <Button
                 type="submit"
+                disabled={isLoading}
                 className="w-full btn-gradient cursor-pointer"
               >
-                Add Education
+                {isLoading ? "Adding..." : "Add Education"}
               </Button>
             </div>
           </form>

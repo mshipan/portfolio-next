@@ -10,33 +10,12 @@ import {
 import { Briefcase } from "lucide-react";
 import ExperiencePill from "./ExperiencePill";
 import AddExperienceModal from "@/components/shared/modals/AddExperienceModal";
+import { useGetAboutQuery } from "@/redux/features/about/about.api";
 
 const ExperienceCard = () => {
-  const experiences = [
-    {
-      title: "Senior Developer",
-      company: "Tech Corp",
-      startDate: "2020-01",
-      endDate: "Present",
-      description: "Leading development of enterprise applications",
-    },
-    {
-      title: "Frontend Engineer",
-      company: "Creative Studio",
-      startDate: "2018-05",
-      endDate: "2019-12",
-      description:
-        "Built interactive and accessible UIs using React and Next.js",
-    },
-  ];
+  const { data, isLoading, isError } = useGetAboutQuery(undefined);
 
-  const handleEdit = (title: string) => {
-    console.log("Edit:", title);
-  };
-
-  const handleDelete = (title: string) => {
-    console.log("Delete:", title);
-  };
+  const experiences = data?.data?.experiences || [];
 
   return (
     <Card className="w-full bg-[#fdfdfd] dark:bg-[#0B111E] border border-gray-300 dark:border-gray-800 text-white hover:shadow-xl transition-shadow duration-500 ease-out">
@@ -55,20 +34,33 @@ const ExperienceCard = () => {
       </CardHeader>
 
       <CardContent className="px-6">
-        <div className="flex flex-col gap-6">
-          {experiences?.slice(0, 2)?.map((exp, i) => (
-            <ExperiencePill
-              key={i}
-              title={exp.title}
-              company={exp.company}
-              startDate={exp.startDate}
-              endDate={exp.endDate}
-              description={exp.description}
-              onEdit={() => handleEdit(exp.title)}
-              onDelete={() => handleDelete(exp.title)}
-            />
-          ))}
-        </div>
+        {isLoading && (
+          <p className="text-sm text-gray-400 animate-pulse">
+            Loading experiences...
+          </p>
+        )}
+
+        {isError && (
+          <div className="flex justify-center items-center py-5">
+            <p className="text-sm text-red-500">
+              Failed to load experiences. Please try again.
+            </p>
+          </div>
+        )}
+
+        {!isLoading && !isError && experiences.length === 0 && (
+          <div className="flex justify-center items-center py-5">
+            <p className="text-sm text-gray-400">No experience added yet.</p>
+          </div>
+        )}
+
+        {!isLoading && !isError && experiences.length > 0 && (
+          <div className="flex flex-col gap-6">
+            {experiences.slice(0, 2).map((exp) => (
+              <ExperiencePill key={exp.id} experience={exp} />
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );

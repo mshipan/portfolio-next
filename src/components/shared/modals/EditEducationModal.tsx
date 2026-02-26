@@ -18,17 +18,68 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useUpdateEducationMutation } from "@/redux/features/education/education.api";
+import { IEducation } from "@/redux/rtkTypes/education.type";
 import { Edit } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
-const EditEducationModal = () => {
-  const form = useForm();
+interface Props {
+  education: IEducation;
+}
+
+const EditEducationModal = ({ education }: Props) => {
+  const [open, setOpen] = useState(false);
+
+  const [updateEducation, { isLoading }] = useUpdateEducationMutation();
+
+  const form = useForm<IEducation>({
+    defaultValues: {
+      degree: "",
+      institution: "",
+      startYear: "",
+      endYear: "",
+      description: "",
+    },
+  });
+
+  useEffect(() => {
+    if (education) {
+      form.reset({
+        degree: education.degree,
+        institution: education.institution,
+        startYear: education.startYear,
+        endYear: education.endYear || "",
+        description: education.description || "",
+      });
+    }
+  }, [education, form]);
+
+  const onSubmit = async (values: IEducation) => {
+    const toastId = toast.loading("Updating education...");
+    try {
+      await updateEducation({
+        id: education.id,
+        data: values,
+      }).unwrap();
+
+      toast.success("Education updated successfully", {
+        id: toastId,
+      });
+      setOpen(false);
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Update failed", {
+        id: toastId,
+      });
+    }
+  };
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           variant="ghost"
-          //   onClick={onEdit}
           className="transition-all duration-300 ease-linear cursor-pointer hover:bg-[#47cfeb] hover:text-black p-2.5 sm:p-3 rounded-xl"
         >
           <Edit className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -43,7 +94,7 @@ const EditEducationModal = () => {
         </DialogHeader>
 
         <Form {...form}>
-          <form className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -139,9 +190,10 @@ const EditEducationModal = () => {
             <div className="flex flex-col sm:flex-row gap-3">
               <Button
                 type="submit"
+                disabled={isLoading}
                 className="w-full btn-gradient cursor-pointer"
               >
-                Edit Education
+                {isLoading ? "Updating..." : "Update Education"}
               </Button>
             </div>
           </form>

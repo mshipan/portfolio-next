@@ -16,16 +16,80 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useUpdateSkillMutation } from "@/redux/features/skill/skill.api";
+import { ISkill } from "@/redux/rtkTypes/skill.type";
 import { Edit } from "lucide-react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
-const EditSkillModal = () => {
-  const form = useForm();
+type SkillFormValues = {
+  name: string;
+  category: string;
+  photo?: File | null;
+};
 
+interface Props {
+  skill: ISkill;
+}
+
+const EditSkillModal = ({ skill }: Props) => {
+  const [open, setOpen] = useState(false);
+
+  const [updateSkill, { isLoading }] = useUpdateSkillMutation();
+
+  const form = useForm<SkillFormValues>({
+    defaultValues: {
+      name: "",
+      category: "",
+      photo: null,
+    },
+  });
+
+  useEffect(() => {
+    if (skill) {
+      form.reset({
+        name: skill.name || "",
+        category: skill.category || "",
+        photo: null,
+      });
+    }
+  }, [skill, form]);
+
+  const onSubmit = async () => {
+    const values = form.getValues();
+    const formData = new FormData();
+
+    const singleSkill = {
+      name: values.name,
+      category: values.category,
+    };
+
+    formData.append("data", JSON.stringify(singleSkill));
+
+    if (values.photo) formData.append("file", values.photo);
+
+    const toastId = toast.loading("Updating skill...");
+
+    try {
+      await updateSkill({ id: skill.id as string, formData }).unwrap();
+      toast.success("Skill updated successfully!", { id: toastId });
+      setOpen(false);
+    } catch (error) {
+      toast.error("Failed to update skill. Please try again.", { id: toastId });
+    }
+  };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           variant="ghost"
@@ -44,7 +108,7 @@ const EditSkillModal = () => {
         </DialogHeader>
 
         <Form {...form}>
-          <form className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             {/* Fields */}
             <div className="flex flex-col gap-4">
               <FormField
@@ -60,6 +124,13 @@ const EditSkillModal = () => {
                           <Image
                             src={URL.createObjectURL(field.value)}
                             alt="Preview"
+                            fill
+                            className="object-cover"
+                          />
+                        ) : skill?.photo ? (
+                          <Image
+                            src={skill.photo}
+                            alt="Existing"
                             fill
                             className="object-cover"
                           />
@@ -100,15 +171,45 @@ const EditSkillModal = () => {
                   </FormItem>
                 )}
               />
+
+              <FormField
+                control={form.control}
+                name="category"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-black dark:text-white">
+                      Category
+                    </FormLabel>
+                    <FormControl>
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger className="border-gray-300 dark:border-gray-800 w-full">
+                          <SelectValue placeholder="Select category" />
+                        </SelectTrigger>
+
+                        <SelectContent>
+                          <SelectItem value="Frontend">Frontend</SelectItem>
+                          <SelectItem value="Backend">Backend</SelectItem>
+                          <SelectItem value="Tools">Tools</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
 
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-3">
               <Button
                 type="submit"
+                disabled={isLoading}
                 className="w-full btn-gradient cursor-pointer"
               >
-                Update Skill
+                {isLoading ? "Updating..." : "Update Skill"}
               </Button>
             </div>
           </form>
