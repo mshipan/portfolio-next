@@ -1,9 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { Project } from "@/types";
+import { Project } from "@/redux/rtkTypes/project.type";
 import { ExternalLink, Github } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 interface ProjectCardProps {
   card: Project;
@@ -14,12 +13,11 @@ const ProjectCard = ({ card }: ProjectCardProps) => {
     <div className="bg-[#fafafa] dark:bg-[#11192c] rounded-2xl overflow-hidden flex flex-col border border-gray-300 dark:border-gray-800 hover:border-[#9767e4] transition-all ease-in-out duration-500">
       <div className="relative overflow-hidden bg-cover bg-no-repeat w-full h-full aspect-video">
         <Image
-          src={card.img}
+          src={card.thumbnail as string}
           alt={card.title}
           fill
           className="object-cover transition duration-300 ease-in-out hover:scale-110"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          priority={card.id < 1}
         />
       </div>
 
@@ -30,10 +28,12 @@ const ProjectCard = ({ card }: ProjectCardProps) => {
           </h4>
         </Link>
 
-        <p className="text-sm leading-6 font-normal text-ring">{card.desc}</p>
+        <p className="text-sm leading-6 font-normal text-ring">
+          {card.description}
+        </p>
 
         <div className="flex flex-wrap items-center gap-2">
-          {card?.techs?.map((t) => (
+          {card?.techStack?.map((t) => (
             <span
               key={t}
               className="bg-[#47cfeb] px-3 py-1 rounded-full text-[#11192c] text-xs font-semibold"
@@ -44,13 +44,32 @@ const ProjectCard = ({ card }: ProjectCardProps) => {
         </div>
 
         <div className="flex w-full gap-4">
-          <Button className="flex items-center justify-center gap-2 w-1/2 text-sm font-medium hover:bg-[#47cfeb] cursor-pointer">
-            <Github className="w-4 h-4" />
-            <span>Code</span>
+          <Button
+            asChild
+            className="flex items-center justify-center gap-2 w-1/2 text-sm font-medium hover:bg-[#47cfeb] cursor-pointer"
+          >
+            <Link
+              href={card.repoUrl || "#"}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Github className="w-4 h-4" />
+              <span>Code</span>
+            </Link>
           </Button>
-          <Button className="flex items-center justify-center gap-2 w-1/2 text-sm font-medium bg-linear-to-r from-[#9767e4] to-[#47cfeb] cursor-pointer">
-            <ExternalLink className="w-4 h-4" />
-            <span>Demo</span>
+
+          <Button
+            asChild
+            className="flex items-center justify-center gap-2 w-1/2 text-sm font-medium bg-linear-to-r from-[#9767e4] to-[#47cfeb] cursor-pointer"
+          >
+            <Link
+              href={card.liveUrl || "#"}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <ExternalLink className="w-4 h-4" />
+              <span>Demo</span>
+            </Link>
           </Button>
         </div>
       </div>

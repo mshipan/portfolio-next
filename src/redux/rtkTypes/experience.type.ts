@@ -5,6 +5,7 @@ export interface IExperience {
   startYear: string;
   endYear?: string;
   description?: string;
+  achievements?: string[];
 }
 
 export interface ICreateExperiencePayload {

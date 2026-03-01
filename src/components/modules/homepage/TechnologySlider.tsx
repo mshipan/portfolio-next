@@ -6,17 +6,28 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
 import { Autoplay } from "swiper/modules";
+import { ISkill } from "@/redux/rtkTypes/skill.type";
 
-const TechnologySlider = () => {
-  const technologies = [
-    { name: "React", src: "/images/react.svg" },
-    { name: "Next.js", src: "/images/nextjs.svg" },
-    { name: "TypeScript", src: "/images/typescript.svg" },
-    { name: "Node.js", src: "/images/react.svg" },
-    { name: "Express", src: "/images/nextjs.svg" },
-    { name: "Tailwind", src: "/images/typescript.svg" },
-    { name: "MongoDB", src: "/images/react.svg" },
-  ];
+interface Props {
+  skills: ISkill[];
+}
+
+const TechnologySlider = ({ skills }: Props) => {
+  if (!skills.length) {
+    return (
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-10">
+        <div className="bg-white dark:bg-[#11192c] border border-dashed border-gray-300 dark:border-gray-700 rounded-xl p-10 py-16 text-center">
+          <h3 className="text-lg font-semibold text-gray-600 dark:text-gray-300">
+            No skills added yet
+          </h3>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+            Skills will appear here once they are added from the dashboard.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 overflow-hidden">
       <Swiper
@@ -40,11 +51,11 @@ const TechnologySlider = () => {
         modules={[Autoplay]}
         className="pb-8"
       >
-        {technologies.map((tech, index) => (
+        {skills?.map((tech, index) => (
           <SwiperSlide key={index} className="h-auto!">
             <div className="bg-white dark:bg-[#11192c] border border-gray-300 dark:border-gray-800 rounded-lg flex flex-col items-center justify-center p-3 sm:p-4 transition-transform duration-200">
               <Image
-                src={tech.src}
+                src={tech.photo as string}
                 alt={`${tech.name} logo`}
                 width={40}
                 height={40}

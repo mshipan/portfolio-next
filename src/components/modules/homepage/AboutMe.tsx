@@ -1,8 +1,13 @@
 import HeaderSection from "@/components/shared/HeaderSection";
+import { IGetAbout } from "@/redux/rtkTypes/about.type";
 import { ChevronsLeftRight, Rocket, Users } from "lucide-react";
 import Image from "next/image";
 
-const AboutMe = () => {
+interface Props {
+  aboutMe?: IGetAbout;
+}
+
+const AboutMe = ({ aboutMe }: Props) => {
   const aboutMeData = [
     {
       icon: ChevronsLeftRight,
@@ -41,19 +46,19 @@ const AboutMe = () => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-16 flex flex-col items-center justify-center gap-6">
         <div className="relative w-40 h-40 rounded-full border-4 border-[#9767e4] transition-shadow duration-300 shadow-[0_0_45px_rgba(151,103,228,0.5)] hover:shadow-[0_0_60px_#9767e4]">
           <Image
-            src="/images/user.png"
+            src={aboutMe?.photo || "/images/user.png"}
             alt="user image"
             fill
-            className="absolute top-0 object-cover"
+            className="absolute top-0 object-cover rounded-full"
           />
         </div>
         <HeaderSection
           titleFirstPart="about"
           titleSecondPart="me"
-          subTitle=" I'm a passionate full-stack developer with 2+ years of experience
-          building web applications that make a difference. I specialize in
-          React, TypeScript, and Node.js, with a strong focus on creating
-          performant, accessible, and beautiful user interfaces."
+          subTitle={
+            aboutMe?.bio ||
+            "Passionate frontend developer crafting seamless user experiences with clean code and modern technologies."
+          }
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-6 sm:mt-8">

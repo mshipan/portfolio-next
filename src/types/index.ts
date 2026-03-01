@@ -17,14 +17,6 @@ export interface SectionHeader {
   subTitle?: string;
 }
 
-export interface Project {
-  id: number;
-  title: string;
-  desc: string;
-  img: string;
-  techs: string[];
-}
-
 export interface Blog {
   id: string;
   authorId: string;

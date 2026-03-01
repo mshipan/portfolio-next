@@ -20,57 +20,85 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useUpdateExperienceMutation } from "@/redux/features/experience/experience.api";
 import { IExperience } from "@/redux/rtkTypes/experience.type";
-import { Edit } from "lucide-react";
+import { Edit, Minus, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 interface Props {
   experience: IExperience;
 }
 
+type FormValues = {
+  jobTitle: string;
+  company: string;
+  startYear: string;
+  endYear?: string;
+  description?: string;
+  achievements: { value: string }[];
+};
+
 const EditExperienceModal = ({ experience }: Props) => {
   const [open, setOpen] = useState(false);
 
   const [updateExperience, { isLoading }] = useUpdateExperienceMutation();
-  const form = useForm<IExperience>({
+  const form = useForm<FormValues>({
     defaultValues: {
       jobTitle: "",
       company: "",
       startYear: "",
       endYear: "",
       description: "",
+      achievements: [{ value: "" }],
     },
+  });
+
+  const { fields, append, remove, replace } = useFieldArray({
+    control: form.control,
+    name: "achievements",
   });
 
   useEffect(() => {
     if (experience) {
+      const achievementsArray = experience.achievements ?? [];
+      const initialAchievements =
+        achievementsArray.length > 0
+          ? achievementsArray.map((item) => ({ value: item }))
+          : [{ value: "" }];
+
       form.reset({
         jobTitle: experience.jobTitle,
         company: experience.company,
         startYear: experience.startYear,
         endYear: experience.endYear || "",
         description: experience.description || "",
+        achievements: initialAchievements,
       });
+
+      replace(initialAchievements);
     }
-  }, [experience, form]);
+  }, [experience, form, replace]);
 
-  const onSubmit = async (values: IExperience) => {
+  const onSubmit = async (values: FormValues) => {
     const toastId = toast.loading("Updating experience...");
-    try {
-      await updateExperience({
-        id: experience.id,
-        data: values,
-      }).unwrap();
 
-      toast.success("Experience updated successfully", {
-        id: toastId,
-      });
+    const cleanedData = {
+      jobTitle: values.jobTitle,
+      company: values.company,
+      startYear: values.startYear,
+      endYear: values.endYear,
+      description: values.description,
+      achievements: values.achievements
+        .filter((item) => item.value.trim() !== "")
+        .map((item) => item.value),
+    };
+
+    try {
+      await updateExperience({ id: experience.id, data: cleanedData }).unwrap();
+      toast.success("Experience updated successfully!", { id: toastId });
       setOpen(false);
     } catch (error: any) {
-      toast.error(error?.data?.message || "Update failed", {
-        id: toastId,
-      });
+      toast.error(error?.data?.message || "Update failed", { id: toastId });
     }
   };
 
@@ -184,6 +212,55 @@ const EditExperienceModal = ({ experience }: Props) => {
                   </FormItem>
                 )}
               />
+
+              <div className="lg:col-span-2 space-y-3">
+                <FormLabel className="font-medium">Key Achievements</FormLabel>
+                {fields.map((field, index) => (
+                  <div
+                    key={field.id}
+                    className="flex items-center gap-2 w-full"
+                  >
+                    <FormField
+                      control={form.control}
+                      name={`achievements.${index}.value`}
+                      render={({ field }) => (
+                        <FormItem className="flex-1 flex items-center">
+                          <FormControl>
+                            <Input
+                              {...field}
+                              placeholder="e.g. Improved performance by 40%"
+                              className="border-gray-300 dark:border-gray-800 pr-10"
+                            />
+                          </FormControl>
+
+                          <div className="flex gap-1 ml-2">
+                            {fields.length > 1 && (
+                              <Button
+                                type="button"
+                                variant="destructive"
+                                size="icon"
+                                onClick={() => remove(index)}
+                              >
+                                <Minus size={14} />
+                              </Button>
+                            )}
+                            {index === fields.length - 1 && (
+                              <Button
+                                type="button"
+                                variant="outline"
+                                size="icon"
+                                onClick={() => append({ value: "" })}
+                              >
+                                <Plus size={14} />
+                              </Button>
+                            )}
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3">

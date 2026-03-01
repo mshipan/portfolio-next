@@ -1,8 +1,12 @@
-import React from "react";
 import TechnologySlider from "./TechnologySlider";
 import HeaderSection from "@/components/shared/HeaderSection";
+import { ISkill } from "@/redux/rtkTypes/skill.type";
 
-const Skills = () => {
+interface Props {
+  skills: ISkill[];
+}
+
+const Skills = ({ skills }: Props) => {
   return (
     <div
       id="skills"
@@ -14,7 +18,7 @@ const Skills = () => {
           titleSecondPart="technologies"
           subTitle=" A comprehensive toolkit for building modern web applications"
         />
-        <TechnologySlider />
+        <TechnologySlider skills={skills} />
       </div>
     </div>
   );

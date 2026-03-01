@@ -5,25 +5,26 @@ import { ArrowRight, Mouse } from "lucide-react";
 import { Github, Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { useGetAboutQuery } from "@/redux/features/about/about.api";
 import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { scrollToSection } from "@/lib/scrollTo";
+import { IGetAbout } from "@/redux/rtkTypes/about.type";
 
 gsap.registerPlugin(ScrollToPlugin);
 
-const Banner = () => {
+interface Props {
+  aboutMe?: IGetAbout;
+}
+
+const Banner = ({ aboutMe }: Props) => {
   const [index, setIndex] = useState(0);
-  const { data } = useGetAboutQuery(undefined);
   const textRef = useRef<HTMLDivElement>(null);
   const mouseRef = useRef<HTMLDivElement>(null);
 
-  const aboutMe = data?.data;
-
   const connectLinks = [
-    { path: "https://github.com", icon: Github },
-    { path: "https://linkedin.com", icon: Linkedin },
-    { path: "mailto:shipanmallik95@gmail.com", icon: Mail },
+    { path: aboutMe?.github, icon: Github },
+    { path: aboutMe?.linkedIn, icon: Linkedin },
+    { path: `mailto:${aboutMe?.email}`, icon: Mail },
   ];
 
   const texts = [
@@ -123,7 +124,11 @@ const Banner = () => {
               key={link.path}
               className="rounded-full flex items-center justify-center cursor-pointer text-[#6b7280] dark:text-white hover:text-[#9767e4] transition-all duration-300"
             >
-              <Link href={link.path}>
+              <Link
+                href={link.path as string}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <link.icon className="text-2xl" />
               </Link>
             </div>
