@@ -1,16 +1,16 @@
 import HeaderSection from "@/components/shared/HeaderSection";
 import ProjectCard from "../cards/project/ProjectCard";
 import { Project } from "@/redux/rtkTypes/project.type";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import ShowMoreBtn from "@/components/shared/ShowMoreBtn";
 
 interface Props {
   projects: Project[];
 }
 
 const Projects = ({ projects }: Props) => {
-  const featuredProjects = projects?.slice(0, 6);
+  const featuredProjects = projects
+    ?.filter((project) => project.featured)
+    ?.slice(0, 6);
 
   return (
     <div
@@ -29,19 +29,7 @@ const Projects = ({ projects }: Props) => {
         ))}
       </div>
 
-      {projects?.length > 6 && (
-        <div className="mt-8">
-          <Button
-            asChild
-            className="bg-[#9767e4] hover:bg-[#8354d1] text-white px-8 py-6 rounded-full text-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-[#9767e45e]"
-          >
-            <Link href="/projects" className="flex items-center gap-2">
-              Show More
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-          </Button>
-        </div>
-      )}
+      {projects?.length > 6 && <ShowMoreBtn href="/projects" />}
     </div>
   );
 };

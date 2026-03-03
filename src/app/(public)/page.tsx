@@ -13,6 +13,7 @@ import {
   getSkills,
 } from "@/services/about.service";
 import { getProjects } from "@/services/project.service";
+import { getBlogs } from "@/services/blog.service";
 
 const HomePage = async () => {
   const aboutResponse = await getAbout();
@@ -29,6 +30,11 @@ const HomePage = async () => {
 
   const projectResponse = await getProjects();
   const projects = projectResponse.data;
+  const publishedProjects = projects?.filter((project) => project.published);
+
+  const blogResponse = await getBlogs();
+  const blogs = blogResponse.data;
+  const publishedBlogs = blogs?.filter((blog) => blog.published);
 
   return (
     <div className="text-white">
@@ -39,9 +45,11 @@ const HomePage = async () => {
         <Skills skills={skills} />
         {experiences?.length > 0 && <Experience experiences={experiences} />}
         {educations?.length > 0 && <Education educations={educations} />}
-        {projects?.length > 0 && <Projects projects={projects} />}
-        <Blogs />
-        <GetInTouch />
+        {publishedProjects?.length > 0 && (
+          <Projects projects={publishedProjects} />
+        )}
+        {publishedBlogs?.length > 0 && <Blogs blogs={publishedBlogs} />}
+        <GetInTouch aboutMe={about} />
       </div>
     </div>
   );

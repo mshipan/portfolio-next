@@ -2,8 +2,13 @@ import GetInTouchForm from "@/components/forms/GetInTouchForm";
 import HeaderSection from "@/components/shared/HeaderSection";
 import ContactInfo from "./ContactInfo";
 import Opportunity from "./Opportunity";
+import { IGetAbout } from "@/redux/rtkTypes/about.type";
 
-const GetInTouch = () => {
+interface Props {
+  aboutMe?: IGetAbout;
+}
+
+const GetInTouch = ({ aboutMe }: Props) => {
   return (
     <div id="contact" className="px-6 py-20 sm:py-28 md:py-36">
       <div className="flex flex-col items-center gap-8 max-w-7xl mx-auto">
@@ -16,7 +21,7 @@ const GetInTouch = () => {
         <div className="grid md:grid-cols-2 gap-8 auto-rows-[1fr] items-stretch">
           <GetInTouchForm />
           <div className="flex flex-col gap-8 h-full">
-            <ContactInfo />
+            <ContactInfo aboutMe={aboutMe} />
             <Opportunity />
           </div>
         </div>

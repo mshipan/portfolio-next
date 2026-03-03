@@ -1,22 +1,13 @@
 import HeaderSection from "@/components/shared/HeaderSection";
 import BlogCard from "../cards/blog/BlogCard";
-import { Blog } from "@/types";
+import { IGetBlog } from "@/redux/rtkTypes/blog.type";
+import ShowMoreBtn from "@/components/shared/ShowMoreBtn";
 
-const Blogs = () => {
-  const blogs: Blog[] = Array.from({ length: 6 }).map((_, i) => ({
-    id: `blog-${i}`,
-    authorId: "user-1",
-    title: "Building Scalable React Applications",
-    slug: "building-scalable-react-applications",
-    summary:
-      "Learn best practices for structuring large React applications with proper state management and code organization.",
-    content: "This is a demo blog content.",
-    published: true,
-    coverUrl: "/images/blog1.jpeg",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  }));
+interface Props {
+  blogs: IGetBlog[];
+}
 
+const Blogs = ({ blogs }: Props) => {
   return (
     <div
       id="blog"
@@ -30,10 +21,12 @@ const Blogs = () => {
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 w-full">
-          {blogs.map((blog) => (
+          {blogs?.slice(0, 6)?.map((blog) => (
             <BlogCard blog={blog} key={blog.id} />
           ))}
         </div>
+
+        {blogs?.length > 6 && <ShowMoreBtn href="/blogs" />}
       </div>
     </div>
   );

@@ -1,39 +1,38 @@
 import { Button } from "@/components/ui/button";
-import { Blog } from "@/types";
+import { IGetBlog } from "@/redux/rtkTypes/blog.type";
 import { Calendar, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 interface BlogCardProps {
-  blog: Blog;
+  blog: IGetBlog;
 }
 
 const BlogCard = ({ blog }: BlogCardProps) => {
   return (
-    <div className="bg-[#fafafa] dark:bg-[#11192c] rounded-2xl overflow-hidden flex flex-col border border-gray-300 dark:border-gray-800 hover:border-[#9767e4] transition-all ease-in-out duration-500">
-      <div className="relative overflow-hidden bg-cover bg-no-repeat w-full h-full aspect-video">
+    <div className="bg-[#fafafa] dark:bg-[#11192c] rounded-2xl overflow-hidden flex flex-col h-full border border-gray-300 dark:border-gray-800 hover:border-[#9767e4] transition-all duration-500">
+      <div className="relative overflow-hidden w-full aspect-video">
         <Image
           src={blog.coverUrl || "/images/placeholder.jpeg"}
           alt={blog.title}
           fill
-          className="object-cover transition duration-300 ease-in-out hover:scale-110"
+          className="object-cover transition duration-300 hover:scale-110"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          priority
         />
       </div>
 
-      <div className="p-6 sm:p-7 flex flex-col gap-3 sm:gap-6 h-full">
+      <div className="p-6 sm:p-7 flex flex-col gap-4 flex-1">
         <Link href={`/blog/${blog.slug}`}>
           <h4 className="text-black dark:text-white hover:text-[#9767e4] text-lg sm:text-xl leading-7 font-bold">
             {blog.title}
           </h4>
         </Link>
 
-        <p className="text-sm leading-6 font-normal text-ring">
+        <p className="text-sm leading-6 text-ring line-clamp-3">
           {blog.summary}
         </p>
 
-        <div className="text-xs leading-4 font-normal flex items-center gap-1 text-ring">
+        <div className="text-xs flex items-center gap-1 text-ring">
           <Calendar size={15} />
           <p>
             {blog.createdAt
@@ -41,13 +40,13 @@ const BlogCard = ({ blog }: BlogCardProps) => {
                   day: "2-digit",
                   month: "short",
                   year: "numeric",
-                }).format(blog.createdAt)
+                }).format(new Date(blog.createdAt))
               : ""}
           </p>
         </div>
 
-        <div className="flex w-full mt-4">
-          <Button className="flex items-center justify-center gap-2 w-full text-sm font-medium bg-linear-to-r from-[#9767e4] to-[#47cfeb] cursor-pointer">
+        <div className="mt-auto pt-4">
+          <Button className="flex items-center justify-center gap-2 w-full text-sm font-medium bg-linear-to-r from-[#9767e4] to-[#47cfeb]">
             <ExternalLink className="w-4 h-4" />
             <span>Read More</span>
           </Button>
