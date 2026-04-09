@@ -9,6 +9,7 @@ import {
   House,
   LayoutDashboard,
   LogOut,
+  Mail,
   User,
 } from "lucide-react";
 
@@ -65,6 +66,11 @@ const data = {
       title: "Blog",
       url: "/dashboard/blog",
       icon: FileText,
+    },
+    {
+      title: "Messages",
+      url: "/dashboard/messages",
+      icon: Mail,
     },
   ],
 };
